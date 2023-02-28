@@ -1,6 +1,6 @@
 :root {
   --primary: #00B37E;
-  --background: #121214;
+  --background: #FFF;
   --text: #FFF;
   --caption: #8D8D99;
   --gray: #E1E1E6;
@@ -20,6 +20,30 @@ body {
 }
 
 button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px;
+  gap: 10px;
+  
+  position: absolute;
+  width: 77px;
+  /* height: 32px; */
+
+  border: none;
   cursor: pointer;
+  /* background: #006FEC; */
+  border-radius: 4px;
+
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.03em;
+  color: #FFFFFF;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
 }
-/*# sourceMappingURL=global.css.map */
+
