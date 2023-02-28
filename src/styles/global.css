@@ -29,11 +29,11 @@ button {
   
   position: absolute;
   width: 77px;
-  /* height: 32px; */
+  height: 32px;
 
   border: none;
   cursor: pointer;
-  /* background: #006FEC; */
+  background: #006FEC;
   border-radius: 4px;
 
   font-style: normal;

@@ -1,4 +1,3 @@
-// import "./styles.scss"
 import { Container } from "@material-ui/core";
 import Button  from "../../Components/Button";
 import "./styles.css"
@@ -6,7 +5,7 @@ import "./styles.css"
 export function SignIn(){
     return (
         <Container maxWidth="md">            
-            <Button type="Large-Button" >Button</Button>
+            <Button variant="Small-Button">Button</Button>
         </Container>
     )
 }

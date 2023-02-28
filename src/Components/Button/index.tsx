@@ -1,12 +1,13 @@
 
 import "./styles.css"
 
-export default function Button(props: any, type:any){
-    console.log(type)
+export default function ButtonStyle(props:any){
+    const {children, variant } = props
+
     return (
         <>
-            <button className="Large-Button">
-                {props.children}
+            <button className={variant}>
+                {children}
             </button>
         </>
     )
