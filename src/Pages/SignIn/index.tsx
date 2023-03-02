@@ -2,6 +2,7 @@ import { Container } from "@material-ui/core";
 import Button  from "../../Components/Button";
 import { Input } from "../../Components/Input";
 import { Text } from "../../Components/Text";
+import { Comment } from "../../Components/Comments"
 import "./styles.css"
 
 export function SignIn(){
@@ -21,6 +22,14 @@ export function SignIn(){
             <Input type="text" variant="default" placeholder="Pesquisar" icon={false} />
             <Input type="text" variant="success" placeholder="Pesquisar" icon={false} />
             <Input type="text" variant="error" placeholder="Pesquisar" icon={false} />
+            
+            <Comment
+                author="Leonardo Henrique" 
+                avatar="LH" 
+                comment="Lorem ipsum dolor sit amet consectetur. Facilisis et tellus dapibus in non. Scelerisque molestie non dignissim sed et vitae." 
+                rating={5}
+                createdAt="02/19/2023 00:48 AM"
+            />
 
             
         </Container>

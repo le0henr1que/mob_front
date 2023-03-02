@@ -1,3 +1,27 @@
+button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px;
+  gap: 10px;  
+  width: 77px;
+  /* height: 32px; */
+  border: none;
+  cursor: pointer;
+  background: #006FEC;
+  border-radius: 4px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.03em;
+  color: #FFFFFF;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
 .large-button{
   height: 56px !important;
 }

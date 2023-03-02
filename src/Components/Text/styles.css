@@ -1,4 +1,9 @@
 
+div{
+    color: #0F0D15;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
 .font-regular{
     font-style: normal !important;
     font-weight: 400;
@@ -56,4 +61,9 @@
 
 .color-blue{
     color: #006FEC !important;
+}
+.muted{
+    color: #888888 !important;
+
+
 }
