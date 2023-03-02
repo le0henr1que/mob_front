@@ -1,14 +1,14 @@
-.Large-Button{
+.large-button{
   height: 56px !important;
 }
-.Medium-Button{
+.medium-button{
   height: 40px !important;
 
 }
-.Small-button{
+.small-button{
   height: 32px !important;
 }
-.Outlined{
+.outlined{
   border: 1px solid #006FEC !important;;
   background: #FFF !important;;
   color: #006FEC !important;;

@@ -1,0 +1,59 @@
+
+.font-regular{
+    font-style: normal !important;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    line-height: 116%;
+    
+}
+.font-bold{
+    font-style: normal !important;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    line-height: 116%;
+    
+}
+.font-extrabold{
+    font-style: normal !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.03em;
+    line-height: 116%;
+    
+}
+.font-semibold{
+    font-style: normal !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.03em;
+    line-height: 116%;
+    
+}
+
+.title-1{
+    font-size: 60px !important;
+}
+.title-2{
+    font-size: 48px !important; 
+}
+.title-3{
+    font-size:34px !important;
+}
+.headline{
+    font-size:24px;
+}
+
+.subheadline{
+    font-size:18px !important;
+}
+.body{
+    font-size:16px !important;
+}
+.body-small{
+    font-size:14px !important;
+}
+.caption{
+    font-size:12px !important;
+}
+
+.color-blue{
+    color: #006FEC !important;
+}

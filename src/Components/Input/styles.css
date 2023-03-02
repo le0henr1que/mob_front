@@ -1,0 +1,20 @@
+
+.default{
+    border: 1px solid #B9B8B7; 
+}
+.error{
+    border: 1px solid #E73232;
+}
+.success{
+    border: 1px solid #22C55E;
+}
+.container-input{
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 350px;
+}
+.icon{
+    position:absolute;
+    right:10px;
+}
