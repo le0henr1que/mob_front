@@ -7,3 +7,10 @@ export interface Comments {
     comment:string;
     createdAt:string;
 }
+
+
+export interface TypeStars{
+    variant:string;
+    rating: 1 | 2 |  3 |  4 |  5;
+    starType: "view" | "select";
+}

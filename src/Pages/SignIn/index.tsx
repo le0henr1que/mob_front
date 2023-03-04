@@ -7,7 +7,8 @@ import "./styles.css"
 
 export function SignIn(){
     return (
-        <Container maxWidth="md">            
+        <Container maxWidth="md">           
+         
             <Button variant="small-button">Button</Button>
             <Text variant="font-extrabold  title-3 color-blue">Text</Text>
             <Text variant="font-bold title-2 color-blue">Text</Text>

@@ -11,4 +11,6 @@ export default {
   component: Chart,
 } as ComponentMeta<typeof Chart>;
 
-export const Charts: ComponentStory<typeof Chart> = () => <Chart/>
+const data = [4, 7, 9, 5, 10]
+
+export const Charts: ComponentStory<typeof Chart> = () => <Chart data={data}/>

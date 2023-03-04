@@ -23,6 +23,7 @@ export function Comment({author, avatar, rating, comment, createdAt}:Comments){
                             <Star className="star" fontSize="small"></Star>
                             <Star className="star" fontSize="small"></Star>
                             <Star className="star" fontSize="small"></Star>
+                            
                         </div>
                         <Text variant="font-regular caption muted">{createdAt}</Text>
                     </div>

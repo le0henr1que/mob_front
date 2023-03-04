@@ -2,17 +2,21 @@
 import ReactApexChart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
 
-export function Chart(){
+export function Chart({data}:any){
 
     var options: ApexOptions = {
         series: [
         {
-            name: 'Series 1',
-            data: [30, 40, 35, 50, 49, 60, 70, 91, 125],
-
+            name: 'Classificação',
+            data:data
           }],
        
         yaxis: {
+          labels: {
+            show: false
+          }
+        },
+        xaxis:{
           labels: {
             show: false
           }
