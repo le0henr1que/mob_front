@@ -16,3 +16,8 @@ export interface TypeStars{
     starType: "view" | "select";
     onReturnRating?: any;
 }
+
+export interface LoadSkeleton {
+    size: "small" | "large" | "medium";
+    type: "circle" | "line"
+}
