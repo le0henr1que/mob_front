@@ -6,3 +6,6 @@
 .container-star{
     gap:5;
 }
+.select{
+    cursor: pointer;
+}

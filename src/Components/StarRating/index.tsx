@@ -1,48 +1,71 @@
 
 import "./styles.css"
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import { Star, StarBorder, StarHalfTwoTone} from "@material-ui/icons"
 import { TypeStars } from "../../@types"
 
-export function StarRating({rating, variant, starType}:TypeStars){
+export function StarRating({rating, variant, starType, onReturnRating, size}:TypeStars){
 
-    // const [ratingNote, setRatignNote] = useState<number[]>([]);
 
-    var ratingsSelectArray:number[] = []
-    var ratingsNonSelectedArray:number[] = []
+    var ratingsSelectArray:number[] = [1, 2, 3, 4, 5]
+    const [isHovering, setIsHovering] = useState<number>(0);
+    const [isRating, setIsRating] = useState<number>(0);
+    const [isStarType, setIsStarType] = useState<string>("view");
 
-    for(var i:number = 0; i < rating; i++){
-        ratingsSelectArray[i] = i
-    }
-    const calcRating = rating - 5;
-    for(var e = 0; e < calcRating; e++){
-        ratingsNonSelectedArray[e] = e
-    }
+    useEffect(() => {
+        setIsRating(rating)
+        setIsStarType(starType)       
+    }, [])
+
+    const handleMouseEnter = (number:number) => {
+        setIsHovering(number);
+    };
     
-    // setRatignNote(ratingNote)
+    const handleMouseLeave = () => {
+        setIsHovering(0);
+        console.log(isHovering)
+    };
+    const handleClickStar = (number:number) => {
+        setIsRating(number)
+        setIsStarType("view");
+        onReturnRating(number);
+    } 
 
-    // console.log(ratingNote)
+    const evenStars = ratingsSelectArray.map((number) => {
+        if (number <= isRating) {
+            return <Star className={`${variant} star`} fontSize={size} />;
+        } 
+        if (number >= isRating) {
+            return <StarBorder className={`${variant} star`} fontSize={size} />;
+        } 
+    });
+
+    const evenStarsHandle = ratingsSelectArray.map((number) => {
+            if(number <= isHovering){
+                return <Star 
+                    onMouseEnter={() => handleMouseEnter(number)}
+                    onMouseLeave={handleMouseLeave}
+                    className={`${variant} star select`} 
+                    fontSize={size} 
+                    onClick={() => handleClickStar(number)}
+                />;
+            }
+            if(number >= isHovering){
+                return <StarBorder 
+                onMouseEnter={() => handleMouseEnter(number)}
+                onMouseLeave={handleMouseLeave}
+                className={`${variant} star select`} 
+                fontSize={size} 
+                />;
+            }
+   
+    });
+
 
     return ( 
         <div className="container-star">
-            {
-                ratingsSelectArray.map((content) => (
-                    <Star className={`${variant} star`} fontSize="small" />
-                ))
-
-            }
-            {
-              ratingsNonSelectedArray.map((index) => (
-                <StarBorder className={`${variant} star`} fontSize="small" />
-                ))
-            }
-            {/* <Star className={`${variant} star`} fontSize="small" />
-            <Star className={`${variant} star`} fontSize="small" />
-            <Star className={`${variant} star`} fontSize="small" />
-            <StarHalfTwoTone className={`${variant} star`} fontSize="small" />
-            <StarBorder className={`${variant} star`} fontSize="small"  /> */}
-
-
+            {isStarType === "view" && evenStars}
+            {isStarType === "select" &&  evenStarsHandle}
         </div>
     )
 }

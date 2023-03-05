@@ -11,5 +11,7 @@ export default {
   component: StarRating,
 } as ComponentMeta<typeof StarRating>;
 
-export const Select: ComponentStory<typeof StarRating> = () => <StarRating variant="nothing" rating={5} starType="view" />;
-export const Disabled: ComponentStory<typeof StarRating> = () => <StarRating variant="nothing" rating={2} starType="view" />;
+const ratingNote = (note:number) => { alert(note); return note }
+
+export const Select: ComponentStory<typeof StarRating> = () => <StarRating variant="nothing" rating={3} starType="select" onReturnRating={ratingNote} size="large"/>;
+export const Disabled: ComponentStory<typeof StarRating> = () => <StarRating variant="nothing" rating={4} starType="view" size="small" />;

@@ -3,6 +3,7 @@ import { Comments } from "../../@types"
 import { Text } from "../Text"
 import { Star } from "@material-ui/icons"
 import "./styles.css"
+import { StarRating } from "../StarRating"
 
 export function Comment({author, avatar, rating, comment, createdAt}:Comments){
     return (
@@ -18,12 +19,7 @@ export function Comment({author, avatar, rating, comment, createdAt}:Comments){
 
                     <div className="continer-rating">
                         <div className="container-star">
-                            <Star className="star" fontSize="small"></Star>
-                            <Star className="star" fontSize="small"></Star>
-                            <Star className="star" fontSize="small"></Star>
-                            <Star className="star" fontSize="small"></Star>
-                            <Star className="star" fontSize="small"></Star>
-                            
+                            <StarRating variant="nothing" rating={3} starType="view" size="small" />                            
                         </div>
                         <Text variant="font-regular caption muted">{createdAt}</Text>
                     </div>
