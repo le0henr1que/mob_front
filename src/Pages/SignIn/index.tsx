@@ -4,10 +4,15 @@ import { Input } from "../../Components/Input";
 import { Text } from "../../Components/Text";
 import { Comment } from "../../Components/Comments"
 import "./styles.css"
+import { Header } from "../../Components/Header";
 
 export function SignIn(){
     return (
-        <Container maxWidth="md">           
+        <>
+        <Header/>
+
+        <Container maxWidth="md">         
+
          
             <Button variant="small-button">Button</Button>
             <Text variant="font-extrabold  title-3 color-blue">Text</Text>
@@ -34,5 +39,7 @@ export function SignIn(){
 
             
         </Container>
+        </>
+
     )
 }
