@@ -68,12 +68,14 @@ export function Header(){
                     </div>
                 </div>
             </div>
-            <div className="container-menu">
-                {
-                    isMenuList.map((item) => (
-                        <Text variant="muted font-regular subheadline">{item}</Text>
-                    ))
-                }
+            <div className="container-menu-margin">
+                <div className="container-menu">
+                    {
+                        isMenuList.map((item) => (
+                            <Text variant="muted font-regular subheadline">{item}</Text>
+                        ))
+                    }
+                </div>
             </div>
         </div>
     )
