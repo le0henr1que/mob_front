@@ -24,7 +24,21 @@
     align-items: center;
     gap:24px;
 }
+.div-button-sidebar{
+    width: 90%;
+    display: flex;
+    align-items: center;
+    gap:15px;
+    float:left;
+    margin-bottom: 24px;
 
+}
+.top-sidebar{
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .input-search{
     width: 583px;
 }
@@ -77,3 +91,4 @@
         border:none;
     }
   } 
+
