@@ -5,6 +5,7 @@ import { Text } from "../../Components/Text";
 import { Comment } from "../../Components/Comments"
 import "./styles.css"
 import { Header } from "../../Components/Header";
+import { Footer } from "../../Components/Footer";
 
 export function SignIn(){
     return (
@@ -12,7 +13,9 @@ export function SignIn(){
         <Header/>
         <Container>   
                   
+                  
         </Container>
+        <Footer/>
         </>
 
     )

@@ -62,6 +62,9 @@ div{
 .color-blue{
     color: #006FEC !important;
 }
+.color-white{
+    color: #FFF !important;
+}
 .muted{
     color: #888888 !important;
 
