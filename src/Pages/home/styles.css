@@ -1,9 +1,39 @@
 
 .card{
+    padding-top: 36px;
     width: 521px;
     height: 666px;
     border: 1px solid #B3B3B3;
     border-radius: 5px;
+    display: flex;
+    align-items: center;
+    /* justify-content: space-around; */
+    flex-direction: column;
+    text-align: center;
+}
+.card-title{
+    margin-top: 60px;
+}
+.card-title span{
+    color: #007FFF !important;
+}
+.card-text{
+    margin-top: 14px;
+    width: 379px;
+}
+.card-input{
+    margin-top: 39px;
+    width: 350px;
+}
+.card-text-last{
+    margin-top: 38px;
+}
+.card-text-last a{
+    color: #007FFF !important;
+    text-decoration: none
+}
+.card-buttom{
+    margin-top: 39px;
 }
 .main-card{
     display: flex;
