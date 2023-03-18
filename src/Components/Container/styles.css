@@ -5,41 +5,46 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    padding: 0 30px 30px 0;
+
 }
 
 @media screen and (max-width: 1350px) {
     .container{
         width: 95%;
+        display: flex;
+        justify-content: center;
     }
   }
 
 @media screen and (max-width: 1200px) {
     .container div{
         flex-direction: column;
-        width: 95%;
+        /* width: 95%; */
     }
   
 
   }
   @media screen and (max-width: 992px) {
-    .container div{
+    /* .container div{
         width: 95%;
-    }
+    } */
   } 
   @media screen and (max-width: 500px) {
    
     .container div img{
         width: 300px;
     }
-    .container div {
+    /* .container div {
         font-size: 12px;
+    } */
+      .container {
+        width: 95%;
     }
   } 
   @media screen and (max-width: 768px) {
    
-    .container div{
+    /* .container div{
         width: 95%;
-    }
+    } */
   } 
 

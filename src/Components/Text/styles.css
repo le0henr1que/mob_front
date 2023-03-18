@@ -72,3 +72,18 @@ div{
 .muted{
     color: #888888 !important;
 }
+
+
+
+@media screen and (max-width: 500px) {
+   .title-3{
+    font-size: 25px !important;
+   }
+   /* .subheadline{
+    font-size: 12px !important;
+
+   }
+   .body{
+    font-size: 12px !important;
+   } */
+} 

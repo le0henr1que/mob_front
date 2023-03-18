@@ -45,3 +45,20 @@
     gap:32px;
     margin-bottom: 39px;
 }
+@media screen and (max-width: 590px) {
+    .card-text{
+        width: 80% !important;
+    }
+    .card-input{
+        width: 80% !important;
+    }
+    .main-card{
+        width: 95% !important;
+     }
+     .card{
+         width: 100% !important;
+     }
+     .card-text-last{
+        width: 80% !important;
+    }
+  } 
