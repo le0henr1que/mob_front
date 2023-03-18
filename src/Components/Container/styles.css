@@ -17,14 +17,29 @@
 @media screen and (max-width: 1200px) {
     .container div{
         flex-direction: column;
+        width: 95%;
     }
+  
 
   }
   @media screen and (max-width: 992px) {
+    .container div{
+        width: 95%;
+    }
+  } 
+  @media screen and (max-width: 500px) {
    
+    .container div img{
+        width: 300px;
+    }
+    .container div {
+        font-size: 12px;
+    }
   } 
   @media screen and (max-width: 768px) {
    
-   
+    .container div{
+        width: 95%;
+    }
   } 
 

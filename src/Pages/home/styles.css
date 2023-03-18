@@ -34,6 +34,9 @@
 }
 .card-buttom{
     margin-top: 39px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .main-card{
     display: flex;
