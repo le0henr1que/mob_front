@@ -8,6 +8,10 @@ export interface Comments {
     createdAt:string;
 }
 
+export interface MenuItem {
+    label: string;
+    href: string;
+  }
 
 export interface TypeStars{
     size: "small" | "default" | "inherit" | "large" | "medium";

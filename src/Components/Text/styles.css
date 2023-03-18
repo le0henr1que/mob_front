@@ -36,6 +36,7 @@ div{
 .title-1{
     font-size: 60px !important;
     color: #424242 !important;
+    line-height:60px !important;
 }
 .title-2{
     font-size: 48px !important;
@@ -79,11 +80,5 @@ div{
    .title-3{
     font-size: 25px !important;
    }
-   /* .subheadline{
-    font-size: 12px !important;
 
-   }
-   .body{
-    font-size: 12px !important;
-   } */
 } 

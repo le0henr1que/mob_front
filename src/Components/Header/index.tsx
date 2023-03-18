@@ -2,6 +2,7 @@
 import { AppBar, Toolbar, IconButton, Typography, Drawer, List } from '@material-ui/core';
 import { Menu, Close  } from '@material-ui/icons';
 import { useEffect, useState } from "react"
+import { MenuItem } from '../../@types';
 //@ts-ignore
 import LogMob from "../../Assests/Frame142.svg"
 import ButtonStyle from "../Button"
@@ -10,22 +11,24 @@ import { Text } from "../Text"
 import "./styles.css"
 import { StylesList, MakeStyleDrawer, useStyles } from './stylesMaterialUI'
 
+
 export function Header(){
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const [isMenuList, setIsMenuList] = useState<string[]>([]);
+    const [isMenuList, setIsMenuList] = useState<MenuItem[]>([]);
     const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
     const classes = useStyles();
 
-    var listMenu:string[] = [
-        "Estabelecimento", 
-        "Denuncias",
-        "Mobilidade",
-        "Dúvidas Frequentes",
-        "Institucional", 
-        "Sobre o Mob!", 
-        "Trabalhe Conosco", 
-        "SAC"
+    var listMenu:MenuItem[] = [
+        {label:"Estabelecimento", href:"/notfound"},
+        {label:"Denuncias", href:"/notfound"},
+        {label:"Mobilidade", href:"/notfound"},
+        {label:"Dúvidas Frequentes", href:"/notfound"},
+        {label:"Institucional", href:"/notfound"},
+        {label:"Sobre o Mob!", href:"/notfound"},
+        {label:"Trabalhe Conosco", href:"/notfound"},
+        {label:"SAC", href:"/notfound"},
     ]
+
     useEffect(() => {
         setIsMenuList(listMenu)
     }, [])
@@ -59,7 +62,9 @@ export function Header(){
                                 </div>
                                 {
                                     isMenuList.map((item) => (
-                                        <Text variant="muted font-regular subheadline">{item}</Text>
+                                        <a href={item.href} className="link">
+                                            <Text variant="muted font-regular subheadline">{item.label}</Text>
+                                        </a>
                                     ))
                                 }
                             </List>
@@ -72,7 +77,9 @@ export function Header(){
                 <div className="container-menu">
                     {
                         isMenuList.map((item) => (
-                            <Text variant="muted font-regular subheadline">{item}</Text>
+                            <a href={item.href} className="link">
+                                <Text variant="muted font-regular subheadline">{item.label}</Text>
+                            </a>
                         ))
                     }
                 </div>

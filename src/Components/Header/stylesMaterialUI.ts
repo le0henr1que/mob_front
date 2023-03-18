@@ -6,7 +6,8 @@ export const StylesList:any = {
     display:'flex',
     flexDirection:'column', 
     gap:'20px', 
-    width:'100%'
+    width:'100%',
+
 }
 export const MakeStyleDrawer:any = {
     width:'100%'

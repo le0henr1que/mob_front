@@ -53,6 +53,9 @@
     padding-bottom: 26px;
     gap:56px;
 }
+.link {
+    text-decoration: none;
+}
 .container-margin{
     width: 1350px;
     padding: 30px;
