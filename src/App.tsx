@@ -1,10 +1,10 @@
 import React from 'react';
-import { SignIn } from './Pages/SignIn';
+import { Home } from './Pages/home';
 
 
 function App() {
   return (
-   <SignIn/>
+   <Home/>
   );
 }
 

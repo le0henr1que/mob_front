@@ -14,10 +14,10 @@ export const MakeStyleDrawer:any = {
 
 export const useStyles = makeStyles((theme) => ({
     drawer: {
-      width: '100%',
-      maxWidth: '100%',
+        width: '100%',
+        maxWidth: '100%',
     },
     menuButton: {
-      marginRight: theme.spacing(2),
+        marginRight: theme.spacing(2),
     },
-  }));
+}));
