@@ -39,7 +39,7 @@ export function Header(){
 
             <div className="container-header-main">
                 <div className="container-margin">
-                    <img src={LogMob} />
+                    <img src={LogMob} onClick={() => navigate("/")}/>
                     <div className="input-search">
                         <Input type="text" variant="default" placeholder="Pesquisar" icon={true} />
                     </div>

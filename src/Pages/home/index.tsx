@@ -11,8 +11,10 @@ import pana from "../../Assests/pana.svg"
 //@ts-ignore
 import rafiki from "../../Assests/rafiki.svg"
 import ButtonStyle from "../../Components/Button";
+import { useNavigate } from "react-router-dom";
 
 export function Home(){
+    const navigate = useNavigate()
     return (
         <>
         <Header/>
@@ -23,7 +25,7 @@ export function Home(){
                 <div className="card">
                     <img src={pana} />    
                     <div className="card-title">
-                        <Text variant="font-bold title-3">Procure por uma <span>local</span></Text>    
+                        <Text variant="font-bold title-3">Procure por um <span>local</span></Text>    
                     </div>  
                     <div className="card-text">
                         <Text variant="muted font-regular subheadline">Digite o nome de uma empresa ou estabelecimento e mostraremos a vocÊ se esses ambientes possui acessibilidade.</Text>     
@@ -32,7 +34,7 @@ export function Home(){
                         <Input variant="default" icon={true} placeholder="Pesquisar"/>
                     </div>  
                     <div className="card-text-last">
-                        <Text variant="muted font-regular body" >Não achou a empresa? <a href="#">Clique aqui</a></Text>   
+                        <Text variant="muted font-regular body" >Não encontrou o local? <a href="/local">Clique aqui</a></Text>   
                     </div>     
                 </div>
 
@@ -45,7 +47,7 @@ export function Home(){
                         <Text variant="muted font-regular subheadline">Quer que sua empresa seja vista como um ambiente acessível a todos? cadastre ela em nosso site!</Text>     
                     </div>  
                     <div className="card-buttom">
-                        <ButtonStyle variant="medium-button">Cadastre sua empresa</ButtonStyle>
+                        <ButtonStyle variant="medium-button" onClick={() => navigate("/local")}>Cadastre um local</ButtonStyle>
                     </div>  
                     <div className="card-text-last">
                         <Text variant="muted font-regular body" >Problemas para cadastrar? <a href="#">Clique aqui</a></Text>   

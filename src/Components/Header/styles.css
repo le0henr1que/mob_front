@@ -63,6 +63,9 @@
     justify-content: space-between;
     align-items: center;
 }
+.container-margin img {
+    cursor:pointer;
+}
 .container-menu-burguer{
     display: none;
 }
