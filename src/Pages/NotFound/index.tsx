@@ -11,8 +11,16 @@ import pana from "../../Assests/pana.svg"
 //@ts-ignore
 import Notfound from "../../Assests/notfound.svg"
 import ButtonStyle from "../../Components/Button";
+import { useNavigate } from "react-router-dom";
+
 
 export function NotFound(){
+    const navigate = useNavigate();
+
+    const handleGoBack = () => {
+        navigate(-1)
+    };
+
     return (
         <>
         <Header/>
@@ -22,9 +30,9 @@ export function NotFound(){
                     <Text variant="color-blue font-extrabold title-1">Ooops...</Text>     
                     <Text variant="font-regular  title-1">Página não existente</Text>     
                     <Text variant="muted font-regular subheadline">A página que procura não existe ou ocorreu outro erro.</Text>     
-                    <a href="/" className="link">
-                        <ButtonStyle variant="medium-button">Voltar</ButtonStyle>
-                    </a>
+
+                    <ButtonStyle variant="medium-button" onClick={handleGoBack}>Voltar</ButtonStyle>
+
                 </div>
                 <div className="row-2">
                     <img src={Notfound}/>

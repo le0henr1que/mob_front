@@ -7,7 +7,7 @@ export default function ButtonStyle(props:any){
 
     return (
         <>
-            <button className={variant}>
+            <button className={variant} {...props}>
                 {children}
             </button>
         </>
