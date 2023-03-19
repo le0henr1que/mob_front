@@ -10,13 +10,14 @@ import { Input } from "../Input/index"
 import { Text } from "../Text"
 import "./styles.css"
 import { StylesList, MakeStyleDrawer, useStyles } from './stylesMaterialUI'
-
+import { useNavigate } from 'react-router-dom';
 
 export function Header(){
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [isMenuList, setIsMenuList] = useState<MenuItem[]>([]);
     const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
     const classes = useStyles();
+    const navigate = useNavigate()
 
     var listMenu:MenuItem[] = [
         {label:"Estabelecimento", href:"/notfound"},
@@ -46,8 +47,8 @@ export function Header(){
                         <Menu onClick={toggleDrawer} color="inherit" style={{cursor:'pointer'}}/>
                     </div>
                     <div className="div-button">
-                        <ButtonStyle variant="medium-button">Fazer Login</ButtonStyle>               
-                        <ButtonStyle variant="medium-button outlined">Cadastrar</ButtonStyle> 
+                        <ButtonStyle variant="medium-button" onClick={() => navigate("/login")}>Fazer Login</ButtonStyle>               
+                        <ButtonStyle variant="medium-button outlined" onClick={() => navigate("/")}>Cadastrar</ButtonStyle> 
 
                         <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer} classes={{paper: classes.drawer}}>
 
@@ -57,8 +58,8 @@ export function Header(){
                                     <Close onClick={toggleDrawer} style={{cursor:'pointer'}}/>
                                 </div>
                                 <div className="div-button-sidebar">
-                                    <ButtonStyle variant="medium-button">Fazer Login</ButtonStyle>               
-                                    <ButtonStyle variant="medium-button outlined">Cadastrar</ButtonStyle> 
+                                    <ButtonStyle variant="medium-button" onClick={() => navigate("/login")}>Fazer Login</ButtonStyle>               
+                                    <ButtonStyle variant="medium-button outlined" onClick={() => navigate("/")}>Cadastrar</ButtonStyle> 
                                 </div>
                                 {
                                     isMenuList.map((item) => (
