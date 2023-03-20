@@ -30,9 +30,9 @@ export function Local(){
                     <img src={Rafiki1}/>
                 </div>
                 <div className="row-1">
-                    <Text variant="headline font-extrabold title-1">Não encontrou o <span>local?</span></Text>     
+                    <Text variant="headline font-bold title-3">Não encontrou o <span>local?</span></Text>     
 
-                    <Text variant="muted font-regular subheadline">Ajude outras pessoas criando e avaliando um novo local.</Text>     
+                    <Text variant="muted font-bold subheadline">Ajude outras pessoas criando e avaliando um novo local.</Text>     
 
                     <ButtonStyle variant="medium-button" onClick={handleRegisterLocal}>Cadastrar um novo local</ButtonStyle>
 

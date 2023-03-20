@@ -7,7 +7,7 @@ import { StarRating } from "../StarRating"
 
 export function Comment({author, avatar, rating, comment, createdAt}:Comments){
     return (
-        <div className="container">
+        <div className="container-comment">
             <div className="container-title">
                 <div className="avatar">
                     <Text variant="font-semibold subheadline headline">{avatar}</Text>
@@ -19,7 +19,7 @@ export function Comment({author, avatar, rating, comment, createdAt}:Comments){
 
                     <div className="continer-rating">
                         <div className="container-star">
-                            <StarRating variant="nothing" rating={3} starType="view" size="small" />                            
+                            <StarRating variant="nothing" rating={rating} starType="view" size="small" />                            
                         </div>
                         <Text variant="font-regular caption muted">{createdAt}</Text>
                     </div>

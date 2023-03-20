@@ -3,7 +3,7 @@
 export interface Comments {
     author:string;
     avatar:string;
-    rating:number;
+    rating: 1 | 2 |  3 |  4 |  5;
     comment:string;
     createdAt:string;
 }

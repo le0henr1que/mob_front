@@ -20,7 +20,7 @@ export function Header(){
     const navigate = useNavigate()
 
     var listMenu:MenuItem[] = [
-        {label:"Estabelecimento", href:"/notfound"},
+        {label:"Estabelecimento", href:"/local/rating"},
         {label:"Denuncias", href:"/notfound"},
         {label:"Mobilidade", href:"/notfound"},
         {label:"Dúvidas Frequentes", href:"/notfound"},
