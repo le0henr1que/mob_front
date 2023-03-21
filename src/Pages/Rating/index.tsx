@@ -23,10 +23,10 @@ export function Rating(){
         <Container>  
 
             <div className="main-rating">
-                <div className="row-1">
+                <div className="row-rating-1">
                     <Chart data={data}/>
                 </div>
-                <div className="row-2">
+                <div className="row-rating-2">
                     <div className="comment">
                         <Comment 
                             author="Leonardo Henrique" 
