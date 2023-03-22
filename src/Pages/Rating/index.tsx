@@ -10,13 +10,15 @@ import { Footer } from "../../Components/Footer";
 import pana from "../../Assests/pana.svg"
 //@ts-ignore
 import rafiki from "../../Assests/rafiki.svg"
+//@ts-ignore
+import Type from "../../Assests/Group25.svg"
 import ButtonStyle from "../../Components/Button";
 import { useNavigate } from "react-router-dom";
 import { Chart } from "../../Components/Chart";
 
 export function Rating(){
     const navigate = useNavigate()
-    const data = [4, 7, 9, 5, 10]
+    const data = [1, 7, 9, 5, 10]
     return (
         <>
         <Header/>
@@ -24,10 +26,48 @@ export function Rating(){
 
             <div className="main-rating">
                 <div className="row-rating-1">
-                    <Chart data={data}/>
+                    
+                    <div className="rating-title">
+                        
+                        <div className="row-rating-title-1">
+                            <img src={Type}/>
+                            <div>
+                                <Text variant="font-semibold title-3">Lojas Brasileiras</Text>
+                                <Text variant="muthed font-regular caption">São Paulo - Osasco Super Shopping</Text>
+                            </div>
+                        </div>
+                        <div className="row-rating-title-2">
+                            <ButtonStyle>Adicionar Avaliação</ButtonStyle>
+                        </div>
+                    </div>
+
+                    <div className="container-rating-note">
+                        <div className="row-rating-note-1">
+                            <Text variant="font-semibold title-3">Classificação</Text>
+                            <Text variant="font-semibold title-1">3.7</Text>
+                        </div>
+                        <div className="row-rating-note-2">
+                            {/* <div className="input-select"> */}
+                                {/* <Input type="select" variant="default" placeholder="Pesquisar" icon={true} >
+                                    <option>Mobilidade</option>
+                                </Input>; */}
+                                {/* <Chart data={data}/> */}
+                            {/* </div> */}
+                        </div>
+                    </div>
+
+                    <div className="chart-rating">
+                        <Chart data={data}/>
+                    </div>
                 </div>
+
                 <div className="row-rating-2">
                     <div className="comment">
+                        <div className="title-comment">
+                            <Text variant="muthed font-regular body">
+                                Todas Classificações (6)
+                            </Text>
+                        </div>
                         <Comment 
                             author="Leonardo Henrique" 
                             avatar="R" 

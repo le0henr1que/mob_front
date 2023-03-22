@@ -8,6 +8,7 @@ import { StarRating } from "../StarRating"
 export function Comment({author, avatar, rating, comment, createdAt}:Comments){
     return (
         <div className="container-comment">
+                {/* <div></div> */}
             <div className="container-title">
                 <div className="avatar">
                     <Text variant="font-semibold subheadline headline">{avatar}</Text>

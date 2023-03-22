@@ -1,7 +1,8 @@
 .container-comment{
-    width: auto;
+    /* width: auto; */
 }
 .container-title{
+    width: auto;
     display:flex;
     justify-content: flex-start;
     align-items: center;
@@ -43,3 +44,6 @@
     margin-top:16px;
     word-break: break-word;
 }
+@media screen and (max-width: 1200px) {
+ 
+} 
