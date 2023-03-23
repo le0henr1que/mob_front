@@ -7,7 +7,7 @@ import { StarRating } from "../StarRating"
 
 export function Comment({author, avatar, rating, comment, createdAt}:Comments){
     return (
-        <div className="container-comment">
+        <div className="container-comment-main">
                 {/* <div></div> */}
             <div className="container-title">
                 <div className="avatar">
@@ -24,6 +24,8 @@ export function Comment({author, avatar, rating, comment, createdAt}:Comments){
                         </div>
                         <Text variant="font-regular caption muted">{createdAt}</Text>
                     </div>
+                    <Text variant="font-regular caption muted">Postado há 1 hora</Text>
+
                 </div>
 
             </div>
