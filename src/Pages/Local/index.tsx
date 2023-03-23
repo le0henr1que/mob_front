@@ -18,7 +18,7 @@ export function Local(){
     const navigate = useNavigate();
 
     const handleRegisterLocal = () => {
-        navigate("/notFoun")
+        navigate("/local/register")
     };
 
     return (
