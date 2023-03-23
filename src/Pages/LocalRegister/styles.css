@@ -32,6 +32,12 @@
     justify-content: space-between;
 }
 
+@media screen and (max-width: 992px) {
+    .container-flex-local{
+        flex-direction: column;
+    }
+
+  } 
 
 .container-flex-local{
     display: flex;
