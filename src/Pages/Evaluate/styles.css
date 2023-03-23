@@ -1,0 +1,20 @@
+.container-main-evaluate{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    flex-direction: column;
+}
+.container-evaluate{
+    width: 1350px;
+}
+.container-title-evaluate{
+    margin-top: 60px;
+}
+.container-title-evaluate span{
+    color:#0072E5;
+}
+.container-form-evaluate{
+    margin-top: 24px;
+}

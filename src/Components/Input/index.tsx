@@ -16,6 +16,9 @@ export function Input(props:any){
             :  
             <input type={type} className={variant} placeholder={placeholder} /> 
         }
+        {
+            type == "textarea" && <textarea></textarea>
+        }
             {type === "select" && <KeyboardArrowDown color="disabled" className="icon" />}
             { icon && type !== "select" && <Search color="disabled" fontSize="large" className="icon"/>}
 

@@ -6,10 +6,11 @@ import "./styles.css"
 import { StarRating } from "../StarRating"
 import ButtonStyle from "../Button"
 import { Chart } from "../Chart"
+import { useNavigate } from "react-router-dom"
 
 export function Company(){
+    const navigate = useNavigate()
     const data = [1, 7, 9, 5, 10]
-
     return (
        <>
         <div className="header-company">
@@ -18,7 +19,7 @@ export function Company(){
                 <div className="header-side-company">
                     <Text variant="font-semibold title-2">Lojas Brasileiras</Text>
                     <Text variant="muthed font-regular body-small">São Paulo - Osasco Super Shopping</Text>
-                    <ButtonStyle variant="medium-button outlined">Avaliar local</ButtonStyle> 
+                    <ButtonStyle variant="medium-button outlined" onClick={() => navigate("/local/evaluate")}>Avaliar local</ButtonStyle> 
 
                 </div>
 
