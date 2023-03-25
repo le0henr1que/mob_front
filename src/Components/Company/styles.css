@@ -56,7 +56,9 @@
     }
     .header-company-center{
         /* width: 95%; */
-        flex-direction: column;
+        flex-direction: column-reverse;
+        display: flex;
+        justify-content:space-evenly;
     }
     .header-side-company{
         display: flex;
@@ -64,10 +66,12 @@
         align-items: center !important;
         flex-direction: column;
         text-align: center;
+        
     }
     .header-company{
         height: 400px;
         border-bottom: 1px solid #C2C2C2;
+      
     }
 
   }

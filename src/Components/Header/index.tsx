@@ -20,14 +20,16 @@ export function Header(){
     const navigate = useNavigate()
 
     var listMenu:MenuItem[] = [
-        {label:"Estabelecimento", href:"/local/rating"},
-        {label:"Denuncias", href:"/notfound"},
-        {label:"Mobilidade", href:"/notfound"},
-        {label:"Dúvidas Frequentes", href:"/notfound"},
-        {label:"Institucional", href:"/notfound"},
-        {label:"Sobre o Mob!", href:"/notfound"},
-        {label:"Trabalhe Conosco", href:"/notfound"},
-        {label:"SAC", href:"/notfound"},
+        {label:"Achar local", href:"/locals"},
+        // {label:"Denuncias", href:"/notfound"},
+        {label:"Minhas avaliações", href:"/myratings"},
+        // {label:"Dúvidas Frequentes", href:"/notfound"},
+        // {label:"Institucional", href:"/notfound"},
+        {label:"Sobre o Mob!", href:"/about"},
+        {label:"Perfil", href:"/profile"},
+        {label:"Home", href:"/"},
+        // {label:"Trabalhe Conosco", href:"/notfound"},
+        // {label:"SAC", href:"/notfound"},
     ]
 
     useEffect(() => {
@@ -48,18 +50,18 @@ export function Header(){
                     </div>
                     <div className="div-button">
                         <ButtonStyle variant="medium-button" onClick={() => navigate("/login")}>Fazer Login</ButtonStyle>               
-                        <ButtonStyle variant="medium-button outlined" onClick={() => navigate("/")}>Cadastrar</ButtonStyle> 
+                        <ButtonStyle variant="medium-button outlined" onClick={() => navigate("/register")}>Cadastrar</ButtonStyle> 
 
                         <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer} classes={{paper: classes.drawer}}>
 
                             <List style={StylesList}>
                                 <div className='top-sidebar'>
-                                    <img src={LogMob} />
+                                    <img src={LogMob} onClick={() => navigate("/")} />
                                     <Close onClick={toggleDrawer} style={{cursor:'pointer'}}/>
                                 </div>
                                 <div className="div-button-sidebar">
                                     <ButtonStyle variant="medium-button" onClick={() => navigate("/login")}>Fazer Login</ButtonStyle>               
-                                    <ButtonStyle variant="medium-button outlined" onClick={() => navigate("/")}>Cadastrar</ButtonStyle> 
+                                    <ButtonStyle variant="medium-button outlined" onClick={() => navigate("/register")}>Cadastrar</ButtonStyle> 
                                 </div>
                                 {
                                     isMenuList.map((item) => (

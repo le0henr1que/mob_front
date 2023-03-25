@@ -67,3 +67,8 @@ input, select{
   
   }
   
+  @media screen and (max-width: 1200px) {
+    .icon{
+        top:10px;
+    }
+  }

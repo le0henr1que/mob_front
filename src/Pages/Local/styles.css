@@ -8,7 +8,7 @@
     /* padding: 15px; */
     width: 1290px;
     height: 565px;
-    border: 1px solid #E3E3E3;
+    /* border: 1px solid #E3E3E3; */
     border-radius: 20px;
 }
 .row-1{
@@ -42,6 +42,17 @@
 }
 @media screen and (max-width: 1200px) {
 
+    .row-2{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .row-1{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
     .container-notfound{
         width: 95%;
     }

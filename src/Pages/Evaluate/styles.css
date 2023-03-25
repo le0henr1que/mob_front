@@ -19,9 +19,15 @@
     margin-top: 24px;
 }
 .container-evaluate-content-input{
-    margin-top: 30px;
-    /* margin-bottom: 100px; */
+    margin-top: 40px;
+    width: 100%;
+    display: flex;
+
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 12px;
 }
+
 
 .container-evaluate-button{
     width: 100%;
@@ -30,7 +36,9 @@
     align-items: center;
     justify-content: space-between;
 }
-
+.label{
+    margin-top: 12px !important;
+}
 .form-input{
     margin-bottom: 100px;
 }

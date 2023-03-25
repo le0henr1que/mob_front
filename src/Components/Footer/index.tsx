@@ -9,14 +9,16 @@ export function Footer(){
     const [isMenuList, setIsMenuList] = useState<MenuItem[]>([]);
 
     var listMenu:MenuItem[] = [
-        {label:"Estabelecimento", href:"#"},
-        {label:"Denuncias", href:"#"},
-        {label:"Mobilidade", href:"#"},
-        {label:"Dúvidas Frequentes", href:"#"},
-        {label:"Institucional", href:"#"},
-        {label:"Sobre o Mob!", href:"#"},
-        {label:"Trabalhe Conosco", href:"#"},
-        {label:"SAC", href:"#"},
+        {label:"Achar local", href:"/locals"},
+        // {label:"Denuncias", href:"/notfound"},
+        {label:"Minhas avaliações", href:"/myratings"},
+        // {label:"Dúvidas Frequentes", href:"/notfound"},
+        // {label:"Institucional", href:"/notfound"},
+        {label:"Sobre o Mob!", href:"/about"},
+        {label:"Perfil", href:"/profile"},
+        {label:"Home", href:"/"},
+        // {label:"Trabalhe Conosco", href:"/notfound"},
+        // {label:"SAC", href:"/notfound"},
     ]
     useEffect(() => {
         setIsMenuList(listMenu)

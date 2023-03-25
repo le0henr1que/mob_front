@@ -37,19 +37,19 @@ export function Login(){
                         </div>
 
                         <div className="container-login-content-option">
-                                <div className="remember-password">
-                                    <Checkbox
-                                        checked={isChecked}
-                                        onChange={handleChange}
-                                        color="default"
-                                        inputProps={{ 'aria-label': 'checkbox' }}
-                                        // style={useStyles}
-                                    />
-                                   <Text variant="muted font-regular caption">Lembrar senha</Text>
-                                </div>
-                                <div className="forgot-password">
-                                    <a href="/forgot" className="link"><Text variant="muted font-regular caption">Forgot password</Text></a>
-                                </div>
+                            <div className="remember-password">
+                                <Checkbox
+                                    checked={isChecked}
+                                    onChange={handleChange}
+                                    color="default"
+                                    inputProps={{ 'aria-label': 'checkbox' }}
+                                    // style={useStyles}
+                                />
+                                <Text variant="muted font-regular caption">Lembrar senha</Text>
+                            </div>
+                            <div className="forgot-password">
+                                <a href="/forgot" className="link"><Text variant="muted font-regular caption">Forgot password</Text></a>
+                            </div>
                         </div>
                         <div className="container-login-content-buttons">
                             <ButtonStyle variant="large-button">Logar</ButtonStyle>
@@ -63,7 +63,7 @@ export function Login(){
             
                         <Text variant="muted font-regular caption">
                             Não possui conta?
-                            <a href="">Criar conta gratis!</a>
+                            <a href="/register">Criar conta gratis!</a>
                         </Text>
 
                     </div>

@@ -7,6 +7,7 @@ import { Local } from "../Pages/Local";
 import { Rating } from "../Pages/Rating";
 import { Evaluete } from "../Pages/Evaluate";
 import { LocalRegister } from "../Pages/LocalRegister";
+import { Register } from "../Pages/UserRegister/index";
 
 const Router = () => {
   return (
@@ -18,6 +19,7 @@ const Router = () => {
           <Route  path="/local/rating" element={<Rating/>} />
           <Route  path="/local/evaluate" element={<Evaluete/>} />
           <Route  path="/local/register" element={<LocalRegister/>} />
+          <Route  path="/register" element={<Register/>} />
           
           <Route path="*" element={<NotFound/>} />
         </Routes>

@@ -39,7 +39,7 @@ export function Evaluete(){
                     </div>
                     <form className="form-input">
                         <div className="container-evaluate-content-input">
-                            <label htmlFor="title">Titulo</label>
+                            <label htmlFor="title" className="label">Titulo</label>
                             <Input type="text" variant="default" name="title" id="title" placeholder="Digite um título para o seu comentário"/>
                         </div>
                         <div className="container-evaluate-content-input">

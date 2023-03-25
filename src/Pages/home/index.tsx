@@ -50,7 +50,7 @@ export function Home(){
                         <ButtonStyle variant="medium-button" onClick={() => navigate("/local")}>Cadastre um local</ButtonStyle>
                     </div>  
                     <div className="card-text-last">
-                        <Text variant="muted font-regular body" >Problemas para cadastrar? <a href="#">Clique aqui</a></Text>   
+                        {/* <Text variant="muted font-regular body" >Problemas para cadastrar? <a href="#">Clique aqui</a></Text>    */}
                     </div>     
                 </div>
 
