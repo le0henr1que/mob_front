@@ -1,0 +1,109 @@
+.container-search-local-main{
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-search-local{
+    width: 1350px;
+    height: auto;
+    border-radius: 10px;
+    margin-top:-10px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;    
+}
+.card-title-search-local{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 50px;
+    margin-top: 50px;
+    flex-direction: column;
+    gap:24px;
+}
+.card-title-search-local span{
+    color: #007FFF !important;
+}
+.container-card-find-local{
+    width: 100%;
+    border: 1px solid #B3B3B3;
+    height: auto;
+    padding-bottom: 30px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding-top: 80px;
+}
+
+.card-title-find-local{
+    display: flex;
+    width: 95%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+}
+.card-title-find-local span{
+    color: #007FFF !important;
+}
+.card-local-main{
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: auto;
+    margin-top: 30px;
+    gap:24px;
+    flex-direction: row;
+}
+.swiper-container{
+    width: 100% !important;
+    height: 100% !important;
+  }
+.container-search-local-comments{
+    width: 1350px;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid #d6d6d6;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    
+}
+.comment-search-local{
+    padding: 40px;
+}
+.container-search-local-options{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    margin-bottom: 50px;
+
+}
+.container-search-local-options span{
+    color: #007FFF !important;
+    }
+
+@media screen and (max-width: 1410px) {
+    
+    .container-card-find-local{
+        width: 100% !important;
+    }
+    .container-search-local{
+        width: 95% !important;
+    }
+
+    .container-search-local-comments{
+        width: 100% !important; 
+    }
+        
+}
+    

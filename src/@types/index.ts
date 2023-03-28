@@ -2,11 +2,17 @@
 
 export interface Comments {
     author:string;
-    avatar:string;
+    title:string;
     rating: 1 | 2 |  3 |  4 |  5;
     comment:string;
     createdAt:string;
+    variant?:string
 }
+export interface LocalCard {
+    author:string;
+    rating: 1 | 2 |  3 |  4 |  5;
+}
+
 
 export interface MenuItem {
     label: string;

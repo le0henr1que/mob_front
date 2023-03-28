@@ -20,13 +20,14 @@ export function Header(){
     const navigate = useNavigate()
 
     var listMenu:MenuItem[] = [
-        {label:"Achar local", href:"/locals"},
+        {label:"Achar local", href:"/pesquisar-local"},
         // {label:"Denuncias", href:"/notfound"},
-        {label:"Minhas avaliações", href:"/myratings"},
+        {label:"Minhas avaliações", href:"/minhas-avaliacoes"},
         // {label:"Dúvidas Frequentes", href:"/notfound"},
         // {label:"Institucional", href:"/notfound"},
         {label:"Sobre o Mob!", href:"/about"},
-        {label:"Perfil", href:"/profile"},
+        {label:"Fazer avaliação", href:"/pesquisar-local"},
+        // {label:"Perfil", href:"/profile"},
         {label:"Home", href:"/"},
         // {label:"Trabalhe Conosco", href:"/notfound"},
         // {label:"SAC", href:"/notfound"},
@@ -50,7 +51,7 @@ export function Header(){
                     </div>
                     <div className="div-button">
                         <ButtonStyle variant="medium-button" onClick={() => navigate("/login")}>Fazer Login</ButtonStyle>               
-                        <ButtonStyle variant="medium-button outlined" onClick={() => navigate("/register")}>Cadastrar</ButtonStyle> 
+                        <ButtonStyle variant="medium-button outlined" onClick={() => navigate("/cadastrar")}>Cadastrar</ButtonStyle> 
 
                         <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer} classes={{paper: classes.drawer}}>
 
@@ -61,7 +62,7 @@ export function Header(){
                                 </div>
                                 <div className="div-button-sidebar">
                                     <ButtonStyle variant="medium-button" onClick={() => navigate("/login")}>Fazer Login</ButtonStyle>               
-                                    <ButtonStyle variant="medium-button outlined" onClick={() => navigate("/register")}>Cadastrar</ButtonStyle> 
+                                    <ButtonStyle variant="medium-button outlined" onClick={() => navigate("/cadastrar")}>Cadastrar</ButtonStyle> 
                                 </div>
                                 {
                                     isMenuList.map((item) => (

@@ -1,6 +1,7 @@
 
 import ReactApexChart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
+import { Star, StarBorder, StarHalfTwoTone} from "@material-ui/icons"
 
 export function Chart({data}:any){
 
@@ -49,11 +50,17 @@ export function Chart({data}:any){
           columnWidth:"100px", 
           rangeBarGroupRows:false, 
           rangeBarOverlap: true,
-
+          borderRadius:5,
+          borderRadiusWhenStacked:"all",
           // columnWidth:'10px'
           // columnWidth:"10px"
-            
+          colors:{
+            backgroundBarColors:['#EEEEEE'],
+            backgroundBarRadius:5
+          }
         },
+        
+        
       },
     
       dataLabels: {

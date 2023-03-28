@@ -20,7 +20,8 @@
     border: 1px solid #B3B3B3;
     border-radius: 5px;
     width: 692px;
-    height: 700px;
+    height: auto;
+    padding-bottom: 50px;
     flex-direction: column;
 
 }
@@ -101,11 +102,16 @@
     text-decoration: none;
 }
 .remember-password{
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-left: -9px;
-    /* flex-direction: row; */
+    word-break: break-word;
+
+}
+.remember-password div{
+    margin-top: 20px;
 }
 
 .container-register-content-buttons{

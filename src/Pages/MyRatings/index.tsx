@@ -17,55 +17,58 @@ import { useNavigate } from "react-router-dom";
 import { Chart } from "../../Components/Chart";
 import { Company } from "../../Components/LocalInfoHeader";
 
-export function Rating(){
+export function MyRating(){
     const navigate = useNavigate()
     const data = [1, 7, 9, 5, 10]
     return (
         <>
         <Header/>
-        <Company/>
-
-        <div className="container-rating-main">
+        <div className="container-myratings-main">
         
-            <div className="container-rating-comments">
+            <div className="container-myratings-comments">
                 
 
-                <div className="comment-rating">
-                <div className="container-rating-options">
-                    <Text variant="font-bold title-3">Avaliações</Text>  
+                <div className="comment-myratings">
+                <div className="container-myratings-options">
+                    <Text variant="font-bold title-3">Minhas Avaliações</Text>  
                     <Text variant="font-regular subheadline">Ordenar por Mais Recente</Text>  
                     
                 </div>
                     <Comment 
-                        author="Amanda" 
+                        variant="muthed-avatar"
+                        author="Lojas Brasileiras" 
                         title="Sem Rampa de acesso"
                         comment="Lorem ipsum dolor sit amet consectetur. Facilisis et tellus dapibus in non. Scelerisque molestie non dignissim sed et vitae." 
                         rating={5}
                         createdAt="02/19/2023 00:48 AM"
                     />
                     <Comment 
-                        author="Joana Carolliny" 
+                        variant="muthed-avatar"
+                        author="Lojas Brasileiras" 
                         title="Sem Rampa de acesso"
                         comment="Lorem ipsum dolor sit amet consectetur. Facilisis et tellus dapibus in non. Scelerisque molestie non dignissim sed et vitae. Lorem ipsum dolor sit amet consectetur. Facilisis et tellus dapibus in non. Scelerisque molestie non dignissim sed et vitae.Lorem ipsum dolor sit amet consectetur. Facilisis et tellus dapibus in non. Scelerisque molestie non dignissim sed et vitae." 
                         rating={2}
                         createdAt="02/19/2023 00:48 AM"
                     />
                     <Comment 
-                        author="Felipe Silva" 
+                        variant="muthed-avatar"
+                        author="Lojas Brasileiras" 
                         title="Sem Rampa de acesso"
                         comment="Lorem ipsum dolor sit amet consectetur. Facilisis et tellus dapibus in non. Scelerisque molestie non dignissim sed et vitae.Lorem ipsum dolor sit amet consectetur. Facilisis et tellus dapibus in non. Scelerisque molestie non dignissim sed et vitae.Lorem ipsum dolor sit amet consectetur. Facilisis et tellus dapibus in non. Scelerisque molestie non dignissim sed et vitae.Lorem ipsum dolor sit amet consectetur. Facilisis et tellus dapibus in non. Scelerisque molestie non dignissim sed et vitae.Lorem ipsum dolor sit amet consectetur. Facilisis et tellus dapibus in non. Scelerisque molestie non dignissim sed et vitae." 
                         rating={2}
                         createdAt="02/19/2023 00:48 AM"
                     />
                     <Comment 
-                        author="Juninho " 
+                        variant="muthed-avatar"
+                        author="Lojas Brasileiras" 
                         title="Sem Rampa de acesso"
                         comment="Lorem ipsum dolor sit amet consectetur. Facilisis et tellus dapibus in non. Scelerisque molestie non dignissim sed et vitae." 
                         rating={1}
                         createdAt="02/19/2023 00:48 AM"
                     />
                     <Comment 
-                        author="Danilo Santos"
+                        variant="muthed-avatar"
+                        author="Lojas Brasileiras"
                         title="Dificil acesso"
                         comment="Lorem ipsum dolor sit amet consectetur. Facilisis et tellus dapibus in non. Scelerisque molestie non dignissim sed et vitae." 
                         rating={4}
@@ -73,7 +76,8 @@ export function Rating(){
                     />
 
                     <Comment 
-                        author="Nilson Ferreira"
+                        variant="muthed-avatar"
+                        author="Lojas Brasileiras"
                         title="Local sem atendimento em libras"
                         comment="Lorem ipsum dolor sit amet consectetur. Facilisis et tellus dapibus in non. Scelerisque molestie non dignissim sed et vitae." 
                         rating={3}

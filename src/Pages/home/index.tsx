@@ -28,7 +28,7 @@ export function Home(){
                         <Text variant="font-bold title-3">Procure por um <span>local</span></Text>    
                     </div>  
                     <div className="card-text">
-                        <Text variant="muted font-regular subheadline">Digite o nome de uma empresa ou estabelecimento e mostraremos a vocÊ se esses ambientes possui acessibilidade.</Text>     
+                        <Text variant="muted font-regular subheadline">Digite o nome de uma empresa ou estabelecimento e mostraremos à você, se esses ambientes são acessiveis ou possuel acessibilidade.</Text>     
                     </div>  
                     <div className="card-input">
                         <Input variant="default" icon={true} placeholder="Pesquisar"/>

@@ -1,7 +1,7 @@
 .container-comment-main{
     /* width: auto; */
     margin-bottom: 30px;
-    border-bottom: 1px solid #dbdbdb;
+    /* border-bottom: 1px solid #dbdbdb; */
 }
 .container-title{
     width: auto;
@@ -23,20 +23,60 @@
 .avatar div {
     color:#FFF !important;
 }
+.muthed-avatar{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #FAFAFA ;
+    border: 1px solid #AFAFAF ;
+    font-style: normal;
+    font-weight: 700 ;
+    font-size: 30px ;
+    line-height: 109px ;
+    color: #AFAFAF ;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 18px;
+}
+.muthed-avatar div {
+    color:#FFF !important;
+}
+
 .container-detail{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: flex-start;
-    flex-direction: column;
+    flex-direction: row;
     margin-top:3px;
+    width: 100% ;
 }
 .continer-rating{
     display: flex;
     justify-content: start;
-    align-items: center;
-    gap:16px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap:0px;
 }
-
+.container-comment-option-report{
+    display: flex;
+    gap:5px
+}
+.container-comment-option-report div{
+    cursor: pointer;
+}
+.container-comment-option{
+    display: flex;
+    gap:5px
+}
+.container-comment-options{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: -20px;
+    margin-bottom: 20px;
+}
 .container-star{
     gap:5;
 }
@@ -46,6 +86,11 @@
     margin-top:16px;
     word-break: break-word;
     margin-bottom: 40px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap:10px
 }
 @media screen and (max-width: 1200px) {
  

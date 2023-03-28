@@ -1,4 +1,4 @@
-.container-rating-main{
+.container-myratings-main{
     width: 100%;
     height: auto;
     display: flex;
@@ -6,7 +6,7 @@
     justify-content: center;
 }
 
-.container-rating-comments{
+.container-myratings-comments{
     width: 1350px;
     height: auto;
     border-radius: 10px;
@@ -15,10 +15,10 @@
     margin-bottom: 30px;
     
 }
-.comment-rating{
+.comment-myratings{
     padding: 40px;
 }
-.container-rating-options{
+.container-myratings-options{
     width: 100%;
     display: flex;
     align-items: center;

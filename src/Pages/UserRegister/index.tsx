@@ -13,7 +13,11 @@ import ButtonStyle from "../../Components/Button";
 import Rafiki1 from "../../Assests/rafiki1.svg"
 
 export function Register(){
+    const [isChecked, setIsChecked] = useState(false);
 
+    const handleChange = (event: { target: { checked: boolean | ((prevState: boolean) => boolean); }; }) => {
+      setIsChecked(event.target.checked);
+    };
     return (
         // <Container>
             <div className="container-register">
@@ -37,10 +41,26 @@ export function Register(){
                             <label htmlFor="password">Password</label>
                             <Input type="password" variant="default" name="password" id="password" placeholder="Digite sua senha"/>
                         </div>
+                        <div className="container-login-content-option">
+                            <div className="remember-password">
+                                <Checkbox
+                                    checked={isChecked}
+                                    onChange={handleChange}
+                                    color="default"
+                                    inputProps={{ 'aria-label': 'checkbox' }}
+                                    // style={useStyles}
+                                />
+                                <Text variant="muted font-regular caption">
+                                    Aceito os <a href="#">Termos e condições</a> e 
+                                    autorizo o uso de meus dados de acordo com a <a href="#">Declaração de privacidade</a>.
+                                </Text>
+                            </div>
 
+                        </div>
+                      
 
                         <div className="container-register-content-buttons">
-                            <ButtonStyle variant="large-button">Logar</ButtonStyle>
+                            <ButtonStyle variant="large-button">Cadastrar</ButtonStyle>
                         </div>
                     </form>
                     <div className="container-register-content-sign">

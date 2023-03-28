@@ -18,7 +18,7 @@ export function Local(){
     const navigate = useNavigate();
 
     const handleRegisterLocal = () => {
-        navigate("/local/register")
+        navigate("/local/cadastrar")
     };
 
     return (

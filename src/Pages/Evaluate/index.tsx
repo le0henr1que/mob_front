@@ -15,7 +15,7 @@ import Type from "../../Assests/Group25.svg"
 import ButtonStyle from "../../Components/Button";
 import { useNavigate } from "react-router-dom";
 import { Chart } from "../../Components/Chart";
-import { Company } from "../../Components/Company";
+import { Company } from "../../Components/LocalInfoHeader";
 import { StarRating } from "../../Components/StarRating";
 
 export function Evaluete(){
