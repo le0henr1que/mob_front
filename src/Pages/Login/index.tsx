@@ -9,6 +9,7 @@ import { Input } from "../../Components/Input";
 import Checkbox from '@material-ui/core/Checkbox';
 import { useState } from "react";
 import ButtonStyle from "../../Components/Button";
+import  GoogleSignIn  from "../../Components/Button-login-google"
 
 export function Login(){
     const [isChecked, setIsChecked] = useState(false);
@@ -16,6 +17,9 @@ export function Login(){
     const handleChange = (event: { target: { checked: boolean | ((prevState: boolean) => boolean); }; }) => {
       setIsChecked(event.target.checked);
     };
+    function handleSuccess(){
+        console.log("teste")
+      }
 
     return (
         // <Container>
@@ -58,6 +62,7 @@ export function Login(){
                                 <img src={Google}/>
                                 Sign in with Google
                             </button>
+                            <GoogleSignIn clientId="" onSuccess={handleSuccess} />
                         </div>
                     </form>
                     <div className="container-login-content-sign">
