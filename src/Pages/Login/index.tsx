@@ -42,7 +42,7 @@ export function Login(){
                         </div>
 
                         <div className="container-login-content-option">
-                            <div className="remember-password">
+                            <div className="remember-check-password">
                                 <Checkbox
                                     checked={isChecked}
                                     onChange={handleChange}
@@ -58,11 +58,11 @@ export function Login(){
                         </div>
                         <div className="container-login-content-buttons">
                             <ButtonStyle variant="large-button">Logar</ButtonStyle>
-                            <button className="button-login-google">
+                            {/* <button className="button-login-google">
                                 <img src={Google}/>
                                 Sign in with Google
-                            </button>
-                            <GoogleSignIn clientId="" onSuccess={handleSuccess} />
+                            </button> */}
+                            <GoogleSignIn  />
                         </div>
                     </form>
                     <div className="container-login-content-sign">

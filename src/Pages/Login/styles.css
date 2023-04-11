@@ -9,11 +9,13 @@
 }
 
 .container-login img{
-    margin-bottom: -9px;
+    /* margin-bottom: -9px; */
+    
     z-index: 999;
 }
 
 .container-login-content{
+    margin-top: 7px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -92,16 +94,21 @@
 /* .container-login-content-option span{
     color: #0072E5;
 } */
+.remember-check-password{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
 .link {
     text-decoration: none;
 }
-.remember-password{
+/* .remember-password{
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-left: -9px;
+    justify-content: flex-start;
+    margin-left: -9px; */
     /* flex-direction: row; */
-}
+/* } */
 
 .container-login-content-buttons{
     margin-top: 35px;

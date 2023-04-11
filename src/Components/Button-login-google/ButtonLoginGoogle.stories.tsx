@@ -15,4 +15,4 @@ function handleSuccess(){
   console.log("teste")
 }
 
-export const ButtonLogin: ComponentStory<typeof GoogleSignIn> = () => <GoogleSignIn clientId="" onSuccess={handleSuccess} />
+export const ButtonLogin: ComponentStory<typeof GoogleSignIn> = () => <GoogleSignIn  />

@@ -2112,10 +2112,10 @@
   "resolved" "https://registry.npmjs.org/@popperjs/core/-/core-2.11.6.tgz"
   "version" "2.11.6"
 
-"@react-oauth/google@^0.8.0":
-  "integrity" "sha512-xmIhYvvaBSblOzo3Fqv762lqub92SOFR8eRR7QpPyFPZEXZcOymaMuEkRSUKUrbu+9wfB8qtOaGMRJzrN7U2PA=="
-  "resolved" "https://registry.npmjs.org/@react-oauth/google/-/google-0.8.0.tgz"
-  "version" "0.8.0"
+"@react-oauth/google@^0.9.0":
+  "integrity" "sha512-iq9I6A4uwZezU/BixqLM6UET6an559ufC4Nh0lEIeIaKC3TJRvcPNWCjjHny56yAhgdT6ivUicLIvEoiSMjnmg=="
+  "resolved" "https://registry.npmjs.org/@react-oauth/google/-/google-0.9.0.tgz"
+  "version" "0.9.0"
 
 "@remix-run/router@1.4.0":
   "integrity" "sha512-BJ9SxXux8zAg991UmT8slpwpsd31K1dHHbD3Ba4VzD+liLQ4WAMSxQp2d2ZPRPfN0jN2NPRowcSSoM7lCaF08Q=="
