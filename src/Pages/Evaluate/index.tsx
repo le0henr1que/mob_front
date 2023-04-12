@@ -15,7 +15,8 @@ import Type from "../../Assests/Group25.svg"
 import ButtonStyle from "../../Components/Button";
 import { useNavigate } from "react-router-dom";
 import { Chart } from "../../Components/Chart";
-import { Company } from "../../Components/LocalInfoHeader";
+//@ts-ignore
+import { Company } from "../../Components/Company";
 import { StarRating } from "../../Components/StarRating";
 
 export function Evaluete(){
@@ -43,7 +44,7 @@ export function Evaluete(){
                             <Input type="text" variant="default" name="title" id="title" placeholder="Digite um título para o seu comentário"/>
                         </div>
                         <div className="container-evaluate-content-input">
-                            <label htmlFor="description">Descreva sua avaliação</label>
+                            <label htmlFor="description" className="label">Descreva sua avaliação</label>
                             <Input type="textarea" variant="default" name="title" id="title" placeholder="Faça uma breve avaliação"/>
                         </div>
                         <div className="container-evaluate-button">

@@ -9,6 +9,7 @@ import { Input } from "../../Components/Input";
 import Checkbox from '@material-ui/core/Checkbox';
 import { useState } from "react";
 import ButtonStyle from "../../Components/Button";
+import  GoogleSignIn  from "../../Components/Button-login-google"
 
 export function Login(){
     const [isChecked, setIsChecked] = useState(false);
@@ -16,6 +17,9 @@ export function Login(){
     const handleChange = (event: { target: { checked: boolean | ((prevState: boolean) => boolean); }; }) => {
       setIsChecked(event.target.checked);
     };
+    function handleSuccess(){
+        console.log("teste")
+      }
 
     return (
         // <Container>
@@ -38,7 +42,7 @@ export function Login(){
                         </div>
 
                         <div className="container-login-content-option">
-                            <div className="remember-password">
+                            <div className="remember-check-password">
                                 <Checkbox
                                     checked={isChecked}
                                     onChange={handleChange}
@@ -49,22 +53,20 @@ export function Login(){
                                 <Text variant="muted font-regular caption">Lembrar senha</Text>
                             </div>
                             <div className="forgot-password">
-                                <a href="/forgot" className="link"><Text variant="muted font-regular caption">Forgot password</Text></a>
+                                <a href="/forgot" className="link"><Text variant="muted font-regular caption">Esqueci a senha</Text></a>
                             </div>
                         </div>
                         <div className="container-login-content-buttons">
                             <ButtonStyle variant="large-button">Logar</ButtonStyle>
-                            <button className="button-login-google">
-                                <img src={Google}/>
-                                Sign in with Google
-                            </button>
+            
+                            <GoogleSignIn  />
                         </div>
                     </form>
                     <div className="container-login-content-sign">
             
                         <Text variant="muted font-regular caption">
                             Não possui conta?
-                            <a href="/register">Criar conta gratis!</a>
+                            <a href="/cadastrar">Criar conta gratis!</a>
                         </Text>
 
                     </div>
