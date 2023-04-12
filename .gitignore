@@ -8,7 +8,7 @@
 ./storybook
 # testing
 /coverage
-
+.env
 # production
 /build
 

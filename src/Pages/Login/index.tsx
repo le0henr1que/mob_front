@@ -53,15 +53,12 @@ export function Login(){
                                 <Text variant="muted font-regular caption">Lembrar senha</Text>
                             </div>
                             <div className="forgot-password">
-                                <a href="/forgot" className="link"><Text variant="muted font-regular caption">Forgot password</Text></a>
+                                <a href="/forgot" className="link"><Text variant="muted font-regular caption">Esqueci a senha</Text></a>
                             </div>
                         </div>
                         <div className="container-login-content-buttons">
                             <ButtonStyle variant="large-button">Logar</ButtonStyle>
-                            {/* <button className="button-login-google">
-                                <img src={Google}/>
-                                Sign in with Google
-                            </button> */}
+            
                             <GoogleSignIn  />
                         </div>
                     </form>
@@ -69,7 +66,7 @@ export function Login(){
             
                         <Text variant="muted font-regular caption">
                             Não possui conta?
-                            <a href="/register">Criar conta gratis!</a>
+                            <a href="/cadastrar">Criar conta gratis!</a>
                         </Text>
 
                     </div>

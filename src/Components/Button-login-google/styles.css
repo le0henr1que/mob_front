@@ -1,14 +1,14 @@
-.container-login-content-buttons iframe{
-    width: 100%;
-    /* height: 56px; */
-    
-
-}
-.container-login-content-buttons div{
-    width: 100%;
-    height: 56px;
+.button-login-google{
+    border: 1px solid #B3B3B3 !important;
+    background-color: #FFF;
+    color:#6e6e6e; 
+    height: 56px !important;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
+    gap:38px;
 }
