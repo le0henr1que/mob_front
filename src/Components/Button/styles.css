@@ -27,14 +27,14 @@ button {
   height: 56px !important;
 }
 .medium-button{
-  height: 40px !important;
+  height: 48px !important;
 
 }
 .small-button{
   height: 32px !important;
 }
 .outlined{
-  border: 1px solid #006FEC !important;;
-  background: #FFF !important;;
-  color: #006FEC !important;;
+  border: 1px solid #006FEC !important;
+  background: #FFF !important;
+  color: #006FEC !important;
 }

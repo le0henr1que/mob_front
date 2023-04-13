@@ -54,7 +54,7 @@ input, select{
     order: 0;
     flex-grow: 1;
   }
-  select:focus, input:focus{
+  /* select:focus, input:focus{
     border: 1px solid #1E1A17;
     box-shadow: 0 0 0 0;
     outline: 0;
@@ -65,7 +65,7 @@ input, select{
     box-sizing: border-box;
     background: #FFFFFF;
   
-  }
+  } */
   
   @media screen and (max-width: 1200px) {
     .icon{

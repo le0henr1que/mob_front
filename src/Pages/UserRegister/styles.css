@@ -1,129 +1,60 @@
-.container-register{
+.container-login{
     width: 100%;
+    height: 900px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    margin-top: 61px;
-    margin-bottom: 153px;
 }
-
-.container-register img{
-    margin-bottom: -9px;
-    z-index: 999;
+.container-content-login{
+    width: 984px;
+    height: 599px;
+    background: #FFFFFF;
+    box-shadow: 0px 12px 12px -2px rgba(136, 136, 136, 0.12);
+    border-radius: 16px;
+    overflow: hidden;
+    
 }
-
-.container-register-content{
+.container-content-login{
+    display: flex;
+    
+}
+.continaer-lateral-logo{
+    width: 358px;
+    background: #0072E5;
+    height: 100%;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    border: 1px solid #B3B3B3;
-    border-radius: 5px;
-    width: 692px;
-    height: auto;
-    padding-bottom: 50px;
-    flex-direction: column;
-
-}
-.first-image{
-    width: 400px !important;
-    margin-bottom: -16px !important;
-    z-index: 999;
-}
-@media screen and (max-width: 730px) {
-    .container-register-content{
-       width: 95%;
-    }
-    .container-register{
-        width: 100%;
-    }
-    .form-sign{
-        width: 80%;
-    }
-    .container-register-content-input {
-        width: 100% !important;
-    }
-    .container-register-content-option{
-        width: 100% !important;
-    }
-    .container-register-content-buttons{
-        width: 100% !important;
-    }
-    .first-image{
-        width: 300px !important;
-        margin-bottom: -6px !important;
-        z-index: 999;
-    }
-}
-
-.container-register-content-title{
-    margin-top: 54px;
-    display: flex;
     justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap:12px;
+    
 }
-
-.container-register-content-input {
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    margin-top: 21px;
-    gap:12px;
-    width: 484.41px;
-}
-.container-register-content-input label{
-    /* margin-top: 12px !important; */
-    font-style: normal !important;
-    font-weight: 500 !important;
-    font-size: 14px !important;
-    line-height: 21px !important;
-    color: #181818 !important;
-}
-.container-register-content-title span{
-    color: #0072E5 !important;
-}
-.form-sign{
-    margin-top: 20px;
-}
-.container-register-content-option{
+.continaer-lateral-form{
+    height: 100%;
+    width: 626px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-top: 20px;
-    width: 484.41px;
+    justify-content: center;
+    flex-direction: column;
+}
+.container-form-login{
+    width: 382px;
 
 }
-/* .container-register-content-option span{
-    color: #0072E5;
-} */
-.link {
-    text-decoration: none;
+.container-login-content-title{
+    margin-left: 10px;
 }
-.remember-password{
+
+
+.container-login-content-buttons{
+    margin-top: 30px;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: -9px;
-    word-break: break-word;
-
-}
-.remember-password div{
-    margin-top: 20px;
-}
-
-.container-register-content-buttons{
-    margin-top: 35px;
-    width: 484.41px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     gap:16px;
 }
-.container-register-content-buttons button{
+.container-login-content-buttons button{
     width: 100%;
     font-style: normal;
     font-weight: 500;
@@ -132,31 +63,33 @@
     border-radius: 10px;
 
 }
-.container-register-content-sign div{
-    margin-top: 32px;
+.container-login-content-option{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0px;
+    width: 100%;
+
+}
+.private-check{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.private-check span{
+    margin-top: -3px;
+}
+.container-login-content-sign div{
+    margin-top: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap:5px;
 }
-.container-register-content-sign a{
+.container-login-content-sign a{
     text-decoration: none;
     color:#0072E5;
 }
-.button-register-google{
-    border: 1px solid #B3B3B3 !important;
-    background-color: #FFF;
-    color:#6e6e6e; 
-    height: 56px !important;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 21px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap:38px;
-}
-.button-register-google img{
-    margin-top: -9px;
+.form-sign{
+    margin-top: 32px;
 }

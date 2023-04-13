@@ -1,13 +1,14 @@
 .container-header{
     width: 100%;
-    border-bottom: 1px solid #C2C2C2;
+    border-bottom: 1px solid hsl(0, 0%, 76%);
     margin-bottom: 70px;
+    background: #FFF;
 }
 .container-header-main{
     padding-top: 14px;
     width: 100%;
-    border-bottom: 1px solid #C2C2C2;
-    height: 128px;
+    /* border-bottom: 1px solid #C2C2C2; */
+    height: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,7 +24,7 @@
     width: 90%;
     display: flex;
     align-items: center;
-    gap:15px;
+    gap:24px;
     float:left;
     margin-bottom: 24px;
 
@@ -45,7 +46,7 @@
     justify-content: center;
 }
 .container-menu{
-    width: 1350px;
+    /* width: 1350px; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -65,6 +66,8 @@
 }
 .container-margin img {
     cursor:pointer;
+    width: 153px;
+
 }
 .container-menu-burguer{
     display: none;

@@ -1,5 +1,9 @@
 .container{
     width: 1350px;
+    height: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .container-main{
     width: 100%;
@@ -19,7 +23,11 @@
 @media screen and (max-width: 1200px) {
     .container div{
         flex-direction: column;
+
         /* width: 95%; */
+    }
+    .container{
+      height: unset;
     }
   
 

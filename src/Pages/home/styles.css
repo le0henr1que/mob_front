@@ -2,14 +2,15 @@
 .card{
     padding-top: 36px;
     width: 521px;
-    height: 666px;
+    height: 630px;
     border: 1px solid #B3B3B3;
     border-radius: 5px;
     display: flex;
     align-items: center;
-    /* justify-content: space-around; */
+    /* justify-content: center; */
     flex-direction: column;
     text-align: center;
+    background: #FFF;
 }
 .card-title{
     margin-top: 60px;

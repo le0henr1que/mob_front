@@ -25,7 +25,7 @@ export function Home(){
                 <div className="card">
                     <img src={pana} />    
                     <div className="card-title">
-                        <Text variant="font-bold title-3">Procure por um <span>local</span></Text>    
+                        <Text variant="font-bold headline">Procure por um <span>local</span></Text>    
                     </div>  
                     <div className="card-text">
                         <Text variant="muted font-regular subheadline">Digite o nome de uma empresa ou estabelecimento e mostraremos à você, se esses ambientes são acessiveis ou possuel acessibilidade.</Text>     
@@ -41,7 +41,7 @@ export function Home(){
                 <div className="card">
                     <img src={rafiki} />    
                     <div className="card-title">
-                        <Text variant="font-bold title-3">Cadastre um <span>local</span></Text>    
+                        <Text variant="font-bold headline">Cadastre um <span>local</span></Text>    
                     </div>  
                     <div className="card-text">
                         <Text variant="muted font-regular subheadline">Quer que sua empresa seja vista como um ambiente acessível a todos? cadastre ela em nosso site!</Text>     

@@ -15,7 +15,7 @@ export default function GoogleSignIn(){
     // <GoogleOAuthProvider clientId="696316997048-1skfl6md5plvj3gmc5i84s57qn1l3ukm.apps.googleusercontent.com">
     <button className="button-login-google" onClick={() => login()}>
         <img src={Google}/>
-        Sign in with Google
+        Entrar com conta do Google
     </button>
     //   <div
     //   onClick={() => login()}

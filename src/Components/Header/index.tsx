@@ -28,7 +28,7 @@ export function Header(){
         {label:"Sobre o Mob!", href:"/about"},
         {label:"Fazer avaliação", href:"/pesquisar-local"},
         // {label:"Perfil", href:"/profile"},
-        {label:"Home", href:"/"},
+        // {label:"Home", href:"/"},
         // {label:"Trabalhe Conosco", href:"/notfound"},
         // {label:"SAC", href:"/notfound"},
     ]
@@ -43,9 +43,20 @@ export function Header(){
             <div className="container-header-main">
                 <div className="container-margin">
                     <img src={LogMob} onClick={() => navigate("/")}/>
-                    <div className="input-search">
+                    {/* <div className="input-search">
                         <Input type="text" variant="default" placeholder="Pesquisar" icon={true} />
+                    </div> */}
+
+                    <div className="container-menu">
+                        {
+                            isMenuList.map((item) => (
+                                <a href={item.href} className="link">
+                                    <Text variant="muted font-regular body">{item.label}</Text>
+                                </a>
+                            ))
+                        }
                     </div>
+
                     <div className='container-menu-burguer'>
                         <Menu onClick={toggleDrawer} color="inherit" style={{cursor:'pointer'}}/>
                     </div>
@@ -77,7 +88,7 @@ export function Header(){
                     </div>
                 </div>
             </div>
-            <div className="container-menu-margin">
+            {/* <div className="container-menu-margin">
                 <div className="container-menu">
                     {
                         isMenuList.map((item) => (
@@ -87,7 +98,7 @@ export function Header(){
                         ))
                     }
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

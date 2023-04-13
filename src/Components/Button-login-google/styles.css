@@ -1,8 +1,8 @@
 .button-login-google{
-    border: 1px solid #B3B3B3 !important;
+    border: 1px solid #C1C1C1 !important;
     background-color: #FFF;
     color:#6e6e6e; 
-    height: 56px !important;
+    height: 48px !important;
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
@@ -11,4 +11,8 @@
     align-items: center;
     justify-content: center;
     gap:38px;
+}
+.button-login-google img{
+    width: 24px;
+
 }
