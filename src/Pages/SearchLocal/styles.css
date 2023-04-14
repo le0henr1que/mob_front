@@ -5,7 +5,9 @@
     align-items: center;
     justify-content: center;
 }
-
+/* .input-search{
+    width: 100% !important;
+} */
 .container-search-local{
     width: 1350px;
     height: auto;
@@ -26,6 +28,7 @@
     margin-top: 50px;
     flex-direction: column;
     gap:24px;
+    /* background: red ; */
 }
 .card-title-search-local span{
     color: #007FFF !important;
@@ -40,6 +43,7 @@
     align-items: center;
     justify-content: flex-start;
     flex-direction: column;
+    background: #FFF;
     padding-top: 80px;
 }
 
@@ -78,6 +82,7 @@
 }
 .comment-search-local{
     padding: 40px;
+    background: #FFF;
 }
 .container-search-local-options{
     width: 100%;

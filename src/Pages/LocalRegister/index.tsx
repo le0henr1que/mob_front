@@ -17,10 +17,23 @@ import { useNavigate } from "react-router-dom";
 import { Chart } from "../../Components/Chart";
 import { Company } from "../../Components/LocalInfoHeader";
 import { StarRating } from "../../Components/StarRating";
+import { MenuItem, TextField } from "@material-ui/core";
 
 export function LocalRegister(){
     const navigate = useNavigate()
     const ratingNote = (note:number) => { alert(note); return note }
+
+    const currencies = [
+        {
+          value: 'São Paulo',
+          label: 'São Paulo',
+        },
+        {
+          value: 'Rio de Janeiro',
+          label: 'Rio de Janeiro',
+        },
+        
+      ];
 
     return (
         <>
@@ -38,45 +51,81 @@ export function LocalRegister(){
                     <form className="form-input">
                         <div className="container-flex-local">
                             <div className="container-evaluate-content-input">
-                                <label htmlFor="title">Nome do local</label>
-                                <Input type="text" variant="default" name="title" id="title" placeholder="Nome do local"/>
-                            </div>
-                            <div className="container-evaluate-content-input">
-                                <label htmlFor="title">CEP</label>
-                                <Input type="text" variant="default" name="title" id="title" placeholder="CEP"/>
-                            </div>
-                        </div>
-                        <div className="container-flex-local">
-                            <div className="container-evaluate-content-input">
-                                <label htmlFor="title">Estado</label>
-                                <Input type="select" variant="default" placeholder="Pesquisar" icon={true} >
-                                    <option>Estado</option>
-                                </Input>
+                                
+                                    <TextField 
+                                        id="nome-local" 
+                                        label="Nome" 
+                                        variant="outlined" 
+                                    />
 
                             </div>
                             <div className="container-evaluate-content-input">
-                                <label htmlFor="title">Cidade</label>
-                                <Input type="text" variant="default" name="title" id="title" placeholder="Cidade"/>
+                                <TextField 
+                                        id="nome-loca" 
+                                        label="CEP" 
+                                        variant="outlined" 
+                                    />
+
                             </div>
                         </div>
                         <div className="container-flex-local">
                             <div className="container-evaluate-content-input">
-                                <label htmlFor="title">Bairro</label>
-                                <Input type="text" variant="default" name="title" id="title" placeholder="Bairro"/>
+                                <TextField
+                                    id="outlined-select-currency"
+                                    variant="outlined"
+                                    select
+                                    label="Estado"
+                                    defaultValue="São Paulo"
+                                >
+                                {currencies.map((option) => (
+                                    <MenuItem key={option.value} value={option.value}>
+                                    {option.label}
+                                    </MenuItem>
+                                ))}
+                                </TextField>
+
                             </div>
                             <div className="container-evaluate-content-input">
-                                <label htmlFor="title">Número</label>
-                                <Input type="text" variant="default" name="title" id="title" placeholder="Número"/>
+                                <TextField 
+                                        id="city-local" 
+                                        label="Cidade" 
+                                        variant="outlined" 
+                                    />
+
+                            </div>
+                        </div>
+                        <div className="container-flex-local">
+                            <div className="container-evaluate-content-input">
+                                <TextField 
+                                        id="neighborhood-local" 
+                                        label="Bairro" 
+                                        variant="outlined" 
+                                    />
+
                             </div>
                             <div className="container-evaluate-content-input">
-                                <label htmlFor="title">Complemento</label>
-                                <Input type="text" variant="default" name="title" id="title" placeholder="Complemento"/>
+                                <TextField 
+                                    id="number-local" 
+                                    label="Número" 
+                                    variant="outlined" 
+                                />
+
+                            </div>
+                            <div className="container-evaluate-content-input">
+                                <TextField 
+                                    id="complement-local" 
+                                    label="Complemento" 
+                                    variant="outlined" 
+                                />
                             </div>
                         </div>
 
                         <div className="container-evaluate-content-input">
-                            <label htmlFor="description">Endereço</label>
-                            <Input type="text" variant="default" name="title" id="title" placeholder="Endereço"/>
+                             <TextField 
+                                    id="address-local" 
+                                    label="Endereço" 
+                                    variant="outlined" 
+                                />
                         </div>
                         <div className="container-evaluate-button">
                             <Text variant="color-blue font-regular body-small"></Text>

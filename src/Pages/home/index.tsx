@@ -12,6 +12,8 @@ import pana from "../../Assests/pana.svg"
 import rafiki from "../../Assests/rafiki.svg"
 import ButtonStyle from "../../Components/Button";
 import { useNavigate } from "react-router-dom";
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
 export function Home(){
     const navigate = useNavigate()
@@ -31,7 +33,24 @@ export function Home(){
                         <Text variant="muted font-regular subheadline">Digite o nome de uma empresa ou estabelecimento e mostraremos à você, se esses ambientes são acessiveis ou possuel acessibilidade.</Text>     
                     </div>  
                     <div className="card-input">
-                        <Input variant="default" icon={true} placeholder="Pesquisar"/>
+                        <Box
+                                component="form"
+                                sx={{
+                                    '& > :not(style)': { m: 1, width: '100%' },
+                                }}
+                                noValidate
+                                autoComplete="off"
+                                >
+                            
+                                    <TextField 
+                                        id="search-local" 
+                                        label="Pesquisar..." 
+                                        variant="outlined" 
+                                    />
+
+            
+                            </Box>
+                        {/* <Input variant="default" icon={true} placeholder="Pesquisar"/> */}
                     </div>  
                     <div className="card-text-last">
                         <Text variant="muted font-regular body" >Não encontrou o local? <a href="/local">Clique aqui</a></Text>   

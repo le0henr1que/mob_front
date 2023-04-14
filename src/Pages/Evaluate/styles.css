@@ -1,5 +1,6 @@
 .container-main-evaluate{
     width: 100%;
+    height: 700px !important;
     display: flex;
     align-items: center;
     justify-content: center;

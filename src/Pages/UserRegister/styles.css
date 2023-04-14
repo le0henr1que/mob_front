@@ -93,3 +93,23 @@
 .form-sign{
     margin-top: 32px;
 }
+
+@media screen and (max-width: 1076px) {
+    .container-content-login{
+        width: 90% !important;
+    }
+}
+@media screen and (max-width: 800px) {
+    .continaer-lateral-logo{
+        display: none !important;
+    }
+}
+/* container-form-login */
+@media screen and (max-width: 550px) {
+    .container-form-login{
+        width: 80% !important;
+    }
+}
+/* @media screen and (max-width: 1200px) {
+
+} */

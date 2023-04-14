@@ -18,6 +18,8 @@ import { Chart } from "../../Components/Chart";
 //@ts-ignore
 import { Company } from "../../Components/Company";
 import { StarRating } from "../../Components/StarRating";
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
 export function Evaluete(){
     const navigate = useNavigate()
@@ -39,14 +41,34 @@ export function Evaluete(){
                         <StarRating variant="nothing" rating={3} starType="select" onReturnRating={ratingNote} size="large"/>
                     </div>
                     <form className="form-input">
-                        <div className="container-evaluate-content-input">
-                            <label htmlFor="title" className="label">Titulo</label>
-                            <Input type="text" variant="default" name="title" id="title" placeholder="Digite um título para o seu comentário"/>
-                        </div>
-                        <div className="container-evaluate-content-input">
-                            <label htmlFor="description" className="label">Descreva sua avaliação</label>
-                            <Input type="textarea" variant="default" name="title" id="title" placeholder="Faça uma breve avaliação"/>
-                        </div>
+                        <Box
+                            component="form"
+                            sx={{
+                                '& > :not(style)': { m: 1, width: '100%' },
+                            }}
+                            noValidate
+                            autoComplete="off"
+                            >
+                                
+                                <TextField 
+                                    id="title" 
+                                    label="Titulo" 
+                                    variant="outlined" 
+                                    placeholder="Defina um titulo para sua avaliação"
+                                />
+                                
+                                <TextField
+                                    id="description"
+                                    label="Descrição"
+                                    multiline
+                                    rows={4}
+                                    placeholder="Faça uma descrição do ocorrido ou situação"
+
+                                    // defaultValue="Default Value"
+                                />
+
+        
+                            </Box>
                         <div className="container-evaluate-button">
                             <Text variant="color-blue font-regular body-small">Não inclua dados pessoais</Text>
                             <ButtonStyle variant="medium-button" type="submit">Avaliar</ButtonStyle>

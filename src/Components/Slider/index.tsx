@@ -11,25 +11,29 @@ export function SliderSlider(props:any){
     <div className="swiper-container">
       <Swiper
         slidesPerView={1}
-        spaceBetween={10}
-        pagination={{
-            clickable: true,
-            // cssMode: true 
-            
-        }}
+        spaceBetween={50}
+        pagination={false}
 
         breakpoints={{
             640: {
-                slidesPerView: 2,
-                spaceBetween: 20,
+                slidesPerView: 3,
+                spaceBetween: 70,
             },
-            1200: {
+            841:{
+              slidesPerView: 4,
+              spaceBetween: 70,
+            },
+            1105: {
                 slidesPerView: 4,
-                spaceBetween: 40,
+                spaceBetween: 10,
+            },
+            1379: {
+                slidesPerView: 5,
+                spaceBetween: 10,
             },
             1400: {
                 slidesPerView: 5,
-                spaceBetween: 100,
+                spaceBetween: 10,
             },
         }}
         modules={[Pagination]}

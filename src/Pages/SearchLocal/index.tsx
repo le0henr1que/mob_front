@@ -8,6 +8,8 @@ import { Input } from "../../Components/Input";
 import { SliderSlider } from "../../Components/Slider";
 import { Text } from "../../Components/Text";
 import "./styles.css";
+import { TextField } from "@material-ui/core";
+import Box from '@mui/material/Box';
 
 
 export function SearchLocal(){
@@ -22,10 +24,30 @@ export function SearchLocal(){
                     <div className="card-title-search-local">
                         <Text variant="font-bold title-3">Procure por um <span>local</span></Text> 
 
-                        <div className="input-search">
-                            <Input type="text" variant="default" placeholder="Pesquisar" icon={true} />
-                        </div>
+                       <div className="input-search">
+                  
+                            <Box
+                                component="form"
+                                sx={{
+                                    '& > :not(style)': { m: 1, width: '100%' },
+                                }}
+                                noValidate
+                                autoComplete="off"
+                                >
+                            
+                                    <TextField 
+                                        id="search-local" 
+                                        label="Pesquisar..." 
+                                        variant="outlined" 
+                                    />
+
+            
+                            </Box>
+                        </div> 
                     </div> 
+                    <div className="container-content-two">
+                    </div>
+                    
                     <div className="container-card-find-local">
                         <div className="card-title-find-local">
                             <Text variant="font-bold headline">Locais <span>relacionados</span></Text> 
@@ -61,7 +83,7 @@ export function SearchLocal(){
                         <div className="comment-search-local">
                         <div className="container-search-local-options">
                             <div>
-                                <Text variant="font-bold title-3">Avaliações em <span>destaque</span></Text>  
+                                <Text variant="font-bold headline">Avaliações em <span>destaque</span></Text>  
                                 <Text variant="muthed font-regular body-small">Locais relacionados a sua busca.</Text>
                             </div>
                             <Text variant="font-regular subheadline">Ordenar por Mais Recente</Text>  

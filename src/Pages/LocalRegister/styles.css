@@ -36,6 +36,9 @@
     .container-flex-local{
         flex-direction: column;
     }
+    .container-main-evaluate{
+        margin-top: 200px;
+    }
 
   } 
 
@@ -54,4 +57,5 @@
     .container-evaluate{
         width: 95%;
     }
+   
 }
