@@ -1,16 +1,14 @@
 // Button.stories.ts|tsx
 
-import React from 'react';
+import React from "react";
 
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { ComponentStory, ComponentMeta } from "@storybook/react";
 
-import { Company }  from './index';
+import { Company } from "./index";
 
 export default {
-  title: 'Company',
+  title: "Company",
   component: Company,
 } as ComponentMeta<typeof Company>;
 
-export const CompanyCard: ComponentStory<typeof Company> = () => 
-<Company />;
-
+export const CompanyCard: ComponentStory<typeof Company> = () => <Company />;

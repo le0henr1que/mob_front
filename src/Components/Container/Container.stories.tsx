@@ -1,16 +1,16 @@
 // Button.stories.ts|tsx
 
-import React from 'react';
+import React from "react";
 
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { ComponentStory, ComponentMeta } from "@storybook/react";
 
-import { Container }  from './index';
+import { Container } from "./index";
 
 export default {
-  title: 'Container',
+  title: "Container",
   component: Container,
 } as ComponentMeta<typeof Container>;
 
-export const ContainerMain: ComponentStory<typeof Container> = () => 
-<Container />;
-
+export const ContainerMain: ComponentStory<typeof Container> = () => (
+  <Container />
+);
