@@ -31,3 +31,10 @@ export interface LoadSkeleton {
     size: "small" | "large" | "medium";
     type: "circle" | "line"
 }
+
+export interface AuthState {
+    token: string | null;
+    isAuthenticated: boolean;
+  }
+  
+  

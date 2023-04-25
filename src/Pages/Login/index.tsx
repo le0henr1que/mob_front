@@ -14,17 +14,33 @@ import  GoogleSignIn  from "../../Components/Button-login-google"
 import LogMob from "../../Assests/mob-white.svg"
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import { useAuth } from '../../hooks/useAuth/index';
+
 
 export function Login(){
     const [isChecked, setIsChecked] = useState(false);
 
+    // const [email, setEmail] = useState();
+    // const [password, setPassword] = useState();
+
     const handleChange = (event: { target: { checked: boolean | ((prevState: boolean) => boolean); }; }) => {
       setIsChecked(event.target.checked);
     };
-    function handleSuccess(){
-        console.log("teste")
-      }
+  
 
+    // const { handleLogin } = useAuth();
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        // event.preventDefault();
+        // const emailElement = event.currentTarget.elements.namedItem('email') as HTMLInputElement
+        // console.log(emailElement.value)
+        // console.log(data.password)
+        // console.log(email)
+        // console.log(password)
+        // handleLogin(email, password);
+
+    };
+ 
     return (
         // <Container>
             <div className="container-login">
@@ -39,7 +55,7 @@ export function Login(){
                                 <Text variant="font-bold headline">Bem vindo de volta</Text>
                                 <Text variant="muthed font-regular body-small">Utilize sua credencial Mob para realizar o acesso.</Text>
                             </div>
-                            <form className="form-sign">
+                            <form className="form-sign" onSubmit={handleSubmit}>
                                 <Box
                                     component="form"
                                     sx={{
@@ -49,11 +65,19 @@ export function Login(){
                                     autoComplete="off"
                                     >
                                 
-                                        <TextField id="email" label="Email" variant="outlined" />
                                         <TextField 
+                                    
+                                            id="email" 
+                                            name="email" 
+                                            label="Email" 
+                                            variant="outlined" />
+                                            
+                                        <TextField 
+                                            name="password"
                                             id="password" 
                                             label="Password" 
                                             variant="outlined" 
+                                            type="password"
                                         />
 
         
