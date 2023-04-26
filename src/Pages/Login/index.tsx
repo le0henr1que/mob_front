@@ -14,12 +14,16 @@ import GoogleSignIn from "../../Components/Button-login-google";
 import LogMob from "../../Assests/mob-white.svg";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { useAuth } from "../../hooks/useAuth/index";
+import { useAuth } from "../../context/AuthContext";
+import { UserInterface } from "../../@types";
 
 export function Login() {
   const [isChecked, setIsChecked] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { login } = useAuth();
+  const [error, setError] = useState<any>(null);
 
   const handleChange = (event: {
     target: { checked: boolean | ((prevState: boolean) => boolean) };
@@ -27,11 +31,17 @@ export function Login() {
     setIsChecked(event.target.checked);
   };
 
-  const { handleLogin } = useAuth();
-
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    handleLogin(email, password);
+    alert(email);
+
+    const userDataLogin: UserInterface = {
+      email,
+      password,
+    };
+
+    const handleLogin = await login(userDataLogin);
+    setError(handleLogin);
   };
 
   return (
@@ -50,6 +60,7 @@ export function Login() {
                 Utilize sua credencial Mob para realizar o acesso.
               </Text>
             </div>
+
             <form className="form-sign" onSubmit={handleSubmit}>
               <Box
                 component="form"
@@ -79,7 +90,7 @@ export function Login() {
                   onChange={(event) => setPassword(event.target.value)}
                 />
               </Box>
-
+              {/* {erro && <p>{erro}</p>} */}
               <div className="container-login-content-option">
                 <div className="remember-check-password">
                   <Checkbox

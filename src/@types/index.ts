@@ -1,5 +1,6 @@
 
 
+import { Dispatch, SetStateAction } from "react";
 export interface Comments {
     author:string;
     title:string;
@@ -37,4 +38,17 @@ export interface AuthState {
     isAuthenticated: boolean;
   }
   
-  
+
+export interface UserInterface {
+    name?:string;
+    email:string;
+    password:string;
+}
+
+export interface AuthContextType {
+  isAuthenticated: boolean;
+  setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
+  login: ({email, password}:UserInterface) => Promise<void>;
+  logout: () => void;
+ 
+}
