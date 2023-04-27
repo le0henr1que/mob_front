@@ -5,6 +5,8 @@ import {
   Typography,
   Drawer,
   List,
+  Popover,
+  Button,
 } from "@material-ui/core";
 import { Menu, Close } from "@material-ui/icons";
 import { useEffect, useState } from "react";
@@ -17,13 +19,29 @@ import { Text } from "../Text";
 import "./styles.css";
 import { StylesList, MakeStyleDrawer, useStyles } from "./stylesMaterialUI";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 export function Header() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMenuList, setIsMenuList] = useState<MenuItem[]>([]);
   const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
+  const { authState } = useAuth();
+
   const classes = useStyles();
   const navigate = useNavigate();
+
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
 
   var listMenu: MenuItem[] = [
     { label: "Achar local", href: "/pesquisar-local" },
@@ -43,6 +61,13 @@ export function Header() {
     setIsMenuList(listMenu);
   }, []);
 
+  function getInitials(name: string): string {
+    const spaceIndex = name.indexOf(" ");
+    const firstName = name.substring(0, 1);
+    const lastName =
+      spaceIndex !== -1 ? name.substring(spaceIndex + 1, spaceIndex + 2) : "";
+    return firstName.toUpperCase() + lastName.toUpperCase();
+  }
   return (
     <div className="container-header">
       <div className="container-header-main">
@@ -68,19 +93,29 @@ export function Header() {
             />
           </div>
           <div className="div-button">
-            <ButtonStyle
-              variant="medium-button"
-              onClick={() => navigate("/login")}
-            >
-              Fazer Login
-            </ButtonStyle>
-            <ButtonStyle
-              variant="medium-button outlined"
-              onClick={() => navigate("/cadastrar")}
-            >
-              Cadastrar
-            </ButtonStyle>
-
+            {authState.isAuthenticated === false ? (
+              <>
+                <ButtonStyle
+                  variant="medium-button"
+                  onClick={() => navigate("/login")}
+                >
+                  Fazer Login
+                </ButtonStyle>
+                <ButtonStyle
+                  variant="medium-button outlined"
+                  onClick={() => navigate("/cadastrar")}
+                >
+                  Cadastrar
+                </ButtonStyle>
+              </>
+            ) : (
+              <div className="container-avatar-login">
+                <div className="muthed-avatar-header">
+                  {getInitials("Leonardo Henrique")}
+                </div>
+                <Text variant="muted font-regular body">Leonardo Henrique</Text>
+              </div>
+            )}
             <Drawer
               anchor="left"
               open={isDrawerOpen}
@@ -93,18 +128,31 @@ export function Header() {
                   <Close onClick={toggleDrawer} style={{ cursor: "pointer" }} />
                 </div>
                 <div className="div-button-sidebar">
-                  <ButtonStyle
-                    variant="medium-button"
-                    onClick={() => navigate("/login")}
-                  >
-                    Fazer Login
-                  </ButtonStyle>
-                  <ButtonStyle
-                    variant="medium-button outlined"
-                    onClick={() => navigate("/cadastrar")}
-                  >
-                    Cadastrar
-                  </ButtonStyle>
+                  {authState.isAuthenticated === false ? (
+                    <>
+                      <ButtonStyle
+                        variant="medium-button"
+                        onClick={() => navigate("/login")}
+                      >
+                        Fazer Login
+                      </ButtonStyle>
+                      <ButtonStyle
+                        variant="medium-button outlined"
+                        onClick={() => navigate("/cadastrar")}
+                      >
+                        Cadastrar
+                      </ButtonStyle>
+                    </>
+                  ) : (
+                    <div className="container-avatar-login">
+                      <div className="muthed-avatar-header">
+                        {getInitials("Leonardo Henrique")}
+                      </div>
+                      <Text variant="muted font-regular body">
+                        Leonardo Henrique
+                      </Text>
+                    </div>
+                  )}
                 </div>
                 {isMenuList.map((item) => (
                   <a href={item.href} className="link">

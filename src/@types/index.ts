@@ -51,5 +51,5 @@ export interface AuthContextType {
   login: ({email, password}:UserInterface) => Promise<void>;
   logout: () => void;
   loginError:string | null
-
+  authState:any
 }

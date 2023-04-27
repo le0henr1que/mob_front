@@ -10,6 +10,7 @@ export const AuthContext = createContext<AuthContextType>({
   login: async ({ email, password }: UserInterface) => {},
   logout: () => {},
   loginError: null,
+  authState: { token: null, isAuthenticated: false },
 });
 
 const AuthProvider = ({ children }: any) => {
@@ -19,7 +20,6 @@ const AuthProvider = ({ children }: any) => {
   });
 
   useEffect(() => {
-    // Verifica se o usuário já está autenticado ao carregar a página
     const token = authService.getToken();
     if (token) {
       setAuthState({
@@ -38,6 +38,7 @@ const AuthProvider = ({ children }: any) => {
         email,
         password,
       };
+
       const response = await authService.login(userDataSendLogin);
 
       const token = response.data.token;
@@ -85,9 +86,9 @@ const AuthProvider = ({ children }: any) => {
   };
 
   return (
-    //@ts-ignore
     <AuthContext.Provider
-      value={{ authState, login, register, logout, loginError, redirect }}
+      //@ts-ignore
+      value={{ authState, login, register, logout, loginError }}
     >
       {children}
     </AuthContext.Provider>

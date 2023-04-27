@@ -25,13 +25,14 @@ export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login, loginError } = useAuth();
+  const { login, loginError, authState } = useAuth();
   const [error, setError] = useState<string>();
 
   const [open, setOpen] = useState(false);
   const [emailEmpty, setEmailEmpty] = useState(false);
   const [passwordEmpty, setPasswordEmpty] = useState(false);
 
+  const navigate = useNavigate();
   const handleClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -69,6 +70,9 @@ export function Login() {
 
     const handleLogin = await login(userDataLogin);
 
+    if (authState.isAuthenticated == true) {
+      navigate(-1);
+    }
     // alert(redirect)
   };
 
