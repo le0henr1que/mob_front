@@ -50,5 +50,6 @@ export interface AuthContextType {
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
   login: ({email, password}:UserInterface) => Promise<void>;
   logout: () => void;
- 
+  loginError:string | null
+
 }

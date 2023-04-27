@@ -4,7 +4,6 @@ import api from "../../utils/api";
 const authService = {
   async login({ email, password }: UserInterface) {
     try {
-      alert(email);
       const response = await api.post("/login", { email, password });
       return response;
     } catch (error) {

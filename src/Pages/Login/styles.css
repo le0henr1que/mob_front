@@ -108,3 +108,9 @@
 /* @media screen and (max-width: 1200px) {
 
 } */
+
+.input-helper{
+    color: red !important;
+    font-size: 12px !important;
+    margin-top: -5px !important;
+}

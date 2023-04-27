@@ -2,12 +2,14 @@ import React, { useState, createContext, useContext, useEffect } from "react";
 import authService from "../service/AuthService";
 import { UserInterface, AuthState, AuthContextType } from "../@types";
 import { EmailOutlined } from "@material-ui/icons";
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
   setIsAuthenticated: () => {},
   login: async ({ email, password }: UserInterface) => {},
   logout: () => {},
+  loginError: null,
 });
 
 const AuthProvider = ({ children }: any) => {
@@ -27,11 +29,11 @@ const AuthProvider = ({ children }: any) => {
     }
   }, []);
 
-  const [loginError, setLoginError] = useState<string | null>(null);
+  const [loginError, setLoginError] = useState<string | null>();
+  const [redirect, setRedirect] = useState<boolean>();
+
   const login = async ({ email, password }: UserInterface) => {
     try {
-      alert(email);
-
       const userDataSendLogin: UserInterface = {
         email,
         password,
@@ -39,14 +41,19 @@ const AuthProvider = ({ children }: any) => {
       const response = await authService.login(userDataSendLogin);
 
       const token = response.data.token;
+      console.log(response);
+
       authService.setToken(token);
       setAuthState({
         token,
         isAuthenticated: true,
       });
-    } catch (error) {
-      console.error(error);
-      setLoginError("Email ou senha incorretos");
+    } catch (error: any) {
+      console.log(error);
+
+      if (error.response.data.message) {
+        setLoginError(error.response.data.message);
+      }
     }
   };
 
@@ -79,7 +86,9 @@ const AuthProvider = ({ children }: any) => {
 
   return (
     //@ts-ignore
-    <AuthContext.Provider value={{ authState, login, register, logout }}>
+    <AuthContext.Provider
+      value={{ authState, login, register, logout, loginError, redirect }}
+    >
       {children}
     </AuthContext.Provider>
   );

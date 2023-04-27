@@ -7,7 +7,7 @@ import Google from "../../Assests/icon-google.svg";
 import { Text } from "../../Components/Text";
 import { Input } from "../../Components/Input";
 import Checkbox from "@material-ui/core/Checkbox";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ButtonStyle from "../../Components/Button";
 import GoogleSignIn from "../../Components/Button-login-google";
 //@ts-ignore
@@ -16,24 +16,51 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { useAuth } from "../../context/AuthContext";
 import { UserInterface } from "../../@types";
+import { Alert, Snackbar } from "@mui/material";
+import { Button, Fade, Grow, Slide, SnackbarOrigin } from "@material-ui/core";
+import { redirect, useNavigate } from "react-router-dom";
 
 export function Login() {
   const [isChecked, setIsChecked] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login } = useAuth();
-  const [error, setError] = useState<any>(null);
+  const { login, loginError } = useAuth();
+  const [error, setError] = useState<string>();
+
+  const [open, setOpen] = useState(false);
+  const [emailEmpty, setEmailEmpty] = useState(false);
+  const [passwordEmpty, setPasswordEmpty] = useState(false);
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    setOpen(false);
+  };
 
   const handleChange = (event: {
     target: { checked: boolean | ((prevState: boolean) => boolean) };
   }) => {
     setIsChecked(event.target.checked);
   };
+  // const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    alert(email);
+
+    if (!email) {
+      setEmailEmpty(true);
+      return;
+    } else {
+      setEmailEmpty(false);
+    }
+    if (!password) {
+      setPasswordEmpty(true);
+      return;
+    } else {
+      setPasswordEmpty(false);
+    }
 
     const userDataLogin: UserInterface = {
       email,
@@ -41,8 +68,13 @@ export function Login() {
     };
 
     const handleLogin = await login(userDataLogin);
-    setError(handleLogin);
+
+    // alert(redirect)
   };
+
+  useEffect(() => {
+    loginError && setOpen(true);
+  });
 
   return (
     // <Container>
@@ -71,6 +103,8 @@ export function Login() {
                 autoComplete="off"
               >
                 <TextField
+                  //@ts-ignore
+                  error={loginError || (emailEmpty && true)}
                   id="email"
                   name="email"
                   label="Email"
@@ -79,8 +113,12 @@ export function Login() {
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
                 />
-
+                {emailEmpty && (
+                  <p className="input-helper">Insira um endereço de e-mail.</p>
+                )}
                 <TextField
+                  //@ts-ignore
+                  error={loginError || (passwordEmpty && true)}
                   name="password"
                   id="password"
                   label="Password"
@@ -89,8 +127,11 @@ export function Login() {
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
                 />
+                {passwordEmpty && (
+                  <p className="input-helper">Insira uma senha.</p>
+                )}
               </Box>
-              {/* {erro && <p>{erro}</p>} */}
+
               <div className="container-login-content-option">
                 <div className="remember-check-password">
                   <Checkbox
@@ -113,6 +154,22 @@ export function Login() {
                 </div>
               </div>
 
+              <Snackbar
+                TransitionComponent={Fade}
+                open={open}
+                autoHideDuration={6000}
+                onClose={handleClose}
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                key="top right"
+              >
+                <Alert
+                  onClose={handleClose}
+                  severity="error"
+                  sx={{ width: "100%" }}
+                >
+                  {loginError}
+                </Alert>
+              </Snackbar>
               <div className="container-login-content-buttons">
                 <ButtonStyle variant="medium-button">Logar</ButtonStyle>
 
