@@ -3,12 +3,12 @@ import "./styles.css";
 import LogMob from "../../Assests/Frame142.svg";
 import { useEffect, useState } from "react";
 import { Text } from "../Text";
-import { MenuItem } from "../../@types";
+import { MenuItemsHeader } from "../../@types";
 
 export function Footer() {
-  const [isMenuList, setIsMenuList] = useState<MenuItem[]>([]);
+  const [isMenuList, setIsMenuList] = useState<MenuItemsHeader[]>([]);
 
-  var listMenu: MenuItem[] = [
+  var listMenu: MenuItemsHeader[] = [
     { label: "Achar local", href: "/locals" },
     // {label:"Denuncias", href:"/notfound"},
     { label: "Minhas avaliações", href: "/myratings" },

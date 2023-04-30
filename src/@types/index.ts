@@ -15,7 +15,7 @@ export interface LocalCard {
 }
 
 
-export interface MenuItem {
+export interface MenuItemsHeader {
     label: string;
     href: string;
   }
@@ -50,6 +50,7 @@ export interface AuthContextType {
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
   login: ({email, password}:UserInterface) => Promise<void>;
   logout: () => void;
-  loginError:string | null
+  AuthError:string | null
   authState:any
 }
+

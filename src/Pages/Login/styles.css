@@ -114,3 +114,6 @@
     font-size: 12px !important;
     margin-top: -5px !important;
 }
+.MuiCircularProgress-colorPrimary {
+    color: #FFF !important;
+}

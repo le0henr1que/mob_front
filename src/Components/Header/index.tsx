@@ -7,10 +7,12 @@ import {
   List,
   Popover,
   Button,
+  MenuItem,
 } from "@material-ui/core";
-import { Menu, Close } from "@material-ui/icons";
+import { Menu, Close, ExitToApp } from "@material-ui/icons";
 import { useEffect, useState } from "react";
-import { MenuItem } from "../../@types";
+import { MenuItemsHeader } from "../../@types";
+
 //@ts-ignore
 import LogMob from "../../Assests/Frame142.svg";
 import ButtonStyle from "../Button";
@@ -20,12 +22,14 @@ import "./styles.css";
 import { StylesList, MakeStyleDrawer, useStyles } from "./stylesMaterialUI";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import UserMenu from "../User-menu-header";
+import Divider from "@mui/material/Divider";
 
 export function Header() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [isMenuList, setIsMenuList] = useState<MenuItem[]>([]);
+  const [isMenuList, setIsMenuList] = useState<MenuItemsHeader[]>([]);
   const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
-  const { authState } = useAuth();
+  const { authState, logout } = useAuth();
 
   const classes = useStyles();
   const navigate = useNavigate();
@@ -43,19 +47,16 @@ export function Header() {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
-  var listMenu: MenuItem[] = [
+  var listMenu: MenuItemsHeader[] = [
     { label: "Achar local", href: "/pesquisar-local" },
-    // {label:"Denuncias", href:"/notfound"},
     { label: "Minhas avaliações", href: "/minhas-avaliacoes" },
-    // {label:"Dúvidas Frequentes", href:"/notfound"},
-    // {label:"Institucional", href:"/notfound"},
     { label: "Sobre o Mob!", href: "/about" },
     { label: "Fazer avaliação", href: "/pesquisar-local" },
-    // {label:"Perfil", href:"/profile"},
-    // {label:"Home", href:"/"},
-    // {label:"Trabalhe Conosco", href:"/notfound"},
-    // {label:"SAC", href:"/notfound"},
   ];
+
+  const handleLogout = async () => {
+    logout();
+  };
 
   useEffect(() => {
     setIsMenuList(listMenu);
@@ -73,9 +74,6 @@ export function Header() {
       <div className="container-header-main">
         <div className="container-margin">
           <img src={LogMob} onClick={() => navigate("/")} />
-          {/* <div className="input-search">
-                        <Input type="text" variant="default" placeholder="Pesquisar" icon={true} />
-                    </div> */}
 
           <div className="container-menu">
             {isMenuList.map((item) => (
@@ -113,7 +111,19 @@ export function Header() {
                 <div className="muthed-avatar-header">
                   {getInitials("Leonardo Henrique")}
                 </div>
-                <Text variant="muted font-regular body">Leonardo Henrique</Text>
+
+                <UserMenu userName="Leonardo Henrique">
+                  {/* <MenuItem onClick={() => alert("Sucesso")}>Profile</MenuItem>
+                  <MenuItem onClick={() => alert("Sucesso")}>My account</MenuItem> */}
+                  <MenuItem onClick={() => alert("Sucesso")}>
+                    Configuração
+                  </MenuItem>
+                  <Divider sx={{ my: 0.2 }} />
+                  <MenuItem onClick={() => handleLogout()} disableRipple>
+                    <ExitToApp />
+                    Sair
+                  </MenuItem>
+                </UserMenu>
               </div>
             )}
             <Drawer

@@ -9,7 +9,7 @@ export const AuthContext = createContext<AuthContextType>({
   setIsAuthenticated: () => {},
   login: async ({ email, password }: UserInterface) => {},
   logout: () => {},
-  loginError: null,
+  AuthError: null,
   authState: { token: null, isAuthenticated: false },
 });
 
@@ -29,7 +29,7 @@ const AuthProvider = ({ children }: any) => {
     }
   }, []);
 
-  const [loginError, setLoginError] = useState<string | null>();
+  const [AuthError, setAuthError] = useState<string | null>();
   const [redirect, setRedirect] = useState<boolean>();
 
   const login = async ({ email, password }: UserInterface) => {
@@ -49,11 +49,12 @@ const AuthProvider = ({ children }: any) => {
         token,
         isAuthenticated: true,
       });
+      setAuthError("");
     } catch (error: any) {
       console.log(error);
 
       if (error.response.data.message) {
-        setLoginError(error.response.data.message);
+        setAuthError(error.response.data.message);
       }
     }
   };
@@ -88,7 +89,7 @@ const AuthProvider = ({ children }: any) => {
   return (
     <AuthContext.Provider
       //@ts-ignore
-      value={{ authState, login, register, logout, loginError }}
+      value={{ authState, login, register, logout, AuthError }}
     >
       {children}
     </AuthContext.Provider>
