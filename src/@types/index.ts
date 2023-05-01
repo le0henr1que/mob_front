@@ -40,9 +40,10 @@ export interface AuthState {
   
 
 export interface UserInterface {
+    id?:string;
     name?:string;
     email:string;
-    password:string;
+    password?:string;
 }
 
 export interface AuthContextType {

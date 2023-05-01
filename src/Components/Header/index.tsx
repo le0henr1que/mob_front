@@ -9,9 +9,9 @@ import {
   Button,
   MenuItem,
 } from "@material-ui/core";
-import { Menu, Close, ExitToApp } from "@material-ui/icons";
+import { Menu, Close, ExitToApp, BorderColor } from "@material-ui/icons";
 import { useEffect, useState } from "react";
-import { MenuItemsHeader } from "../../@types";
+import { MenuItemsHeader, UserInterface } from "../../@types";
 
 //@ts-ignore
 import LogMob from "../../Assests/Frame142.svg";
@@ -25,8 +25,11 @@ import { useAuth } from "../../context/AuthContext";
 import UserMenu from "../User-menu-header";
 import Divider from "@mui/material/Divider";
 import api from "../../utils/api";
+import authService from "../../service/AuthService";
 
 export function Header() {
+  const [dataUserMe, setDataUserMe] = useState<UserInterface | any>(null);
+
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMenuList, setIsMenuList] = useState<MenuItemsHeader[]>([]);
   const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
@@ -35,20 +38,20 @@ export function Header() {
   const classes = useStyles();
   const navigate = useNavigate();
 
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  // const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
 
   // api.get("/users/me", )
 
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
+  // const open = Boolean(anchorEl);
+  // const id = open ? "simple-popover" : undefined;
 
   var listMenu: MenuItemsHeader[] = [
     { label: "Achar local", href: "/pesquisar-local" },
@@ -58,11 +61,25 @@ export function Header() {
   ];
 
   const handleLogout = async () => {
-    logout();
+    await logout();
+  };
+
+  const hendleUserMe = async () => {
+    const dataUser = await api.get("/users/me", {
+      headers: {
+        Authorization: `Bearer ${authService.getToken()}`,
+      },
+    });
+    setDataUserMe(dataUser.data);
   };
 
   useEffect(() => {
     setIsMenuList(listMenu);
+
+    if (authService.getToken()) {
+      hendleUserMe();
+      // console.log(dataUserMe.userMe)
+    }
   }, []);
 
   function getInitials(name: string): string {
@@ -72,6 +89,7 @@ export function Header() {
       spaceIndex !== -1 ? name.substring(spaceIndex + 1, spaceIndex + 2) : "";
     return firstName.toUpperCase() + lastName.toUpperCase();
   }
+
   return (
     <div className="container-header">
       <div className="container-header-main">
@@ -111,11 +129,25 @@ export function Header() {
               </>
             ) : (
               <div className="container-avatar-login">
-                <div className="muthed-avatar-header">
-                  {getInitials("Leonardo Henrique")}
+                <div
+                  className="muthed-avatar-header"
+                  style={{
+                    borderColor: `${
+                      dataUserMe && dataUserMe.userMe.picture && "white"
+                    }`,
+                  }}
+                >
+                  {dataUserMe && !dataUserMe.userMe.picture ? (
+                    getInitials(dataUserMe && dataUserMe.userMe.name)
+                  ) : (
+                    <img
+                      src={dataUserMe && dataUserMe.userMe.picture}
+                      alt="Perfil"
+                    />
+                  )}
                 </div>
 
-                <UserMenu userName="Leonardo Henrique">
+                <UserMenu userName={dataUserMe && dataUserMe.userMe.name}>
                   {/* <MenuItem onClick={() => alert("Sucesso")}>Profile</MenuItem>
                   <MenuItem onClick={() => alert("Sucesso")}>My account</MenuItem> */}
                   <MenuItem onClick={() => alert("Sucesso")}>
@@ -158,11 +190,29 @@ export function Header() {
                     </>
                   ) : (
                     <div className="container-avatar-login">
-                      <div className="muthed-avatar-header">
-                        {getInitials("Leonardo Henrique")}
+                      <div
+                        className="muthed-avatar-header"
+                        style={{
+                          borderColor: `${
+                            dataUserMe && dataUserMe.userMe.picture && "white"
+                          }`,
+                        }}
+                      >
+                        {dataUserMe && !dataUserMe.userMe.picture ? (
+                          getInitials(dataUserMe && dataUserMe.userMe.name)
+                        ) : (
+                          <img
+                            src={dataUserMe && dataUserMe.userMe.picture}
+                            alt="Perfil"
+                          />
+                        )}
                       </div>
+
+                      {/* <Text variant="muted font-regular body">
+                       {dataUserMe && dataUserMe.userMe.email}
+                      </Text> */}
                       <Text variant="muted font-regular body">
-                        Leonardo Henrique
+                        {dataUserMe && dataUserMe.userMe.name}
                       </Text>
                     </div>
                   )}
