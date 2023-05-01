@@ -11,10 +11,10 @@ export default {
   component: GoogleSignIn,
 } as ComponentMeta<typeof GoogleSignIn>;
 
-function handleSuccess() {
-  console.log("teste");
+function handleSuccess(tokenResponse: string) {
+  console.log(tokenResponse);
 }
 
 export const ButtonLogin: ComponentStory<typeof GoogleSignIn> = () => (
-  <GoogleSignIn />
+  <GoogleSignIn handleLogin={handleSuccess} />
 );

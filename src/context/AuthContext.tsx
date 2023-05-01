@@ -8,6 +8,7 @@ export const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
   setIsAuthenticated: () => {},
   login: async ({ email, password }: UserInterface) => {},
+  loginGoogle: async (access_token: string) => {},
   logout: () => {},
   AuthError: null,
   authState: { token: null, isAuthenticated: false },
@@ -59,6 +60,28 @@ const AuthProvider = ({ children }: any) => {
     }
   };
 
+  const loginGoogle = async (access_token: string) => {
+    try {
+      const response = await authService.loginGoogle(access_token);
+
+      const token = response.data.token;
+      console.log(response);
+
+      authService.setToken(token);
+      setAuthState({
+        token,
+        isAuthenticated: true,
+      });
+      setAuthError("");
+    } catch (error: any) {
+      console.log(error);
+
+      if (error.response.data.message) {
+        setAuthError(error.response.data.message);
+      }
+    }
+  };
+
   const register = async ({ name, email, password }: UserInterface) => {
     try {
       const userDataSendRegister: UserInterface = {
@@ -89,7 +112,7 @@ const AuthProvider = ({ children }: any) => {
   return (
     <AuthContext.Provider
       //@ts-ignore
-      value={{ authState, login, register, logout, AuthError }}
+      value={{ authState, login, register, logout, AuthError, loginGoogle }}
     >
       {children}
     </AuthContext.Provider>

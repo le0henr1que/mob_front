@@ -49,6 +49,7 @@ export interface AuthContextType {
   isAuthenticated: boolean;
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
   login: ({email, password}:UserInterface) => Promise<void>;
+  loginGoogle:(access_token:string) => Promise<void>;
   logout: () => void;
   AuthError:string | null
   authState:any

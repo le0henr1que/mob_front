@@ -10,6 +10,14 @@ const authService = {
       throw error;
     }
   },
+  async loginGoogle(access_token: string) {
+    try {
+      const response = await api.post("/login/google", { access_token });
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
 
   async register({ name, email, password }: UserInterface) {
     try {

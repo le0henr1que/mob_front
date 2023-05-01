@@ -24,6 +24,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import UserMenu from "../User-menu-header";
 import Divider from "@mui/material/Divider";
+import api from "../../utils/api";
 
 export function Header() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -43,6 +44,8 @@ export function Header() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  // api.get("/users/me", )
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;

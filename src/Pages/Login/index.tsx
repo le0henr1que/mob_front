@@ -33,7 +33,7 @@ export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login, AuthError, authState } = useAuth();
+  const { login, AuthError, authState, loginGoogle } = useAuth();
   const [error, setError] = useState<string>();
   const [load, setLoad] = useState<boolean>(false);
 
@@ -57,6 +57,7 @@ export function Login() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
     setLoad(true);
     if (!email) {
       setEmailEmpty(true);
@@ -78,8 +79,14 @@ export function Login() {
       password,
     };
 
-    const handleLogin = await login(userDataLogin);
+    await login(userDataLogin);
 
+    setLoad(false);
+  };
+
+  const handleLoginWithGoogle = async (infoUser: any) => {
+    setLoad(true);
+    await loginGoogle(infoUser.access_token);
     setLoad(false);
   };
 
@@ -192,7 +199,8 @@ export function Login() {
                   <ButtonStyle variant="medium-button">
                     {load ? <CircularProgress /> : "Logar"}
                   </ButtonStyle>
-                  <GoogleSignIn />
+
+                  <GoogleSignIn onSendAccessToken={handleLoginWithGoogle} />
                 </div>
               </form>
               <div className="container-login-content-sign">
