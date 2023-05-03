@@ -20,9 +20,14 @@ const authService = {
     }
   },
 
-  async register({ name, email, password }: UserInterface) {
+  async register({ name, email, password, accepted_terms }: UserInterface) {
     try {
-      const response = await api.post("/register", { name, email, password });
+      const response = await api.post("/user", {
+        name,
+        email,
+        password,
+        accepted_terms,
+      });
       return response;
     } catch (error) {
       throw error;

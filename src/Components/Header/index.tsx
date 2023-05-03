@@ -31,6 +31,7 @@ export function Header() {
   const [dataUserMe, setDataUserMe] = useState<UserInterface | any>(null);
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [userImage, setUserImage] = useState();
   const [isMenuList, setIsMenuList] = useState<MenuItemsHeader[]>([]);
   const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
   const { authState, logout } = useAuth();
@@ -65,16 +66,26 @@ export function Header() {
   };
 
   const hendleUserMe = async () => {
-    const dataUser = await api.get("/users/me", {
-      headers: {
-        Authorization: `Bearer ${authService.getToken()}`,
-      },
-    });
-    setDataUserMe(dataUser.data);
+    try {
+      const dataUser = await api.get("/users/me", {
+        headers: {
+          Authorization: `Bearer ${authService.getToken()}`,
+        },
+      });
+
+      setDataUserMe(dataUser.data);
+    } catch (error: any) {
+      console.log(error.response.status);
+      if (error.response.status === 403) {
+        logout();
+      }
+    }
   };
 
   useEffect(() => {
     setIsMenuList(listMenu);
+    // console.log(dataUserMe)
+    dataUserMe && setUserImage(dataUserMe.userMe.picture);
 
     if (authService.getToken()) {
       hendleUserMe();

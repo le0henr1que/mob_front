@@ -9,6 +9,12 @@ export const AuthContext = createContext<AuthContextType>({
   setIsAuthenticated: () => {},
   login: async ({ email, password }: UserInterface) => {},
   loginGoogle: async (access_token: string) => {},
+  register: async ({
+    email,
+    password,
+    name,
+    accepted_terms,
+  }: UserInterface) => {},
   logout: () => {},
   AuthError: null,
   authState: { token: null, isAuthenticated: false },
@@ -30,7 +36,7 @@ const AuthProvider = ({ children }: any) => {
     }
   }, []);
 
-  const [AuthError, setAuthError] = useState<string | null>();
+  const [AuthError, setAuthError] = useState<string | null>(null);
   const [redirect, setRedirect] = useState<boolean>();
 
   const login = async ({ email, password }: UserInterface) => {
@@ -82,22 +88,33 @@ const AuthProvider = ({ children }: any) => {
     }
   };
 
-  const register = async ({ name, email, password }: UserInterface) => {
+  const register = async ({
+    name,
+    email,
+    password,
+    accepted_terms,
+  }: UserInterface) => {
     try {
       const userDataSendRegister: UserInterface = {
         name,
         email,
         password,
+        accepted_terms,
       };
+
       const response = await authService.register(userDataSendRegister);
-      const token = response.data.token;
-      authService.setToken(token);
-      setAuthState({
-        token,
-        isAuthenticated: true,
-      });
-    } catch (error) {
-      console.error(error);
+      // const token = response.data.token;
+      // authService.setToken(token);
+
+      // setAuthState({
+      //   token,
+      //   isAuthenticated: true,
+      // });
+      setAuthError(null);
+    } catch (error: any) {
+      if (error.response.data.message) {
+        setAuthError(error.response.data.message);
+      }
     }
   };
 

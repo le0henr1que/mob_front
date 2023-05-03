@@ -92,7 +92,8 @@ export function Login() {
 
   useEffect(() => {
     AuthError && setOpen(true);
-
+    const lastPath = window.history.state?.key;
+    console.log(lastPath);
     if (authState.isAuthenticated) {
       navigate(-1);
     }
@@ -159,7 +160,7 @@ export function Login() {
 
                 <div className="container-login-content-option">
                   <div className="remember-check-password">
-                    <Checkbox
+                    {/* <Checkbox
                       checked={isChecked}
                       onChange={handleChange}
                       color="default"
@@ -168,10 +169,10 @@ export function Login() {
                     />
                     <Text variant="muted font-regular caption">
                       Lembrar senha
-                    </Text>
+                    </Text> */}
                   </div>
                   <div className="forgot-password">
-                    <a href="/forgot" className="link">
+                    <a href="/checkpoint/forgot-password" className="link">
                       <Text variant="muted font-regular caption">
                         Esqueci a senha
                       </Text>
@@ -199,10 +200,11 @@ export function Login() {
                   <ButtonStyle variant="medium-button">
                     {load ? <CircularProgress /> : "Logar"}
                   </ButtonStyle>
-
-                  <GoogleSignIn onSendAccessToken={handleLoginWithGoogle} />
                 </div>
               </form>
+              <div className="container-login-content-buttons">
+                <GoogleSignIn onSendAccessToken={handleLoginWithGoogle} />
+              </div>
               <div className="container-login-content-sign">
                 <Text variant="muted font-regular caption">
                   Não possui conta?

@@ -59,7 +59,7 @@ export default function UserMenu({ children, userName }: any) {
           onClick={handleToggle}
           endIcon={<ArrowDropDown />}
         >
-          {userName}
+          <div className="text-overflow">{userName}</div>
         </Button>
         <Popper
           open={open}

@@ -2,3 +2,12 @@
     text-decoration: none !important;
     color:#888888 !important;
 }
+.text-overflow{
+    width: 160px !important;
+    overflow: hidden !important; 
+    white-space: nowrap !important; 
+    text-overflow: ellipsis !important; 
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}

@@ -44,12 +44,14 @@ export interface UserInterface {
     name?:string;
     email:string;
     password?:string;
+    accepted_terms?:boolean
 }
 
 export interface AuthContextType {
   isAuthenticated: boolean;
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
   login: ({email, password}:UserInterface) => Promise<void>;
+  register: ({email, password, name, accepted_terms}:UserInterface) => Promise<void>;
   loginGoogle:(access_token:string) => Promise<void>;
   logout: () => void;
   AuthError:string | null
