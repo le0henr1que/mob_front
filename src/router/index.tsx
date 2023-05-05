@@ -27,6 +27,7 @@ const Router = () => {
         <Route path="/minhas-avaliacoes" element={<MyRating />} />
         <Route path="/pesquisar-local" element={<SearchLocal />} />
         <Route path="/checkpoint/chellenge-reset" element={<Chellenge />} />
+
         <Route
           path="/checkpoint/forgot-password"
           element={<ForgotPassword />}
