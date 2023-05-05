@@ -29,6 +29,7 @@ import authService from "../../service/AuthService";
 
 export function Header() {
   const [dataUserMe, setDataUserMe] = useState<UserInterface | any>(null);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [userImage, setUserImage] = useState();
@@ -65,33 +66,27 @@ export function Header() {
     await logout();
   };
 
-  const hendleUserMe = async () => {
-    try {
-      const dataUser = await api.get("/users/me", {
-        headers: {
-          Authorization: `Bearer ${authService.getToken()}`,
-        },
-      });
-
-      setDataUserMe(dataUser.data);
-    } catch (error: any) {
-      console.log(error.response.status);
-      if (error.response.status === 403) {
-        logout();
-      }
-    }
-  };
+  // alert(userImage)
 
   useEffect(() => {
     setIsMenuList(listMenu);
-    // console.log(dataUserMe)
-    dataUserMe && setUserImage(dataUserMe.userMe.picture);
 
     if (authService.getToken()) {
-      hendleUserMe();
-      // console.log(dataUserMe.userMe)
+      api
+        .get("/users/me", {
+          headers: {
+            Authorization: `Bearer ${authService.getToken()}`,
+          },
+        })
+        .then((content) => {
+          setDataUserMe(content.data);
+          setUserImage(content.data.userMe.picture);
+          setIsImageLoaded(true);
+        });
     }
   }, []);
+
+  // alert(dataUserMe.userMe.picture)
 
   function getInitials(name: string): string {
     const spaceIndex = name.indexOf(" ");
@@ -150,11 +145,13 @@ export function Header() {
                 >
                   {dataUserMe && !dataUserMe.userMe.picture ? (
                     getInitials(dataUserMe && dataUserMe.userMe.name)
-                  ) : (
+                  ) : isImageLoaded ? (
                     <img
-                      src={dataUserMe && dataUserMe.userMe.picture}
-                      alt="Perfil"
+                      src={dataUserMe.userMe.picture.replace("=s96-c", "")}
+                      alt="User avatar"
                     />
+                  ) : (
+                    <p>Loading image...</p>
                   )}
                 </div>
 
@@ -211,11 +208,16 @@ export function Header() {
                       >
                         {dataUserMe && !dataUserMe.userMe.picture ? (
                           getInitials(dataUserMe && dataUserMe.userMe.name)
-                        ) : (
+                        ) : isImageLoaded ? (
                           <img
-                            src={dataUserMe && dataUserMe.userMe.picture}
-                            alt="Perfil"
+                            src={dataUserMe.userMe.picture.replace(
+                              "=s96-c",
+                              ""
+                            )}
+                            alt="User avatar"
                           />
+                        ) : (
+                          <p>Loading image...</p>
                         )}
                       </div>
 
@@ -240,6 +242,7 @@ export function Header() {
           </div>
         </div>
       </div>
+
       {/* <div className="container-menu-margin">
                 <div className="container-menu">
                     {

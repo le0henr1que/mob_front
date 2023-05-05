@@ -159,18 +159,6 @@ export function Login() {
                 </Box>
 
                 <div className="container-login-content-option">
-                  <div className="remember-check-password">
-                    {/* <Checkbox
-                      checked={isChecked}
-                      onChange={handleChange}
-                      color="default"
-                      inputProps={{ "aria-label": "checkbox" }}
-                      // style={useStyles}
-                    />
-                    <Text variant="muted font-regular caption">
-                      Lembrar senha
-                    </Text> */}
-                  </div>
                   <div className="forgot-password">
                     <a href="/checkpoint/forgot-password" className="link">
                       <Text variant="muted font-regular caption">

@@ -19,95 +19,72 @@ export function ForgotPassword() {
   return (
     // <Container>
     <>
-      <div className="container-login">
-        {/* <div className="container-content-login"> */}
+      <div className="container-forgot-password">
+        {/* <div className="container-content-forgot-password"> */}
         {/* <div className="continaer-lateral-logo">
             <img src={LogMob} />
           </div> */}
-
-        <div className="continaer-lateral-form">
-          <div className="container-form-login">
-            <div className="container-login-content-title">
-              <Text variant="font-bold headline">Bem vindo de volta</Text>
-              <Text variant="muthed font-regular body-small">
-                Utilize sua credencial Mob para realizar o acesso.
-              </Text>
-            </div>
-
-            <form className="form-sign">
-              <Box
-                component="form"
-                sx={{
-                  "& > :not(style)": { m: 1, width: "100%" },
-                }}
-                noValidate
-                autoComplete="off"
-              >
-                <TextField
-                  id="email"
-                  name="email"
-                  label="Email"
-                  type="email"
-                  variant="outlined"
-                />
-              </Box>
-
-              <div className="container-login-content-option">
-                <div className="remember-check-password">
-                  {/* <Checkbox
-                      checked={isChecked}
-                      onChange={handleChange}
-                      color="default"
-                      inputProps={{ "aria-label": "checkbox" }}
-                      // style={useStyles}
-                    />
-                    <Text variant="muted font-regular caption">
-                      Lembrar senha
-                    </Text> */}
-                </div>
-                <div className="forgot-password">
-                  <a href="/forgot" className="link">
-                    <Text variant="muted font-regular caption">
-                      Esqueci a senha
-                    </Text>
-                  </a>
-                </div>
+        <div className="container-content-forgot-password">
+          <div className="continaer-lateral-form">
+            <div className="container-form-forgot-password">
+              <div className="container-forgot-password-content-title">
+                <Text variant="font-bold headline">Esqueceu a senha?</Text>
+                <Text variant="muthed font-regular body-small">
+                  Redefina a senha em duas etapas rápidas
+                </Text>
               </div>
-              {/* 
-                <Snackbar
-                  TransitionComponent={Fade}
-                  open={open}
-                  autoHideDuration={6000}
-                  onClose={handleClose}
-                  anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                  key="top right"
+
+              <form className="form-sign">
+                <Box
+                  component="form"
+                  sx={{
+                    "& > :not(style)": { m: 1, width: "100%" },
+                  }}
+                  noValidate
+                  autoComplete="off"
                 >
-                  <Alert
+                  <TextField
+                    id="email"
+                    name="email"
+                    label="Email"
+                    type="email"
+                    variant="outlined"
+                    autoFocus
+                  />
+                </Box>
+
+                {/* 
+                  <Snackbar
+                    TransitionComponent={Fade}
+                    open={open}
+                    autoHideDuration={6000}
                     onClose={handleClose}
-                    severity="error"
-                    sx={{ width: "100%" }}
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                    key="top right"
                   >
-                    {AuthError}
-                  </Alert>
-                </Snackbar> */}
-              <div className="container-login-content-buttons">
-                <ButtonStyle variant="medium-button">
-                  {/* {load ? <CircularProgress /> : "Logar"} */}
-                </ButtonStyle>
+                    <Alert
+                      onClose={handleClose}
+                      severity="error"
+                      sx={{ width: "100%" }}
+                    >
+                      {AuthError}
+                    </Alert>
+                  </Snackbar> */}
+                <div className="container-forgot-password-content-buttons">
+                  <ButtonStyle variant="medium-button">
+                    Redefinir Senha
+                  </ButtonStyle>
+                </div>
+              </form>
+
+              <div className="container-forgot-password-content-sign">
+                <Text variant="muted font-regular caption">
+                  <a href="/login"> Voltar</a>
+                </Text>
               </div>
-            </form>
-            <div className="container-login-content-buttons">
-              {/* <GoogleSignIn onSendAccessToken={handleLoginWithGoogle} /> */}
-            </div>
-            <div className="container-login-content-sign">
-              <Text variant="muted font-regular caption">
-                Não possui conta?
-                <a href="/cadastrar">Criar conta gratis!</a>
-              </Text>
             </div>
           </div>
         </div>
-        {/* </div> */}
       </div>
     </>
   );

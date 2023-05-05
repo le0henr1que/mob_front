@@ -10,7 +10,8 @@ import { LocalRegister } from "../Pages/LocalRegister";
 import { Register } from "../Pages/User-Register/index";
 import { MyRating } from "../Pages/MyRatings";
 import { SearchLocal } from "../Pages/SearchLocal";
-import { ForgotPassword } from "../Pages//Forgot-Password";
+import { ForgotPassword } from "../Pages/Forgot-Password";
+import { Chellenge } from "../Pages/Challenge";
 
 const Router = () => {
   return (
@@ -25,6 +26,7 @@ const Router = () => {
         <Route path="/cadastrar" element={<Register />} />
         <Route path="/minhas-avaliacoes" element={<MyRating />} />
         <Route path="/pesquisar-local" element={<SearchLocal />} />
+        <Route path="/checkpoint/chellenge-reset" element={<Chellenge />} />
         <Route
           path="/checkpoint/forgot-password"
           element={<ForgotPassword />}
