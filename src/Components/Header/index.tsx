@@ -26,6 +26,7 @@ import UserMenu from "../User-menu-header";
 import Divider from "@mui/material/Divider";
 import api from "../../utils/api";
 import authService from "../../service/AuthService";
+import { Load } from "../../Components/Load";
 
 export function Header() {
   const [dataUserMe, setDataUserMe] = useState<UserInterface | any>(null);
@@ -39,21 +40,6 @@ export function Header() {
 
   const classes = useStyles();
   const navigate = useNavigate();
-
-  // const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-
-  // const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-
-  // const handleClose = () => {
-  //   setAnchorEl(null);
-  // };
-
-  // api.get("/users/me", )
-
-  // const open = Boolean(anchorEl);
-  // const id = open ? "simple-popover" : undefined;
 
   var listMenu: MenuItemsHeader[] = [
     { label: "Achar local", href: "/pesquisar-local" },
@@ -151,7 +137,8 @@ export function Header() {
                       alt="User avatar"
                     />
                   ) : (
-                    <p>Loading image...</p>
+                    // <p>Loading image...</p>
+                    <Load variant="circular" width={45} height={45} />
                   )}
                 </div>
 
