@@ -13,17 +13,27 @@ import LogMob from "../../Assests/mob-white.svg";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
-import { redirect, useNavigate } from "react-router-dom";
+import {
+  redirect,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
+import match from "react-router-dom";
 
 export function Chellenge() {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const token = queryParams.get("chicket");
+
+  // alert(paramValue)
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+  };
+
   return (
-    // <Container>
     <>
       <div className="container-challenge">
-        {/* <div className="container-content-challenge"> */}
-        {/* <div className="continaer-lateral-logo">
-            <img src={LogMob} />
-          </div> */}
         <div className="container-content-challenge">
           <div className="continaer-lateral-form">
             <div className="container-form-challenge">
@@ -32,28 +42,12 @@ export function Chellenge() {
                   Acabamos de enviar um código para seu e-mail
                 </Text>
                 <Text variant="muthed font-regular body-small">
-                  Insira o código de verificação de 6 dígitos enviado para
-                  t*****@gmail.com.
+                  Insira o código de verificação de 6 dígito.
                 </Text>
                 <a href="/checkpoint/forgot-password">Alterar</a>
               </div>
 
               <form className="form-sign">
-                {/* <Box
-                  component="form"
-                  sx={{
-                    "& > :not(style)": { 
-                      m: 6, 
-                      width: "100%", 
-                      display:"flex", 
-                      flexDirection:"row" ,
-                      justifyContent:"center",
-                      alignItems:"center"
-                    },
-                  }}
-                  noValidate
-                  autoComplete="off"
-                > */}
                 <div className="input-challenge">
                   <TextField
                     id="challenge-number-one"
@@ -63,6 +57,7 @@ export function Chellenge() {
                     variant="outlined"
                     inputProps={{ maxLength: 1 }}
                     // onFocus
+
                     autoFocus
                   />
 
@@ -106,26 +101,8 @@ export function Chellenge() {
                     variant="outlined"
                     inputProps={{ maxLength: 1 }}
                   />
-                  {/* </Box> */}
                 </div>
 
-                {/* 
-                  <Snackbar
-                    TransitionComponent={Fade}
-                    open={open}
-                    autoHideDuration={6000}
-                    onClose={handleClose}
-                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                    key="top right"
-                  >
-                    <Alert
-                      onClose={handleClose}
-                      severity="error"
-                      sx={{ width: "100%" }}
-                    >
-                      {AuthError}
-                    </Alert>
-                  </Snackbar> */}
                 <div className="container-challenge-content-buttons">
                   <ButtonStyle variant="medium-button">Enviar</ButtonStyle>
                 </div>

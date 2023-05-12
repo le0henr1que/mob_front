@@ -13,9 +13,35 @@ import LogMob from "../../Assests/mob-white.svg";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
-import { redirect, useNavigate } from "react-router-dom";
+import { redirect, useNavigate, useSearchParams } from "react-router-dom";
+import api from "../../utils/api";
+import { CircularProgress } from "@material-ui/core";
 
 export function ForgotPassword() {
+  const [email, setEmail] = useState<string>("");
+  const [load, setLoad] = useState<boolean>(false);
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setLoad(true);
+    const responseSolicitation = await api.post("/reset-password-request", {
+      email,
+    });
+
+    const headers = {
+      Authorization: `Bearer ${responseSolicitation.data.ticket}`,
+    };
+
+    // const responseSendChallenge = await api.post("/reset-password-request/send-email", { email }, { headers });
+
+    setLoad(false);
+    navigate(
+      `/checkpoint/chellenge-reset?solicitation_token=${responseSolicitation.data.ticket}`
+    );
+  };
+
   return (
     // <Container>
     <>
@@ -34,7 +60,7 @@ export function ForgotPassword() {
                 </Text>
               </div>
 
-              <form className="form-sign">
+              <form className="form-sign" onSubmit={handleSubmit}>
                 <Box
                   component="form"
                   sx={{
@@ -50,6 +76,8 @@ export function ForgotPassword() {
                     type="email"
                     variant="outlined"
                     autoFocus
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
                   />
                 </Box>
 
@@ -72,7 +100,7 @@ export function ForgotPassword() {
                   </Snackbar> */}
                 <div className="container-forgot-password-content-buttons">
                   <ButtonStyle variant="medium-button">
-                    Redefinir Senha
+                    {load ? <CircularProgress /> : "Redefinir Senha"}
                   </ButtonStyle>
                 </div>
               </form>
