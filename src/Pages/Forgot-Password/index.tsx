@@ -30,12 +30,6 @@ export function ForgotPassword() {
       email,
     });
 
-    const headers = {
-      Authorization: `Bearer ${responseSolicitation.data.ticket}`,
-    };
-
-    // const responseSendChallenge = await api.post("/reset-password-request/send-email", { email }, { headers });
-
     setLoad(false);
     navigate(
       `/checkpoint/chellenge-reset?solicitation_token=${responseSolicitation.data.ticket}`

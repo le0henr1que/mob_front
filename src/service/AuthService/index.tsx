@@ -34,6 +34,19 @@ const authService = {
     }
   },
 
+  async logout(token: string) {
+    try {
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      const response = await api.post("/logout", {}, { headers });
+
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
+
   setToken(token: string) {
     localStorage.setItem("token", token);
   },

@@ -20,16 +20,24 @@ import {
   useParams,
 } from "react-router-dom";
 import match from "react-router-dom";
+import api from "../../utils/api";
 
 export function Chellenge() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const token = queryParams.get("chicket");
+  const token = queryParams.get("solicitation_token");
 
   // alert(paramValue)
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
   };
+
+  useEffect(() => {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    api.post("/reset-password-request/send-email", {}, { headers });
+  }, []);
 
   return (
     <>
