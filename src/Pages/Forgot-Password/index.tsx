@@ -20,15 +20,29 @@ import { CircularProgress } from "@material-ui/core";
 export function ForgotPassword() {
   const [email, setEmail] = useState<string>("");
   const [load, setLoad] = useState<boolean>(false);
+  const [emailEmpty, setEmailEmpty] = useState(false);
 
   const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setLoad(true);
+    if (!email) {
+      setEmailEmpty(true);
+      setLoad(false);
+      return;
+    } else {
+      setEmailEmpty(false);
+    }
     const responseSolicitation = await api.post("/reset-password-request", {
       email,
     });
+
+    const headers = {
+      Authorization: `Bearer ${responseSolicitation.data.ticket}`,
+    };
+
+    api.post("/reset-password-request/send-email", {}, { headers });
 
     setLoad(false);
     navigate(
@@ -64,6 +78,8 @@ export function ForgotPassword() {
                   autoComplete="off"
                 >
                   <TextField
+                    //@ts-ignore
+                    error={emailEmpty && true}
                     id="email"
                     name="email"
                     label="Email"
@@ -73,6 +89,11 @@ export function ForgotPassword() {
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
                   />
+                  {emailEmpty && (
+                    <p className="input-helper">
+                      Insira um endereço de e-mail.
+                    </p>
+                  )}
                 </Box>
 
                 {/* 

@@ -121,7 +121,6 @@ const AuthProvider = ({ children }: any) => {
   const logout = async () => {
     const token: any = authService.getToken();
     await authService.logout(token);
-
     authService.clearToken();
 
     setAuthState({

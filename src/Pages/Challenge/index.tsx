@@ -21,23 +21,68 @@ import {
 } from "react-router-dom";
 import match from "react-router-dom";
 import api from "../../utils/api";
+import { CircularProgress, Fade, Snackbar } from "@material-ui/core";
+import { Alert } from "@mui/material";
 
 export function Chellenge() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const token = queryParams.get("solicitation_token");
+  const navigate = useNavigate();
+  const [error, setError] = useState<string>();
+  const [load, setLoad] = useState<boolean>(false);
 
-  // alert(paramValue)
+  const [open, setOpen] = useState(false);
+
+  const input1Ref = useRef(null);
+  const input2Ref = useRef(null);
+  const input3Ref = useRef(null);
+  const input4Ref = useRef(null);
+  const input5Ref = useRef(null);
+  const input6Ref = useRef(null);
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-  };
+    const formData = new FormData(event.target as HTMLFormElement);
+    const data = Object.fromEntries(formData);
+    const {
+      challengeNumberOne,
+      challengeNumberTwo,
+      challengeNumberTrhee,
+      challengeNumberFour,
+      challengeNumberFive,
+      challengeNumberSix,
+    } = data;
+    const codeChallenge = `${challengeNumberOne}${challengeNumberTwo}${challengeNumberTrhee}${challengeNumberFour}${challengeNumberFive}${challengeNumberSix}`;
 
-  useEffect(() => {
     const headers = {
       Authorization: `Bearer ${token}`,
     };
-    api.post("/reset-password-request/send-email", {}, { headers });
-  }, []);
+    const newPassword = data.newPassword;
+
+    await api
+      .post(
+        "/reset-password-request/reset",
+        { codeChallenge, newPassword },
+        { headers }
+      )
+      .then((content) => {
+        navigate(`/login`);
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
+        setError(error.response.data.message);
+        setOpen(true);
+      });
+  };
+
+  const handleKeyPress = (event: any, nextInputRef: any) => {
+    if (event.target.value.length === 1) {
+      nextInputRef.current.focus();
+    }
+  };
+
+  useEffect(() => {}, []);
 
   return (
     <>
@@ -50,69 +95,98 @@ export function Chellenge() {
                   Acabamos de enviar um código para seu e-mail
                 </Text>
                 <Text variant="muthed font-regular body-small">
-                  Insira o código de verificação de 6 dígito.
+                  Um email de redefinição de senha foi enviado para o endereço
+                  fornecido.
                 </Text>
-                <a href="/checkpoint/forgot-password">Alterar</a>
+                <a href="/checkpoint/forgot-password" className="link">
+                  <Text variant="muthed font-regular body-small">Alterar</Text>
+                </a>
               </div>
 
-              <form className="form-sign">
+              <form className="form-sign" onSubmit={handleSubmit}>
+                <Text variant="muthed font-regular body">código</Text>
                 <div className="input-challenge">
                   <TextField
-                    id="challenge-number-one"
-                    name="challenge-number-one"
-                    // label="Email"
-                    type="challenge-number-one"
+                    id="challengeNumberOne"
+                    name="challengeNumberOne"
                     variant="outlined"
                     inputProps={{ maxLength: 1 }}
-                    // onFocus
-
+                    inputRef={input1Ref}
+                    onChange={(event) => handleKeyPress(event, input2Ref)}
                     autoFocus
                   />
 
                   <TextField
-                    id="challenge-number-two"
-                    name="challenge-number-two"
-                    // label="Email"
-                    type="challenge-number-two"
+                    id="challengeNumberTwo"
+                    name="challengeNumberTwo"
                     variant="outlined"
                     inputProps={{ maxLength: 1 }}
+                    inputRef={input2Ref}
+                    onChange={(event) => handleKeyPress(event, input3Ref)}
                   />
                   <TextField
-                    id="challenge-number-trhee"
-                    name="challenge-number-trhee"
-                    // label="Email"
-                    type="challenge-number-trhee"
+                    id="challengeNumberTrhee"
+                    name="challengeNumberTrhee"
                     variant="outlined"
                     inputProps={{ maxLength: 1 }}
+                    inputRef={input3Ref}
+                    onChange={(event) => handleKeyPress(event, input4Ref)}
                   />
                   <TextField
-                    id="challenge-number-four"
-                    name="challenge-number-four"
-                    // label="Email"
-                    type="challenge-number-four"
+                    id="challengeNumberFour"
+                    name="challengeNumberFour"
                     variant="outlined"
                     inputProps={{ maxLength: 1 }}
+                    inputRef={input4Ref}
+                    onChange={(event) => handleKeyPress(event, input5Ref)}
                   />
                   <TextField
-                    id="challenge-number-five"
-                    name="challenge-number-five"
-                    // label="Email"
-                    type="challenge-number-five"
+                    id="challengeNumberFive"
+                    name="challengeNumberFive"
                     variant="outlined"
                     inputProps={{ maxLength: 1 }}
+                    inputRef={input5Ref}
+                    onChange={(event) => handleKeyPress(event, input6Ref)}
                   />
                   <TextField
-                    id="challenge-number-six"
-                    name="challenge-number-six"
-                    // label="Email"
-                    type="challenge-number-six"
+                    id="challengeNumberSix"
+                    name="challengeNumberSix"
                     variant="outlined"
+                    inputRef={input6Ref}
                     inputProps={{ maxLength: 1 }}
                   />
                 </div>
-
+                <div className="new-password">
+                  <TextField
+                    id="newPassword"
+                    name="newPassword"
+                    label="Nova senha"
+                    variant="outlined"
+                    type="password"
+                    // inputRef={input6Ref}
+                    // inputProps={{ maxLength: 1 }}
+                  />
+                </div>
+                <Snackbar
+                  TransitionComponent={Fade}
+                  open={open}
+                  autoHideDuration={6000}
+                  // onClose={handleClose}
+                  anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                  key="top right"
+                >
+                  <Alert
+                    // onClose={handleClose}
+                    severity="error"
+                    sx={{ width: "100%" }}
+                  >
+                    {error}
+                  </Alert>
+                </Snackbar>
                 <div className="container-challenge-content-buttons">
-                  <ButtonStyle variant="medium-button">Enviar</ButtonStyle>
+                  <ButtonStyle variant="medium-button">
+                    {load ? <CircularProgress /> : "Redefinir Senha"}
+                  </ButtonStyle>
                 </div>
               </form>
 

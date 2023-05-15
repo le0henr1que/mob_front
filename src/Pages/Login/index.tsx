@@ -95,7 +95,7 @@ export function Login() {
     const lastPath = window.history.state?.key;
     console.log(lastPath);
     if (authState.isAuthenticated) {
-      navigate(-1);
+      navigate("/");
     }
   });
 
