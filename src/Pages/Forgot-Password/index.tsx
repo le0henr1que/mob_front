@@ -16,6 +16,7 @@ import TextField from "@mui/material/TextField";
 import { redirect, useNavigate, useSearchParams } from "react-router-dom";
 import api from "../../utils/api";
 import { CircularProgress } from "@material-ui/core";
+import { error } from "console";
 
 export function ForgotPassword() {
   const [email, setEmail] = useState<string>("");
@@ -27,6 +28,7 @@ export function ForgotPassword() {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setLoad(true);
+
     if (!email) {
       setEmailEmpty(true);
       setLoad(false);
@@ -34,20 +36,26 @@ export function ForgotPassword() {
     } else {
       setEmailEmpty(false);
     }
-    const responseSolicitation = await api.post("/reset-password-request", {
-      email,
-    });
 
-    const headers = {
-      Authorization: `Bearer ${responseSolicitation.data.ticket}`,
-    };
+    await api
+      .post("/reset-password-request", {
+        email,
+      })
+      .then((content) => {
+        const headers = {
+          Authorization: `Bearer ${content.data.ticket}`,
+        };
 
-    api.post("/reset-password-request/send-email", {}, { headers });
+        api.post("/reset-password-request/send-email", {}, { headers });
 
-    setLoad(false);
-    navigate(
-      `/checkpoint/chellenge-reset?solicitation_token=${responseSolicitation.data.ticket}`
-    );
+        setLoad(false);
+        navigate(
+          `/checkpoint/chellenge-reset?solicitation_token=${content.data.ticket}`
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (

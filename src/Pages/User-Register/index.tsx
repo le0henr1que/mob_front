@@ -171,30 +171,18 @@ export function Register() {
               </Box>
 
               <div className="container-login-content-option">
-                {/* <div className="private-check"> */}
-                {/* <Checkbox
-                    checked={isChecked}
-                    onChange={handleChange}
-                    color="default"
-                    inputProps={{ "aria-label": "checkbox" }}
-                    
-                    // style={useStyles}
-                  /> */}
                 <Text variant="muted font-regular caption">
-                  Ao clicar em Aceite e cadastre-se, você aceita os{" "}
-                  <a href="#">termos e condições</a>, a{" "}
-                  <a href="#">Política de Privacidade</a> e a{" "}
+                  Ao clicar em cadastre-se, você aceita os
+                  <a href="#">termos e condições</a>, a
+                  <a href="#">Política de Privacidade</a> e a
                   <a href="#">Política de Cookies</a> do mob!.
                 </Text>
-                {/* </div> */}
               </div>
 
               <div className="container-login-content-buttons">
                 <ButtonStyle variant="medium-button">
                   {load ? <CircularProgress /> : "Cadastre-se"}
                 </ButtonStyle>
-
-                {/* <GoogleSignIn  /> */}
               </div>
             </form>
 
