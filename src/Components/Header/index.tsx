@@ -212,16 +212,21 @@ export function Header() {
                             alt="User avatar"
                           />
                         ) : (
-                          <p>Loading image...</p>
+                          <Load variant="circular" width={45} height={45} />
                         )}
                       </div>
-
-                      {/* <Text variant="muted font-regular body">
-                       {dataUserMe && dataUserMe.userMe.email}
-                      </Text> */}
-                      <Text variant="muted font-regular body">
-                        {dataUserMe && dataUserMe.userMe.name}
-                      </Text>
+                      <UserMenu userName={dataUserMe && dataUserMe.userMe.name}>
+                        {/* <MenuItem onClick={() => alert("Sucesso")}>Profile</MenuItem>
+                      <MenuItem onClick={() => alert("Sucesso")}>My account</MenuItem> */}
+                        <MenuItem onClick={() => alert("Sucesso")}>
+                          Configuração
+                        </MenuItem>
+                        <Divider sx={{ my: 0.2 }} />
+                        <MenuItem onClick={() => handleLogout()} disableRipple>
+                          <ExitToApp />
+                          Sair
+                        </MenuItem>
+                      </UserMenu>
                     </div>
                   )}
                 </div>
