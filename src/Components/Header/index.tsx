@@ -27,6 +27,7 @@ import Divider from "@mui/material/Divider";
 import api from "../../utils/api";
 import authService from "../../service/AuthService";
 import { Load } from "../../Components/Load";
+import { error } from "console";
 
 export function Header() {
   const [dataUserMe, setDataUserMe] = useState<UserInterface | any>(null);
@@ -65,9 +66,16 @@ export function Header() {
           },
         })
         .then((content) => {
+          console.log(content);
           setDataUserMe(content.data);
           setUserImage(content.data.userMe.picture);
           setIsImageLoaded(true);
+        })
+        .catch((error) => {
+          if (error.response.status === 403) {
+            handleLogout();
+            navigate("/");
+          }
         });
     }
   }, []);
