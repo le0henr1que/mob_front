@@ -45,6 +45,7 @@ export function Chellenge() {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
     const data = Object.fromEntries(formData);
+    setLoad(true);
     const {
       challengeNumberOne,
       challengeNumberTwo,
@@ -68,6 +69,7 @@ export function Chellenge() {
         console.log(error.response.data.message);
         setError(error.response.data.message);
         setOpen(true);
+        setLoad(false);
       });
   };
 
