@@ -58,16 +58,11 @@ export function Chellenge() {
     const headers = {
       Authorization: `Bearer ${token}`,
     };
-    const newPassword = data.newPassword;
 
     await api
-      .post(
-        "/reset-password-request/reset",
-        { codeChallenge, newPassword },
-        { headers }
-      )
+      .post("/reset-password-request/verify", { codeChallenge }, { headers })
       .then((content) => {
-        navigate(`/login`);
+        navigate(`/checkpoint/update-password?solicitation_token=${token}`);
       })
       .catch((error) => {
         console.log(error.response.data.message);
@@ -156,7 +151,7 @@ export function Chellenge() {
                     inputProps={{ maxLength: 1 }}
                   />
                 </div>
-                <div className="new-password">
+                {/* <div className="new-password">
                   <TextField
                     id="newPassword"
                     name="newPassword"
@@ -166,7 +161,7 @@ export function Chellenge() {
                     // inputRef={input6Ref}
                     // inputProps={{ maxLength: 1 }}
                   />
-                </div>
+                </div> */}
                 <Snackbar
                   TransitionComponent={Fade}
                   open={open}

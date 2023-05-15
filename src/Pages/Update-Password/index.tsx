@@ -24,7 +24,7 @@ import api from "../../utils/api";
 import { CircularProgress, Fade, Snackbar } from "@material-ui/core";
 import { Alert } from "@mui/material";
 
-export function Chellenge() {
+export function UpdatePassword() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const token = queryParams.get("solicitation_token");
@@ -45,27 +45,15 @@ export function Chellenge() {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
     const data = Object.fromEntries(formData);
-    const {
-      challengeNumberOne,
-      challengeNumberTwo,
-      challengeNumberTrhee,
-      challengeNumberFour,
-      challengeNumberFive,
-      challengeNumberSix,
-    } = data;
-    const codeChallenge = `${challengeNumberOne}${challengeNumberTwo}${challengeNumberTrhee}${challengeNumberFour}${challengeNumberFive}${challengeNumberSix}`;
 
     const headers = {
       Authorization: `Bearer ${token}`,
     };
+
     const newPassword = data.newPassword;
 
     await api
-      .post(
-        "/reset-password-request/reset",
-        { codeChallenge, newPassword },
-        { headers }
-      )
+      .post("/reset-password-request/reset", { newPassword }, { headers })
       .then((content) => {
         navigate(`/login`);
       })
@@ -95,17 +83,11 @@ export function Chellenge() {
                   Acabamos de enviar um código para seu e-mail
                 </Text>
                 <Text variant="muthed font-regular body-small">
-                  Um email de redefinição de senha foi enviado para o endereço
-                  fornecido.
+                  Digite sua nova senha.
                 </Text>
-                <a href="/checkpoint/forgot-password" className="link">
-                  <Text variant="muthed font-regular body-small">Alterar</Text>
-                </a>
               </div>
 
               <form className="form-sign" onSubmit={handleSubmit}>
-                <Text variant="muthed font-regular body">código</Text>
-
                 <div className="new-password">
                   <TextField
                     id="newPassword"
@@ -141,10 +123,10 @@ export function Chellenge() {
               </form>
 
               <div className="container-challenge-content-sign">
-                <Text variant="muted font-regular caption">
+                {/* <Text variant="muted font-regular caption">
                   Se não encontrar o e-mail na sua caixa de entrada, verifique a
                   pasta de spam.
-                </Text>
+                </Text> */}
               </div>
             </div>
           </div>
