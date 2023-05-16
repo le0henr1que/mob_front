@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import { error } from "console";
 
 export function Register() {
   const { register, AuthError, login, authState } = useAuth();
@@ -29,10 +30,7 @@ export function Register() {
 
   const navigate = useNavigate();
 
-  const handleClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
+  const handleClose = () => {
     setOpen(false);
   };
 
@@ -77,16 +75,22 @@ export function Register() {
         accepted_terms: true,
       };
 
-      await register(userDataRegister);
+      await register(userDataRegister)
+        .then((content) => {
+          const userLogin: UserInterface = {
+            email,
+            password,
+          };
 
-      if (!AuthError) {
-        const userLogin: UserInterface = {
-          email,
-          password,
-        };
+          login(userLogin);
 
-        await login(userLogin);
-      }
+          setOpen(false);
+          setLoad(false);
+        })
+        .catch((error) => {
+          setOpen(true);
+          setLoad(false);
+        });
     },
   });
 
@@ -95,8 +99,6 @@ export function Register() {
   };
 
   useEffect(() => {
-    AuthError && setOpen(true);
-
     if (authState.isAuthenticated) {
       navigate("/");
     }
@@ -104,6 +106,18 @@ export function Register() {
 
   return (
     <div className="container-register">
+      <Snackbar
+        TransitionComponent={Fade}
+        open={open}
+        autoHideDuration={6000}
+        onClose={() => setOpen(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        key="top right"
+      >
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          {AuthError}
+        </Alert>
+      </Snackbar>
       <div className="container-content-register">
         <div className="continaer-lateral-logo-register">
           <img src={LogMob} />
@@ -211,23 +225,6 @@ export function Register() {
                 </ButtonStyle>
               </div>
             </form>
-
-            <Snackbar
-              TransitionComponent={Fade}
-              open={open}
-              autoHideDuration={6000}
-              onClose={handleClose}
-              anchorOrigin={{ vertical: "top", horizontal: "center" }}
-              key="top right"
-            >
-              <Alert
-                onClose={handleClose}
-                severity="error"
-                sx={{ width: "100%" }}
-              >
-                {AuthError}
-              </Alert>
-            </Snackbar>
 
             <div className="container-register-content-sign">
               <Text variant="muted font-regular caption">

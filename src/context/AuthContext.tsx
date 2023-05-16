@@ -14,7 +14,7 @@ export const AuthContext = createContext<AuthContextType>({
     password,
     name,
     accepted_terms,
-  }: UserInterface) => {},
+  }: UserInterface): Promise<any> => {},
   logout: () => {},
   AuthError: null,
   authState: { token: null, isAuthenticated: false },
@@ -101,20 +101,11 @@ const AuthProvider = ({ children }: any) => {
         password,
         accepted_terms,
       };
-
       const response = await authService.register(userDataSendRegister);
-      // const token = response.data.token;
-      // authService.setToken(token);
-
-      // setAuthState({
-      //   token,
-      //   isAuthenticated: true,
-      // });
-      setAuthError(null);
+      return response;
     } catch (error: any) {
-      if (error.response.data.message) {
-        setAuthError(error.response.data.message);
-      }
+      setAuthError(error.response.data.message);
+      throw error;
     }
   };
 
