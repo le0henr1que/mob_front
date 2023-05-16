@@ -1,47 +1,31 @@
-import { Container } from "../../Components/Container";
 import "./styles.css";
-//@ts-ignore
-import Pana from "../../Assests/pana.svg";
-//@ts-ignore
-import Google from "../../Assests/icon-google.svg";
 import { Text } from "../../Components/Text";
-import { Input } from "../../Components/Input";
-import Checkbox from "@material-ui/core/Checkbox";
 import { useEffect, useState } from "react";
 import ButtonStyle from "../../Components/Button";
-//@ts-ignore
-import Rafiki1 from "../../Assests/rafiki1.svg";
 //@ts-ignore
 import LogMob from "../../Assests/mob-white.svg";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { useAuth } from "../../context/AuthContext";
 import { UserInterface } from "../../@types";
-import { CircularProgress, Fade, Snackbar } from "@material-ui/core";
+import {
+  CircularProgress,
+  Fade,
+  IconButton,
+  InputAdornment,
+  Snackbar,
+} from "@material-ui/core";
 import { Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { Visibility, VisibilityOff } from "@material-ui/icons";
+import * as Yup from "yup";
+import { useFormik } from "formik";
 
 export function Register() {
-  const [isChecked, setIsChecked] = useState(false);
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-
   const { register, AuthError, login, authState } = useAuth();
-  const [redirect, setRedirect] = useState<boolean>(false);
   const [load, setLoad] = useState<boolean>(false);
-
+  const [showPassword, setShowPassword] = useState(false);
   const [open, setOpen] = useState(false);
-  const [emailEmpty, setEmailEmpty] = useState(false);
-  const [passwordEmpty, setPasswordEmpty] = useState(false);
-  const [nameEmpty, setNameEmpty] = useState(false);
-
-  const handleChange = (event: {
-    target: { checked: boolean | ((prevState: boolean) => boolean) };
-  }) => {
-    setIsChecked(event.target.checked);
-  };
 
   const navigate = useNavigate();
 
@@ -52,53 +36,66 @@ export function Register() {
     setOpen(false);
   };
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    setLoad(true);
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("Digite um email válido")
+      .required("O email é obrigatório"),
+    name: Yup.string()
+      .required("O nome é obrigatório")
+      .min(2, "O nome deve ter no mínimo 2 caracteres")
+      .max(50, "O nome deve ter no máximo 50 caracteres"),
+    password: Yup.string()
+      .required("A senha é obrigatória")
+      .min(8, "A senha deve ter no mínimo 8 caracteres")
+      .matches(
+        /^(?=.*[a-zA-Z])(?=.*\d)/,
+        "A senha deve conter pelo menos uma letra e um número"
+      ),
 
-    if (!name) {
-      setNameEmpty(true);
-      setLoad(false);
-      return;
-    }
-    setNameEmpty(false);
-    if (!email) {
-      setEmailEmpty(true);
-      setLoad(false);
-      return;
-    }
-    setEmailEmpty(false);
-    if (!password) {
-      setPasswordEmpty(true);
-      setLoad(false);
-      return;
-    }
-    setPasswordEmpty(false);
+    confirmPassword: Yup.string()
+      .required("A confirmação de senha é obrigatória")
+      .oneOf([Yup.ref("password")], "As senhas devem ser iguais"),
+  });
 
-    const userDataRegister: UserInterface = {
-      email,
-      password,
-      name,
-      accepted_terms: true,
-    };
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      setLoad(true);
 
-    await register(userDataRegister);
-    setRedirect(true);
+      const { email, password, name } = values;
 
-    setLoad(false);
+      const userDataRegister: UserInterface = {
+        email,
+        password,
+        name,
+        accepted_terms: true,
+      };
+
+      await register(userDataRegister);
+
+      if (!AuthError) {
+        const userLogin: UserInterface = {
+          email,
+          password,
+        };
+
+        await login(userLogin);
+      }
+    },
+  });
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
   };
 
   useEffect(() => {
     AuthError && setOpen(true);
-
-    if (redirect && !AuthError) {
-      const userLogin: UserInterface = {
-        email,
-        password,
-      };
-
-      login(userLogin);
-    }
 
     if (authState.isAuthenticated) {
       navigate("/");
@@ -106,21 +103,21 @@ export function Register() {
   });
 
   return (
-    <div className="container-login">
-      <div className="container-content-login">
-        <div className="continaer-lateral-logo">
+    <div className="container-register">
+      <div className="container-content-register">
+        <div className="continaer-lateral-logo-register">
           <img src={LogMob} />
         </div>
 
         <div className="continaer-lateral-form">
-          <div className="container-form-login">
-            <div className="container-login-content-title">
+          <div className="container-form-register">
+            <div className="container-register-content-title">
               <Text variant="font-bold headline">Criar uma conta</Text>
               <Text variant="muthed font-regular body-small">
                 Utilize seus dados para cruar um novo acesso.
               </Text>
             </div>
-            <form className="form-sign" onSubmit={handleSubmit}>
+            <form className="form-sign" onSubmit={formik.handleSubmit}>
               <Box
                 component="form"
                 sx={{
@@ -130,56 +127,85 @@ export function Register() {
                 autoComplete="off"
               >
                 <TextField
-                  //@ts-ignore
-                  error={AuthError || (nameEmpty && true)}
-                  id="full-name"
-                  name="full-name"
+                  id="name"
+                  name="name"
                   label="Nome"
+                  fullWidth
                   variant="outlined"
-                  value={name}
-                  onChange={(event) => setName(event.target.value)}
+                  value={formik.values.name}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={Boolean(formik.touched.name && formik.errors.name)}
+                  helperText={formik.touched.name && formik.errors.name}
                 />
-                {nameEmpty && <p className="input-helper">Insira seu nome.</p>}
                 <TextField
-                  //@ts-ignore
-                  error={AuthError || (emailEmpty && true)}
-                  id="email"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  name="email"
+                  type="email"
                   label="Email"
                   variant="outlined"
-                  type="email"
+                  fullWidth
+                  id="email"
+                  name="email"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={Boolean(formik.touched.email && formik.errors.email)}
+                  helperText={formik.touched.email && formik.errors.email}
                 />
-                {emailEmpty && (
-                  <p className="input-helper">Insira um endereço de e-mail.</p>
-                )}
+
                 <TextField
-                  //@ts-ignore
-                  error={AuthError || (passwordEmpty && true)}
+                  label="Senha"
                   id="password"
                   name="password"
-                  label="Password"
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
+                  variant="outlined"
+                  value={formik.values.password}
+                  type={showPassword ? "text" : "password"}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={Boolean(
+                    formik.touched.password && formik.errors.password
+                  )}
+                  helperText={formik.touched.password && formik.errors.password}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={handleTogglePassword}>
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+
+                <TextField
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  label="Confirmação de Senha"
                   variant="outlined"
                   type="password"
+                  value={formik.values.confirmPassword}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={Boolean(
+                    formik.touched.confirmPassword &&
+                      formik.errors.confirmPassword
+                  )}
+                  helperText={
+                    formik.touched.confirmPassword &&
+                    formik.errors.confirmPassword
+                  }
                 />
-                {passwordEmpty && (
-                  <p className="input-helper">Insira uma senha.</p>
-                )}
               </Box>
 
-              <div className="container-login-content-option">
+              <div className="container-register-content-option">
                 <Text variant="muted font-regular caption">
-                  Ao clicar em cadastre-se, você aceita os
-                  <a href="#">termos e condições</a>, a
-                  <a href="#">Política de Privacidade</a> e a
+                  Ao clicar em cadastre-se, você aceita os{" "}
+                  <a href="#">termos e condições</a>,{" "}
+                  <a href="#">Política de Privacidade</a> e a{" "}
                   <a href="#">Política de Cookies</a> do mob!.
                 </Text>
               </div>
 
-              <div className="container-login-content-buttons">
+              <div className="container-register-content-buttons">
                 <ButtonStyle variant="medium-button">
                   {load ? <CircularProgress /> : "Cadastre-se"}
                 </ButtonStyle>
@@ -203,7 +229,7 @@ export function Register() {
               </Alert>
             </Snackbar>
 
-            <div className="container-login-content-sign">
+            <div className="container-register-content-sign">
               <Text variant="muted font-regular caption">
                 Já possui uma conta?
                 <a href="/login">Login</a>

@@ -20,6 +20,7 @@
     "@types/react-router-dom": "^5.3.3",
     "apexcharts": "^3.37.1",
     "axios": "^1.3.6",
+    "formik": "^2.2.9",
     "jsonwebtoken": "^9.0.0",
     "prettier": "^2.8.8",
     "react": "^18.2.0",
@@ -35,7 +36,8 @@
     "ts-react-google-login-component": "^1.1.9",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4",
-    "yarn": "^1.22.19"
+    "yarn": "^1.22.19",
+    "yup": "^1.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
