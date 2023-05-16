@@ -79,7 +79,11 @@
 }
 .css-1wc848c-MuiFormHelperText-root {
     margin-left: 2px !important;
-    
+
+}
+.css-z4k887 > :not(style) {
+    margin: 0px !important;
+    margin-top: 16px !important;
 }
 .private-check{
     display: flex;

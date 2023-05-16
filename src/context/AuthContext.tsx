@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 export const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
   setIsAuthenticated: () => {},
-  login: async ({ email, password }: UserInterface) => {},
+  login: async ({ email, password }: UserInterface): Promise<any> => {},
   loginGoogle: async (access_token: string) => {},
   register: async ({
     email,
@@ -49,20 +49,17 @@ const AuthProvider = ({ children }: any) => {
       const response = await authService.login(userDataSendLogin);
 
       const token = response.data.token;
-      console.log(response);
 
       authService.setToken(token);
       setAuthState({
         token,
         isAuthenticated: true,
       });
-      setAuthError("");
-    } catch (error: any) {
-      console.log(error);
 
-      if (error.response.data.message) {
-        setAuthError(error.response.data.message);
-      }
+      return response;
+    } catch (error: any) {
+      setAuthError(error.response.data.message);
+      throw error;
     }
   };
 
@@ -78,7 +75,7 @@ const AuthProvider = ({ children }: any) => {
         token,
         isAuthenticated: true,
       });
-      setAuthError("");
+      // setAuthError("");
     } catch (error: any) {
       console.log(error);
 

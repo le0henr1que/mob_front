@@ -20,7 +20,6 @@ import { useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { error } from "console";
 
 export function Register() {
   const { register, AuthError, login, authState } = useAuth();

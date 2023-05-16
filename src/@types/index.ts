@@ -50,7 +50,7 @@ export interface UserInterface {
 export interface AuthContextType {
   isAuthenticated: boolean;
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
-  login: ({email, password}:UserInterface) => Promise<void>;
+  login: ({email, password}:UserInterface) => Promise<any>;
   register: ({email, password, name, accepted_terms}:UserInterface) => Promise<any>;
   loginGoogle:(access_token:string) => Promise<void>;
   logout: () => void;

@@ -1,11 +1,8 @@
-import { Container } from "../../Components/Container";
 import "./styles.css";
-//@ts-ignore
-import Pana from "../../Assests/pana.svg";
+
 //@ts-ignore
 import Google from "../../Assests/icon-google.svg";
 import { Text } from "../../Components/Text";
-import { Input } from "../../Components/Input";
 import Checkbox from "@material-ui/core/Checkbox";
 import { useEffect, useState } from "react";
 import ButtonStyle from "../../Components/Button";
@@ -18,71 +15,66 @@ import { useAuth } from "../../context/AuthContext";
 import { UserInterface } from "../../@types";
 import { Alert, Snackbar } from "@mui/material";
 import {
-  Button,
   CircularProgress,
   Fade,
-  Grow,
-  LinearProgress,
-  Slide,
-  SnackbarOrigin,
+  IconButton,
+  InputAdornment,
 } from "@material-ui/core";
-import { redirect, useNavigate } from "react-router-dom";
+import { Visibility, VisibilityOff } from "@material-ui/icons";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
 
 export function Login() {
-  const [isChecked, setIsChecked] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
   const { login, AuthError, authState, loginGoogle } = useAuth();
   const [error, setError] = useState<string>();
   const [load, setLoad] = useState<boolean>(false);
-
   const [open, setOpen] = useState(false);
-  const [emailEmpty, setEmailEmpty] = useState(false);
-  const [passwordEmpty, setPasswordEmpty] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
-  const handleClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    setOpen(false);
-  };
 
-  const handleChange = (event: {
-    target: { checked: boolean | ((prevState: boolean) => boolean) };
-  }) => {
-    setIsChecked(event.target.checked);
-  };
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("Digite um email válido")
+      .required("O email é obrigatório"),
+    password: Yup.string().required("A senha é obrigatória"),
+  });
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      setLoad(true);
 
-    setLoad(true);
-    if (!email) {
-      setEmailEmpty(true);
-      setLoad(false);
-      return;
-    } else {
-      setEmailEmpty(false);
-    }
-    if (!password) {
-      setPasswordEmpty(true);
-      setLoad(false);
-      return;
-    } else {
-      setPasswordEmpty(false);
-    }
+      const { email, password } = values;
 
-    const userDataLogin: UserInterface = {
-      email,
-      password,
-    };
+      const userLogin: UserInterface = {
+        email,
+        password,
+      };
 
-    await login(userDataLogin);
-
-    setLoad(false);
-  };
+      await login(userLogin)
+        .then((content) => {
+          setOpen(false);
+          setLoad(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setError(error.response.data.message);
+          if (!AuthError) {
+            setError(
+              "Ocorreu um erro inesperado, tente novamente mais tarde ou entre em contato com o suporte mob!."
+            );
+          }
+          setOpen(true);
+          setLoad(false);
+        });
+    },
+  });
 
   const handleLoginWithGoogle = async (infoUser: any) => {
     setLoad(true);
@@ -90,19 +82,35 @@ export function Login() {
     setLoad(false);
   };
 
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   useEffect(() => {
-    AuthError && setOpen(true);
-    const lastPath = window.history.state?.key;
-    console.log(lastPath);
     if (authState.isAuthenticated) {
       navigate("/");
     }
   });
 
   return (
-    // <Container>
     <>
       <div className="container-login">
+        <Snackbar
+          TransitionComponent={Fade}
+          open={open}
+          autoHideDuration={4000}
+          onClose={() => setOpen(false)}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          key="top right"
+        >
+          <Alert
+            onClose={() => setOpen(false)}
+            severity="error"
+            sx={{ width: "300px" }}
+          >
+            {AuthError}
+          </Alert>
+        </Snackbar>
         <div className="container-content-login">
           <div className="continaer-lateral-logo">
             <img src={LogMob} />
@@ -117,7 +125,7 @@ export function Login() {
                 </Text>
               </div>
 
-              <form className="form-sign" onSubmit={handleSubmit}>
+              <form className="form-sign" onSubmit={formik.handleSubmit}>
                 <Box
                   component="form"
                   sx={{
@@ -127,35 +135,43 @@ export function Login() {
                   autoComplete="off"
                 >
                   <TextField
-                    //@ts-ignore
-                    error={AuthError || (emailEmpty && true)}
+                    type="email"
+                    label="Email"
+                    variant="outlined"
+                    fullWidth
                     id="email"
                     name="email"
-                    label="Email"
-                    type="email"
-                    variant="outlined"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={Boolean(formik.touched.email && formik.errors.email)}
+                    helperText={formik.touched.email && formik.errors.email}
                   />
-                  {emailEmpty && (
-                    <p className="input-helper">
-                      Insira um endereço de e-mail.
-                    </p>
-                  )}
                   <TextField
-                    //@ts-ignore
-                    error={AuthError || (passwordEmpty && true)}
-                    name="password"
+                    label="Senha"
                     id="password"
-                    label="Password"
+                    name="password"
                     variant="outlined"
-                    type="password"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
+                    value={formik.values.password}
+                    type={showPassword ? "text" : "password"}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={Boolean(
+                      formik.touched.password && formik.errors.password
+                    )}
+                    helperText={
+                      formik.touched.password && formik.errors.password
+                    }
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={handleTogglePassword}>
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
                   />
-                  {passwordEmpty && (
-                    <p className="input-helper">Insira uma senha.</p>
-                  )}
                 </Box>
 
                 <div className="container-login-content-option">
@@ -168,22 +184,6 @@ export function Login() {
                   </div>
                 </div>
 
-                <Snackbar
-                  TransitionComponent={Fade}
-                  open={open}
-                  autoHideDuration={6000}
-                  onClose={handleClose}
-                  anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                  key="top right"
-                >
-                  <Alert
-                    onClose={handleClose}
-                    severity="error"
-                    sx={{ width: "100%" }}
-                  >
-                    {AuthError}
-                  </Alert>
-                </Snackbar>
                 <div className="container-login-content-buttons">
                   <ButtonStyle variant="medium-button">
                     {load ? <CircularProgress /> : "Logar"}
