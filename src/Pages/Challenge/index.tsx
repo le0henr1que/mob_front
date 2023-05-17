@@ -153,30 +153,15 @@ export function Chellenge() {
                     inputProps={{ maxLength: 1 }}
                   />
                 </div>
-                {/* <div className="new-password">
-                  <TextField
-                    id="newPassword"
-                    name="newPassword"
-                    label="Nova senha"
-                    variant="outlined"
-                    type="password"
-                    // inputRef={input6Ref}
-                    // inputProps={{ maxLength: 1 }}
-                  />
-                </div> */}
+
                 <Snackbar
                   TransitionComponent={Fade}
                   open={open}
                   autoHideDuration={6000}
-                  // onClose={handleClose}
                   anchorOrigin={{ vertical: "top", horizontal: "center" }}
                   key="top right"
                 >
-                  <Alert
-                    // onClose={handleClose}
-                    severity="error"
-                    sx={{ width: "100%" }}
-                  >
+                  <Alert severity="error" sx={{ width: "100%" }}>
                     {error}
                   </Alert>
                 </Snackbar>

@@ -65,11 +65,13 @@ export function Login() {
         .catch((error) => {
           console.log(error);
           setError(error.response.data.message);
-          if (!AuthError) {
+
+          if (error.response.status === 429) {
             setError(
-              "Ocorreu um erro inesperado, tente novamente mais tarde ou entre em contato com o suporte mob!."
+              "Detectamos muitas tentativas de login em um curto período de tempo. Por favor, tente novamente mais tarde ou entre em contato com o suporte ao cliente para obter assistência."
             );
           }
+
           setOpen(true);
           setLoad(false);
         });
@@ -108,7 +110,7 @@ export function Login() {
             severity="error"
             sx={{ width: "300px" }}
           >
-            {AuthError}
+            {error}
           </Alert>
         </Snackbar>
         <div className="container-content-login">
@@ -176,11 +178,14 @@ export function Login() {
 
                 <div className="container-login-content-option">
                   <div className="forgot-password">
-                    <a href="/checkpoint/forgot-password" className="link">
-                      <Text variant="muted font-regular caption">
+                    <Text variant="muted font-regular caption">
+                      <a
+                        href="/checkpoint/forgot-password"
+                        className="link-forgot"
+                      >
                         Esqueci a senha
-                      </Text>
-                    </a>
+                      </a>
+                    </Text>
                   </div>
                 </div>
 

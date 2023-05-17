@@ -1,71 +1,61 @@
-import { Container } from "../../Components/Container";
 import "./styles.css";
-//@ts-ignore
-import Pana from "../../Assests/pana.svg";
-
 import { Text } from "../../Components/Text";
-
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ButtonStyle from "../../Components/Button";
-
-//@ts-ignore
-import LogMob from "../../Assests/mob-white.svg";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-
-import { redirect, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import api from "../../utils/api";
 import { CircularProgress } from "@material-ui/core";
-import { error } from "console";
+import * as Yup from "yup";
+import { useFormik } from "formik";
 
 export function ForgotPassword() {
-  const [email, setEmail] = useState<string>("");
   const [load, setLoad] = useState<boolean>(false);
-  const [emailEmpty, setEmailEmpty] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    setLoad(true);
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("Digite um email válido")
+      .required("O email é obrigatório"),
+  });
 
-    if (!email) {
-      setEmailEmpty(true);
-      setLoad(false);
-      return;
-    } else {
-      setEmailEmpty(false);
-    }
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      setLoad(true);
 
-    await api
-      .post("/reset-password-request", {
-        email,
-      })
-      .then((content) => {
-        const headers = {
-          Authorization: `Bearer ${content.data.ticket}`,
-        };
+      const { email } = values;
 
-        api.post("/reset-password-request/send-email", {}, { headers });
+      await api
+        .post("/reset-password-request", {
+          email,
+        })
+        .then((content) => {
+          const headers = {
+            Authorization: `Bearer ${content.data.ticket}`,
+          };
 
-        setLoad(false);
-        navigate(
-          `/checkpoint/chellenge-reset?solicitation_token=${content.data.ticket}`
-        );
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+          api.post("/reset-password-request/send-email", {}, { headers });
+
+          setLoad(false);
+          navigate(
+            `/checkpoint/chellenge-reset?solicitation_token=${content.data.ticket}`
+          );
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  });
 
   return (
-    // <Container>
     <>
       <div className="container-forgot-password">
-        {/* <div className="container-content-forgot-password"> */}
-        {/* <div className="continaer-lateral-logo">
-            <img src={LogMob} />
-          </div> */}
         <div className="container-content-forgot-password">
           <div className="continaer-lateral-form">
             <div className="container-form-forgot-password">
@@ -76,7 +66,7 @@ export function ForgotPassword() {
                 </Text>
               </div>
 
-              <form className="form-sign" onSubmit={handleSubmit}>
+              <form className="form-sign" onSubmit={formik.handleSubmit}>
                 <Box
                   component="form"
                   sx={{
@@ -86,41 +76,20 @@ export function ForgotPassword() {
                   autoComplete="off"
                 >
                   <TextField
-                    //@ts-ignore
-                    error={emailEmpty && true}
+                    type="email"
+                    label="Email"
+                    variant="outlined"
+                    fullWidth
                     id="email"
                     name="email"
-                    label="Email"
-                    type="email"
-                    variant="outlined"
-                    autoFocus
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={Boolean(formik.touched.email && formik.errors.email)}
+                    helperText={formik.touched.email && formik.errors.email}
                   />
-                  {emailEmpty && (
-                    <p className="input-helper">
-                      Insira um endereço de e-mail.
-                    </p>
-                  )}
                 </Box>
 
-                {/* 
-                  <Snackbar
-                    TransitionComponent={Fade}
-                    open={open}
-                    autoHideDuration={6000}
-                    onClose={handleClose}
-                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                    key="top right"
-                  >
-                    <Alert
-                      onClose={handleClose}
-                      severity="error"
-                      sx={{ width: "100%" }}
-                    >
-                      {AuthError}
-                    </Alert>
-                  </Snackbar> */}
                 <div className="container-forgot-password-content-buttons">
                   <ButtonStyle variant="medium-button">
                     {load ? <CircularProgress /> : "Redefinir Senha"}
