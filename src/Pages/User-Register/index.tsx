@@ -26,6 +26,7 @@ export function Register() {
   const [load, setLoad] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState(false);
   const [open, setOpen] = useState(false);
+  const [error, setError] = useState<string>();
 
   const navigate = useNavigate();
 
@@ -81,16 +82,23 @@ export function Register() {
             password,
           };
 
-          await login(userLogin).then((content) => {
-            navigate("/");
-            setLoad(false);
-          });
+          await login(userLogin)
+            .then((content) => {
+              navigate("/");
+              setLoad(false);
+            })
+            .catch((error) => {
+              setOpen(true);
+              setError(error.response.data.message);
+              setLoad(false);
+            });
 
           setOpen(false);
           setLoad(false);
         })
         .catch((error) => {
           setOpen(true);
+          setError(error.response.data.message);
           setLoad(false);
         });
     },
@@ -117,7 +125,7 @@ export function Register() {
         key="top right"
       >
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-          {AuthError}
+          {error}
         </Alert>
       </Snackbar>
       <div className="container-content-register">
