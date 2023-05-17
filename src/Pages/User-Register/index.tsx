@@ -223,9 +223,9 @@ export function Register() {
               <div className="container-register-content-option">
                 <Text variant="muted font-regular caption">
                   Ao clicar em cadastre-se, você aceita os{" "}
-                  <a href="#">termos e condições</a>,{" "}
-                  <a href="#">Política de Privacidade</a> e a{" "}
-                  <a href="#">Política de Cookies</a> do mob!.
+                  <a href="/termos">termos e condições</a>,{" "}
+                  <a href="/termos">Política de Privacidade</a> e a{" "}
+                  <a href="/termos">Política de Cookies</a> do mob!.
                 </Text>
               </div>
 

@@ -21,8 +21,17 @@ import {
 } from "react-router-dom";
 import match from "react-router-dom";
 import api from "../../utils/api";
-import { CircularProgress, Fade, Snackbar } from "@material-ui/core";
+import {
+  CircularProgress,
+  Fade,
+  IconButton,
+  InputAdornment,
+  Snackbar,
+} from "@material-ui/core";
 import { Alert } from "@mui/material";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+import { Visibility, VisibilityOff } from "@material-ui/icons";
 
 export function UpdatePassword() {
   const location = useLocation();
@@ -31,38 +40,77 @@ export function UpdatePassword() {
   const navigate = useNavigate();
   const [error, setError] = useState<string>();
   const [load, setLoad] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const [open, setOpen] = useState(false);
+  const validationSchema = Yup.object().shape({
+    password: Yup.string()
+      .required("A senha é obrigatória")
+      .min(8, "A senha deve ter no mínimo 8 caracteres")
+      .matches(
+        /^(?=.*[a-zA-Z])(?=.*\d)/,
+        "A senha deve conter pelo menos uma letra e um número"
+      ),
 
-  const input1Ref = useRef(null);
-  const input2Ref = useRef(null);
-  const input3Ref = useRef(null);
-  const input4Ref = useRef(null);
-  const input5Ref = useRef(null);
-  const input6Ref = useRef(null);
+    confirmPassword: Yup.string()
+      .required("A confirmação de senha é obrigatória")
+      .oneOf([Yup.ref("password")], "As senhas devem ser iguais"),
+  });
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    const formData = new FormData(event.target as HTMLFormElement);
-    const data = Object.fromEntries(formData);
+  const formik = useFormik({
+    initialValues: {
+      password: "",
+      confirmPassword: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      const { password } = values;
+      setLoad(true);
 
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      const newPassword = password;
 
-    const newPassword = data.newPassword;
+      await api
+        .post("/reset-password-request/reset", { newPassword }, { headers })
+        .then((content) => {
+          navigate(`/login`);
+        })
+        .catch((error) => {
+          console.log(error.response.data.message);
+          setError(error.response.data.message);
+          setOpen(true);
+        });
+    },
+  });
 
-    await api
-      .post("/reset-password-request/reset", { newPassword }, { headers })
-      .then((content) => {
-        navigate(`/login`);
-      })
-      .catch((error) => {
-        console.log(error.response.data.message);
-        setError(error.response.data.message);
-        setOpen(true);
-      });
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
   };
+
+  // const handleSubmit = async (event: React.FormEvent) => {
+  //   event.preventDefault();
+  //   const formData = new FormData(event.target as HTMLFormElement);
+  //   const data = Object.fromEntries(formData);
+
+  //   const headers = {
+  //     Authorization: `Bearer ${token}`,
+  //   };
+
+  //   const newPassword = data.newPassword;
+
+  //   await api
+  //     .post("/reset-password-request/reset", { newPassword }, { headers })
+  //     .then((content) => {
+  //       navigate(`/login`);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error.response.data.message);
+  //       setError(error.response.data.message);
+  //       setOpen(true);
+  //     });
+  // };
 
   const handleKeyPress = (event: any, nextInputRef: any) => {
     if (event.target.value.length === 1) {
@@ -70,11 +118,27 @@ export function UpdatePassword() {
     }
   };
 
-  useEffect(() => {}, []);
+  // useEffect(() => {}, []);
 
   return (
     <>
       <div className="container-challenge">
+        <Snackbar
+          TransitionComponent={Fade}
+          open={open}
+          autoHideDuration={6000}
+          // onClose={handleClose}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          key="top right"
+        >
+          <Alert
+            // onClose={handleClose}
+            severity="error"
+            sx={{ width: "100%" }}
+          >
+            {error}
+          </Alert>
+        </Snackbar>
         <div className="container-content-challenge">
           <div className="continaer-lateral-form">
             <div className="container-form-challenge">
@@ -87,34 +151,61 @@ export function UpdatePassword() {
                 </Text>
               </div>
 
-              <form className="form-sign" onSubmit={handleSubmit}>
-                <div className="new-password">
+              <form className="form-sign" onSubmit={formik.handleSubmit}>
+                <Box
+                  component="form"
+                  sx={{
+                    "& > :not(style)": { m: 1, width: "100%" },
+                  }}
+                  noValidate
+                  autoComplete="off"
+                >
                   <TextField
-                    id="newPassword"
-                    name="newPassword"
-                    label="Nova senha"
+                    label="Senha"
+                    id="password"
+                    name="password"
+                    variant="outlined"
+                    value={formik.values.password}
+                    type={showPassword ? "text" : "password"}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={Boolean(
+                      formik.touched.password && formik.errors.password
+                    )}
+                    helperText={
+                      formik.touched.password && formik.errors.password
+                    }
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={handleTogglePassword}>
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+
+                  <TextField
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    label="Confirmação de Senha"
                     variant="outlined"
                     type="password"
-                    // inputRef={input6Ref}
-                    // inputProps={{ maxLength: 1 }}
+                    value={formik.values.confirmPassword}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={Boolean(
+                      formik.touched.confirmPassword &&
+                        formik.errors.confirmPassword
+                    )}
+                    helperText={
+                      formik.touched.confirmPassword &&
+                      formik.errors.confirmPassword
+                    }
                   />
-                </div>
-                <Snackbar
-                  TransitionComponent={Fade}
-                  open={open}
-                  autoHideDuration={6000}
-                  // onClose={handleClose}
-                  anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                  key="top right"
-                >
-                  <Alert
-                    // onClose={handleClose}
-                    severity="error"
-                    sx={{ width: "100%" }}
-                  >
-                    {error}
-                  </Alert>
-                </Snackbar>
+                </Box>
+
                 <div className="container-challenge-content-buttons">
                   <ButtonStyle variant="medium-button">
                     {load ? <CircularProgress /> : "Redefinir Senha"}
@@ -122,12 +213,7 @@ export function UpdatePassword() {
                 </div>
               </form>
 
-              <div className="container-challenge-content-sign">
-                {/* <Text variant="muted font-regular caption">
-                  Se não encontrar o e-mail na sua caixa de entrada, verifique a
-                  pasta de spam.
-                </Text> */}
-              </div>
+              <div className="container-challenge-content-sign"></div>
             </div>
           </div>
         </div>

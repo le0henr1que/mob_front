@@ -13,6 +13,7 @@ import { SearchLocal } from "../Pages/SearchLocal";
 import { ForgotPassword } from "../Pages/Forgot-Password";
 import { Chellenge } from "../Pages/Challenge";
 import { UpdatePassword } from "../Pages/Update-Password";
+import { Terms } from "../Pages/Terms";
 
 const Router = () => {
   return (
@@ -28,6 +29,7 @@ const Router = () => {
         <Route path="/minhas-avaliacoes" element={<MyRating />} />
         <Route path="/pesquisar-local" element={<SearchLocal />} />
         <Route path="/checkpoint/chellenge-reset" element={<Chellenge />} />
+        <Route path="/termos" element={<Terms />} />
         <Route
           path="/checkpoint/update-password"
           element={<UpdatePassword />}
