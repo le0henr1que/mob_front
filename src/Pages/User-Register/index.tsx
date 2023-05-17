@@ -75,13 +75,16 @@ export function Register() {
       };
 
       await register(userDataRegister)
-        .then((content) => {
+        .then(async (content) => {
           const userLogin: UserInterface = {
             email,
             password,
           };
 
-          login(userLogin);
+          await login(userLogin).then((content) => {
+            navigate("/");
+            setLoad(false);
+          });
 
           setOpen(false);
           setLoad(false);
