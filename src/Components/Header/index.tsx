@@ -9,6 +9,7 @@ import {
   Button,
   MenuItem,
   Snackbar,
+  CircularProgress,
 } from "@material-ui/core";
 import { Menu, Close, ExitToApp } from "@material-ui/icons";
 import { useEffect, useState } from "react";
@@ -33,7 +34,7 @@ import CookieIcon from "@mui/icons-material/Cookie";
 export function Header() {
   const [dataUserMe, setDataUserMe] = useState<UserInterface | any>(null);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
-
+  const [load, setLoad] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [userImage, setUserImage] = useState();
   const [isMenuList, setIsMenuList] = useState<MenuItemsHeader[]>([]);
@@ -86,6 +87,7 @@ export function Header() {
   }, []);
 
   const handleAcceptCookies = () => {
+    setLoad(true);
     api
       .put(
         "/user",
@@ -100,6 +102,7 @@ export function Header() {
       )
       .then((content) => {
         setOpen(false);
+        setLoad(false);
       })
       .catch((error) => {
         setOpen(false);
@@ -280,7 +283,7 @@ export function Header() {
         }
         action={
           <Button color="primary" size="large" onClick={handleAcceptCookies}>
-            Aceitar
+            {load ? <CircularProgress /> : "Aceitar"}
           </Button>
         }
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
