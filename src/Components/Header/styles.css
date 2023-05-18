@@ -43,6 +43,10 @@
     background: #FAFAFA ;
 }
 
+.MuiSnackbarContent-root {
+    background-color: #FFF !important;
+}
+
 .div-button{
     display: flex;
     justify-content: center;

@@ -8,8 +8,9 @@ import {
   Popover,
   Button,
   MenuItem,
+  Snackbar,
 } from "@material-ui/core";
-import { Menu, Close, ExitToApp, BorderColor } from "@material-ui/icons";
+import { Menu, Close, ExitToApp } from "@material-ui/icons";
 import { useEffect, useState } from "react";
 import { MenuItemsHeader, UserInterface } from "../../@types";
 
@@ -27,7 +28,7 @@ import Divider from "@mui/material/Divider";
 import api from "../../utils/api";
 import authService from "../../service/AuthService";
 import { Load } from "../../Components/Load";
-import { error } from "console";
+import CookieIcon from "@mui/icons-material/Cookie";
 
 export function Header() {
   const [dataUserMe, setDataUserMe] = useState<UserInterface | any>(null);
@@ -39,6 +40,7 @@ export function Header() {
   const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
   const { authState, logout } = useAuth();
 
+  const [open, setOpen] = useState(false);
   const classes = useStyles();
   const navigate = useNavigate();
 
@@ -69,6 +71,9 @@ export function Header() {
           console.log(content);
           setDataUserMe(content.data);
           setUserImage(content.data.userMe.picture);
+          !content.data.userMe.cookieConsent &&
+            authState.isAuthenticated &&
+            setOpen(true);
           setIsImageLoaded(true);
         })
         .catch((error) => {
@@ -80,7 +85,27 @@ export function Header() {
     }
   }, []);
 
-  // alert(dataUserMe.userMe.picture)
+  const handleAcceptCookies = () => {
+    api
+      .put(
+        "/user",
+        {
+          cookieConsent: true,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${authService.getToken()}`,
+          },
+        }
+      )
+      .then((content) => {
+        setOpen(false);
+      })
+      .catch((error) => {
+        setOpen(false);
+        console.log(error);
+      });
+  };
 
   function getInitials(name: string): string {
     const spaceIndex = name.indexOf(" ");
@@ -89,6 +114,10 @@ export function Header() {
       spaceIndex !== -1 ? name.substring(spaceIndex + 1, spaceIndex + 2) : "";
     return firstName.toUpperCase() + lastName.toUpperCase();
   }
+
+  useEffect(() => {
+    // !dataUserMe.userMe.cookieConsent && setOpen(true);
+  }, []);
 
   return (
     <div className="container-header">
@@ -145,14 +174,11 @@ export function Header() {
                       alt="User avatar"
                     />
                   ) : (
-                    // <p>Loading image...</p>
                     <Load variant="circular" width={45} height={45} />
                   )}
                 </div>
 
                 <UserMenu userName={dataUserMe && dataUserMe.userMe.name}>
-                  {/* <MenuItem onClick={() => alert("Sucesso")}>Profile</MenuItem>
-                  <MenuItem onClick={() => alert("Sucesso")}>My account</MenuItem> */}
                   <MenuItem onClick={() => alert("Sucesso")}>
                     Configuração
                   </MenuItem>
@@ -243,17 +269,23 @@ export function Header() {
         </div>
       </div>
 
-      {/* <div className="container-menu-margin">
-                <div className="container-menu">
-                    {
-                        isMenuList.map((item) => (
-                            <a href={item.href} className="link">
-                                <Text variant="muted font-regular subheadline">{item.label}</Text>
-                            </a>
-                        ))
-                    }
-                </div>
-            </div> */}
+      <Snackbar
+        open={open}
+        message={
+          <>
+            {/* <CookieIcon/>  */}
+            Este site utiliza cookies. Clique em 'Aceitar' para confirmar o uso
+            de cookies.
+          </>
+        }
+        action={
+          <Button color="primary" size="large" onClick={handleAcceptCookies}>
+            Aceitar
+          </Button>
+        }
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        // style={{ width: '100%' }}
+      />
     </div>
   );
 }

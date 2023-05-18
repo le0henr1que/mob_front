@@ -108,13 +108,14 @@
     margin-top: 32px;
 }
 
+
 @media screen and (max-width: 1076px) {
     .container-content-register{
         width: 90% !important;
     }
 }
 @media screen and (max-width: 800px) {
-    .continaer-lateral-logo{
+    .continaer-lateral-logo-register{
         display: none !important;
     }
 }
