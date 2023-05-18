@@ -30,11 +30,13 @@ import api from "../../utils/api";
 import authService from "../../service/AuthService";
 import { Load } from "../../Components/Load";
 import CookieIcon from "@mui/icons-material/Cookie";
+import { SnackbarProvider, useSnackbar } from "notistack";
 
 export function Header() {
   const [dataUserMe, setDataUserMe] = useState<UserInterface | any>(null);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [load, setLoad] = useState(false);
+  const [loadConfirmarEmail, setLoadConfirmarEmail] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [userImage, setUserImage] = useState();
   const [isMenuList, setIsMenuList] = useState<MenuItemsHeader[]>([]);
@@ -42,8 +44,12 @@ export function Header() {
   const { authState, logout } = useAuth();
 
   const [open, setOpen] = useState(false);
+
+  const [openEmailConfirm, setOpenEmailConfirm] = useState(false);
+
   const classes = useStyles();
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
 
   var listMenu: MenuItemsHeader[] = [
     { label: "Achar local", href: "/pesquisar-local" },
@@ -75,6 +81,10 @@ export function Header() {
           !content.data.userMe.cookieConsent &&
             authState.isAuthenticated &&
             setOpen(true);
+          !content.data.userMe.confirmed_email &&
+            authState.isAuthenticated &&
+            setOpenEmailConfirm(true);
+
           setIsImageLoaded(true);
         })
         .catch((error) => {
@@ -108,6 +118,12 @@ export function Header() {
         setOpen(false);
         console.log(error);
       });
+  };
+
+  const handleSendEmailConfirmation = () => {
+    setLoadConfirmarEmail(true);
+
+    setOpenEmailConfirm(false);
   };
 
   function getInitials(name: string): string {
@@ -272,23 +288,49 @@ export function Header() {
         </div>
       </div>
 
-      <Snackbar
-        open={open}
-        message={
-          <>
-            {/* <CookieIcon/>  */}
-            Este site utiliza cookies. Clique em 'Aceitar' para confirmar o uso
-            de cookies.
-          </>
-        }
-        action={
-          <Button color="primary" size="large" onClick={handleAcceptCookies}>
-            {load ? <CircularProgress /> : "Aceitar"}
-          </Button>
-        }
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        // style={{ width: '100%' }}
-      />
+      <SnackbarProvider maxSnack={3}>
+        <Snackbar
+          open={open}
+          message={
+            <>
+              Este site utiliza cookies. Clique em 'Aceitar' para confirmar o
+              uso de cookies.
+            </>
+          }
+          action={
+            <Button color="primary" size="large" onClick={handleAcceptCookies}>
+              {load ? <CircularProgress color="secondary" /> : "Aceitar"}
+            </Button>
+          }
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        />
+
+        <Snackbar
+          open={openEmailConfirm}
+          message={
+            <>
+              Você ainda não confirmou seu email, mas é necessário fazer isso
+              para ter acesso a todas as funcionalidades do site. Para confirmar
+              seu email, basta clicar em ‘Confirmar’ e seguir o link que
+              enviamos para sua caixa de entrada.
+            </>
+          }
+          action={
+            <Button
+              color="primary"
+              size="large"
+              onClick={handleSendEmailConfirmation}
+            >
+              {loadConfirmarEmail ? (
+                <CircularProgress color="secondary" />
+              ) : (
+                "Confirmar Email"
+              )}
+            </Button>
+          }
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        />
+      </SnackbarProvider>
     </div>
   );
 }

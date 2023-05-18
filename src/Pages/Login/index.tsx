@@ -23,7 +23,7 @@ import {
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export function Login() {
   const { login, AuthError, authState, loginGoogle } = useAuth();
@@ -88,9 +88,13 @@ export function Login() {
     setShowPassword(!showPassword);
   };
 
+  const location = useLocation();
+
   useEffect(() => {
+    const from = location.state?.from || "/";
+
     if (authState.isAuthenticated) {
-      navigate("/");
+      navigate(from);
     }
   });
 

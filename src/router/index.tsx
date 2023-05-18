@@ -14,17 +14,34 @@ import { ForgotPassword } from "../Pages/Forgot-Password";
 import { Chellenge } from "../Pages/Challenge";
 import { UpdatePassword } from "../Pages/Update-Password";
 import { Terms } from "../Pages/Terms";
+import { useAuth } from "../context/AuthContext";
+import PrivateRoute from "./privateRoute";
 
 const Router = () => {
+  const { authState } = useAuth();
+
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/local/avaliar" element={<Evaluete />} />
+        <Route
+          path="/local/cadastrar"
+          element={<PrivateRoute Component={LocalRegister} />}
+        />
+
+        {/* <PrivateRoute
+          exact
+          path="/local/cadastrar"
+          component={LocalRegister}
+          authenticated={authState.isAuthenticated}
+        /> */}
+
+        {/* <Route path="/local/cadastrar" element={<LocalRegister />} /> */}
+
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/local" element={<Local />} />
         <Route path="/local/avaliacoes" element={<Rating />} />
-        <Route path="/local/avaliar" element={<Evaluete />} />
-        <Route path="/local/cadastrar" element={<LocalRegister />} />
         <Route path="/cadastrar" element={<Register />} />
         <Route path="/minhas-avaliacoes" element={<MyRating />} />
         <Route path="/pesquisar-local" element={<SearchLocal />} />
