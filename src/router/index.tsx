@@ -13,6 +13,7 @@ import { SearchLocal } from "../Pages/SearchLocal";
 import { ForgotPassword } from "../Pages/Forgot-Password";
 import { Chellenge } from "../Pages/Challenge";
 import { UpdatePassword } from "../Pages/Update-Password";
+import { ConfirmEmail } from "../Pages/ConfirmEmail";
 import { Terms } from "../Pages/Terms";
 import { useAuth } from "../context/AuthContext";
 import PrivateRoute from "./privateRoute";
@@ -40,6 +41,9 @@ const Router = () => {
 
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+
+        <Route path="/confirmar-email" element={<ConfirmEmail />} />
+
         <Route path="/local" element={<Local />} />
         <Route path="/local/avaliacoes" element={<Rating />} />
         <Route path="/cadastrar" element={<Register />} />

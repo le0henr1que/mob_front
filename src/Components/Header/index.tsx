@@ -31,6 +31,7 @@ import authService from "../../service/AuthService";
 import { Load } from "../../Components/Load";
 import CookieIcon from "@mui/icons-material/Cookie";
 import { SnackbarProvider, useSnackbar } from "notistack";
+import { useCookies, withCookies } from "react-cookie";
 
 export function Header() {
   const [dataUserMe, setDataUserMe] = useState<UserInterface | any>(null);
@@ -42,10 +43,10 @@ export function Header() {
   const [isMenuList, setIsMenuList] = useState<MenuItemsHeader[]>([]);
   const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
   const { authState, logout } = useAuth();
-
   const [open, setOpen] = useState(false);
-
   const [openEmailConfirm, setOpenEmailConfirm] = useState(false);
+
+  const [cookies, setCookie] = useCookies(["confirmationEmailSent"]);
 
   const classes = useStyles();
   const navigate = useNavigate();
@@ -76,13 +77,17 @@ export function Header() {
         })
         .then((content) => {
           console.log(content);
+
           setDataUserMe(content.data);
           setUserImage(content.data.userMe.picture);
+
           !content.data.userMe.cookieConsent &&
             authState.isAuthenticated &&
             setOpen(true);
+
           !content.data.userMe.confirmed_email &&
             authState.isAuthenticated &&
+            !cookies.confirmationEmailSent &&
             setOpenEmailConfirm(true);
 
           setIsImageLoaded(true);
@@ -120,10 +125,33 @@ export function Header() {
       });
   };
 
-  const handleSendEmailConfirmation = () => {
+  const handleSendEmailConfirmation = async () => {
     setLoadConfirmarEmail(true);
+    await api
+      .post(
+        "/confirmar-email",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${authService.getToken()}`,
+          },
+        }
+      )
+      .then((content) => {
+        console.log(content);
+        const expiryDate = new Date();
+        expiryDate.setDate(expiryDate.getDate() + 5);
+        setCookie("confirmationEmailSent", true, { expires: expiryDate });
 
-    setOpenEmailConfirm(false);
+        setOpenEmailConfirm(false);
+        setLoadConfirmarEmail(false);
+        console.log(cookies.confirmationEmailSent);
+        console.log(cookies);
+      })
+      .catch((error) => {
+        setOpenEmailConfirm(false);
+        console.log(error);
+      });
   };
 
   function getInitials(name: string): string {
@@ -135,7 +163,8 @@ export function Header() {
   }
 
   useEffect(() => {
-    // !dataUserMe.userMe.cookieConsent && setOpen(true);
+    // cookies.confirmationEmailSent === true && setOpenEmailConfirm(false);
+    // console.log(cookies)
   }, []);
 
   return (
