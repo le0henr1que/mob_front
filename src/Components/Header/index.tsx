@@ -279,7 +279,7 @@ export function Header() {
                     </>
                   ) : (
                     <div className="container-avatar-login">
-                      <div
+                      {/* <div
                         className="muthed-avatar-header"
                         style={{
                           borderColor: `${
@@ -300,7 +300,7 @@ export function Header() {
                         ) : (
                           <Load variant="circular" width={45} height={45} />
                         )}
-                      </div>
+                      </div> */}
                       <UserMenu userName={dataUserMe && dataUserMe.userMe.name}>
                         {/* <MenuItem onClick={() => alert("Sucesso")}>Profile</MenuItem>
                       <MenuItem onClick={() => alert("Sucesso")}>My account</MenuItem> */}
@@ -316,13 +316,13 @@ export function Header() {
                     </div>
                   )}
                 </div>
-                {isMenuList.map((item) => (
+                {/* {isMenuList.map((item) => (
                   <a href={item.href} className="link">
                     <Text variant="muted font-regular subheadline">
                       {item.label}
                     </Text>
                   </a>
-                ))}
+                ))} */}
               </List>
             </Drawer>
           </div>

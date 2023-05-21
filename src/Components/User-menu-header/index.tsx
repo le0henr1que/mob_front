@@ -8,66 +8,90 @@ import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import Stack from "@mui/material/Stack";
 import "./styles.css";
-import { ArrowDropDown } from "@material-ui/icons";
+import { LockOutlined } from "@material-ui/icons";
 import ButtonStyle from "../Button";
 import { useAuth } from "../../context/AuthContext";
+import { Text } from "../Text";
+import { MenuItemsHeader } from "../../@types";
 
 export default function UserMenu({ children, userName }: any) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLButtonElement>(null);
   const { authState, logout } = useAuth();
-
-  const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
-
-  const handleClose = (event: Event | React.SyntheticEvent) => {
-    if (
-      anchorRef.current &&
-      anchorRef.current.contains(event.target as HTMLElement)
-    ) {
-      return;
-    }
-
-    setOpen(false);
-  };
-
-  function handleListKeyDown(event: React.KeyboardEvent) {
-    if (event.key === "Tab") {
-      event.preventDefault();
-      setOpen(false);
-    } else if (event.key === "Escape") {
-      setOpen(false);
-    }
-  }
-
-  const prevOpen = React.useRef(open);
-  React.useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.current!.focus();
-    }
-
-    prevOpen.current = open;
-  }, [open]);
+  const [isMenuList, setIsMenuList] = React.useState<MenuItemsHeader[]>([
+    { label: "Achar local", href: "/pesquisar-local" },
+    { label: "Minhas avaliações", href: "/minhas-avaliacoes" },
+    { label: "Sobre o Mob!", href: "/about" },
+    { label: "Fazer avaliação", href: "/pesquisar-local" },
+  ]);
 
   const handleLogout = async () => {
     await logout();
   };
 
+  const handleMouseOver = async () => {
+    setOpen(true);
+  };
+
+  document.addEventListener("click", function () {
+    setOpen(false);
+  });
+
   return (
     <>
       <div className="container-user-avatar">
-        <div className="container-avatar-image-main">L</div>
+        <div
+          className="container-avatar-image-main"
+          onMouseOver={() => setOpen(true)}
+        >
+          L
+        </div>
       </div>
       <div
-        className="container-element option-user"
-        style={{ display: "block" }}
+        className="container-element option-user fade-out"
+        style={{ display: open ? "block" : "none" }}
       >
         <div className="container-banner-option">
           <div className="container-avatar-image-banner">L</div>
           <div className="text-banner">Leonardo Henrique dos Santos </div>
         </div>
-        <div className="option-first"></div>
+        <div className="option-first">
+          <LockOutlined />
+
+          <div className="content-text">
+            <strong>Minha senha</strong>
+            <div>Alterar a senha de acesso</div>
+          </div>
+
+          <div>
+            <svg
+              className="MuiSvgIcon-root"
+              focusable="false"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              role="presentation"
+            >
+              <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>
+            </svg>
+          </div>
+        </div>
+
+        <div className="option-second">
+          {/* <LockOutlined/>
+
+          <div className="content-text">
+            <strong>Minha senha</strong>
+            <div>Alterar a senha de acesso</div>
+          </div> */}
+          {isMenuList.map((item: any) => (
+            <a href={item.href} className="link">
+              <Text variant="muted font-regular subheadline">{item.label}</Text>
+            </a>
+          ))}
+
+          {/* <div><svg className="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></div> */}
+        </div>
+
         <div className="option-button-logout">
           <ButtonStyle variant="small-button " onClick={() => handleLogout()}>
             Sair
