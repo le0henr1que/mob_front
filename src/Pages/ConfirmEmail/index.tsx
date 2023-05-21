@@ -20,13 +20,36 @@ import { Company } from "../../Components/Company";
 import { StarRating } from "../../Components/StarRating";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import { useEffect, useState } from "react";
+import api from "../../utils/api";
 
 export function ConfirmEmail() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const token = queryParams.get("solicitation_token");
 
-  console.log(token);
+  const [message, setMessage] = useState();
+
+  useEffect(() => {
+    api
+      .post(
+        "/confirm-email/verify-token",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((content) => {
+        setMessage(content.data.message);
+        console.log(content);
+      })
+      .catch((error) => {
+        setMessage(error.response.data.message);
+        console.log(error);
+      });
+  }, [message]);
 
   return (
     <div className="container-confirmEmail">
@@ -34,14 +57,9 @@ export function ConfirmEmail() {
         <div className="continaer-lateral-form">
           <div className="container-form-confirmEmail">
             <div className="container-confirmEmail-content-title">
-              <Text variant="font-bold headline">
-                Acabamos de enviar um código para seu e-mail
-              </Text>
+              <Text variant="font-bold headline">Confirmação de Email</Text>
 
-              <Text variant="muthed font-regular body-small">
-                Um email de redefinição de senha foi enviado para o endereço
-                fornecido.
-              </Text>
+              <Text variant="muthed font-regular body-small">{message}</Text>
             </div>
           </div>
         </div>

@@ -1,5 +1,7 @@
 .container-login{
     width: 100%;
+    overflow: auto;
+    overflow-y: auto; /* Adicionado para permitir a rolagem vertical */
 }
 .container-content-login{
     position: fixed;
@@ -11,7 +13,9 @@
     background: #FFFFFF;
     box-shadow: 0px 12px 12px -2px rgba(136, 136, 136, 0.12);
     border-radius: 16px;
-    overflow: hidden;
+    overflow: auto;
+    overflow-y: auto; /* Adicionado para permitir a rolagem vertical */
+
     
 }
 .container-content-login{
@@ -128,4 +132,30 @@
 }
 .MuiCircularProgress-colorPrimary {
     color: #FFF !important;
+}
+@media screen and (max-height: 643px) {
+    .container-login{
+        width: 100%;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-direction: column !important;
+    }
+    .container-content-login{
+        position: inherit !important;
+        top: inherit !important;
+        left: inherit !important;
+        transform: inherit !important;
+        margin-top: 40px;
+        margin-bottom: 40px;
+        width: 984px;
+        height: auto;
+        background: #FFFFFF;
+        box-shadow: 0px 12px 12px -2px rgba(136, 136, 136, 0.12);
+        border-radius: 16px;
+
+    
+        
+    }
+  
 }

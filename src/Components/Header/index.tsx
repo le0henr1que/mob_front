@@ -129,7 +129,7 @@ export function Header() {
     setLoadConfirmarEmail(true);
     await api
       .post(
-        "/confirmar-email",
+        "/confirm-email",
         {},
         {
           headers: {
@@ -206,26 +206,6 @@ export function Header() {
               </>
             ) : (
               <div className="container-avatar-login">
-                <div
-                  className="muthed-avatar-header"
-                  style={{
-                    borderColor: `${
-                      dataUserMe && dataUserMe.userMe.picture && "white"
-                    }`,
-                  }}
-                >
-                  {dataUserMe && !dataUserMe.userMe.picture ? (
-                    getInitials(dataUserMe && dataUserMe.userMe.name)
-                  ) : isImageLoaded ? (
-                    <img
-                      src={dataUserMe.userMe.picture.replace("=s96-c", "")}
-                      alt="User avatar"
-                    />
-                  ) : (
-                    <Load variant="circular" width={45} height={45} />
-                  )}
-                </div>
-
                 <UserMenu userName={dataUserMe && dataUserMe.userMe.name}>
                   <MenuItem onClick={() => alert("Sucesso")}>
                     Configuração
@@ -236,6 +216,38 @@ export function Header() {
                     Sair
                   </MenuItem>
                 </UserMenu>
+
+                {/* <div
+                  className="muthed-avatar-header"
+                  style={{
+                    borderColor: `${
+                      dataUserMe && dataUserMe.userMe.picture && "white"
+                    }`,
+                  }}
+                > */}
+                {/* {dataUserMe && !dataUserMe.userMe.picture ? (
+                    getInitials(dataUserMe && dataUserMe.userMe.name)
+                  ) : isImageLoaded ? (
+                    // <img
+                    //   src={dataUserMe.userMe.picture.replace("=s96-c", "")}
+                    //   alt="User avatar"
+                    // />
+                  ) : (
+                    // <Load variant="circular" width={45} height={45} />
+                  )
+                } */}
+                {/* </div> */}
+
+                {/* <UserMenu userName={dataUserMe && dataUserMe.userMe.name}>
+                  <MenuItem onClick={() => alert("Sucesso")}>
+                    Configuração
+                  </MenuItem>
+                  <Divider sx={{ my: 0.2 }} />
+                  <MenuItem onClick={() => handleLogout()} disableRipple>
+                    <ExitToApp />
+                    Sair
+                  </MenuItem>
+                </UserMenu> */}
               </div>
             )}
             <Drawer
