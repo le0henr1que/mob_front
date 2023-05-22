@@ -41,21 +41,31 @@ export default function UserMenu(userInformation: any) {
   return (
     <>
       <div className="container-user-avatar">
-        <div
-          className="container-avatar-image-main"
-          onMouseOver={() => setOpen(true)}
-          style={
-            picture && {
+        {picture ? (
+          <div
+            className="container-avatar-image-main"
+            onMouseOver={() => setOpen(true)}
+            style={{
               backgroundImage: `url(${picture.replace("=s96-c", "")})`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "100%",
               backgroundPosition: "center",
               backgroundColor: "#fff !important",
-            }
-          }
-        >
-          {!picture && getInitials(name)}
-        </div>
+            }}
+          >
+            {/* {!picture && getInitials(name)} */}
+          </div>
+        ) : (
+          <div
+            className="container-avatar-image-main"
+            onMouseOver={() => setOpen(true)}
+            style={{
+              backgroundColor: "#119bf7 !important",
+            }}
+          >
+            {!picture && getInitials(name)}
+          </div>
+        )}
       </div>
       <div
         className="container-element option-user fade-out"
