@@ -12,7 +12,7 @@ import {
   CircularProgress,
 } from "@material-ui/core";
 import { Menu, Close, ExitToApp } from "@material-ui/icons";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { MenuItemsHeader, UserInterface } from "../../@types";
 
 //@ts-ignore
@@ -45,7 +45,6 @@ export function Header() {
   const { authState, logout } = useAuth();
   const [open, setOpen] = useState(false);
   const [openEmailConfirm, setOpenEmailConfirm] = useState(false);
-
   const [cookies, setCookie] = useCookies(["confirmationEmailSent"]);
 
   const classes = useStyles();

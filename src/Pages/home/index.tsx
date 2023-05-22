@@ -14,9 +14,11 @@ import ButtonStyle from "../../Components/Button";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import React, { useContext } from "react";
 
 export function Home() {
   const navigate = useNavigate();
+
   return (
     <>
       <Header />

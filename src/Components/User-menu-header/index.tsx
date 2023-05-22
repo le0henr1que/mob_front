@@ -50,6 +50,7 @@ export default function UserMenu(userInformation: any) {
               backgroundRepeat: "no-repeat",
               backgroundSize: "100%",
               backgroundPosition: "center",
+              backgroundColor: "#FFFF",
             }
           }
         >
