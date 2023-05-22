@@ -60,7 +60,7 @@ export default function UserMenu(userInformation: any) {
             className="container-avatar-image-main"
             onMouseOver={() => setOpen(true)}
             style={{
-              backgroundColor: "#119bf7 !important",
+              background: "#119bf7",
             }}
           >
             {!picture && getInitials(name)}
