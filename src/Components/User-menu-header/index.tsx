@@ -13,24 +13,25 @@ import ButtonStyle from "../Button";
 import { useAuth } from "../../context/AuthContext";
 import { Text } from "../Text";
 import { MenuItemsHeader } from "../../@types";
+import { getInitials } from "../../utils/GetInitials/index";
 
-export default function UserMenu({ children, userName }: any) {
+export default function UserMenu(userInformation: any) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLButtonElement>(null);
   const { authState, logout } = useAuth();
+
   const [isMenuList, setIsMenuList] = React.useState<MenuItemsHeader[]>([
     { label: "Achar local", href: "/pesquisar-local" },
     { label: "Minhas avaliações", href: "/minhas-avaliacoes" },
     { label: "Sobre o Mob!", href: "/about" },
     { label: "Fazer avaliação", href: "/pesquisar-local" },
   ]);
+  const { name, picture } = userInformation.userInformation;
+
+  console.log(picture);
 
   const handleLogout = async () => {
     await logout();
-  };
-
-  const handleMouseOver = async () => {
-    setOpen(true);
   };
 
   document.addEventListener("click", function () {
@@ -43,8 +44,16 @@ export default function UserMenu({ children, userName }: any) {
         <div
           className="container-avatar-image-main"
           onMouseOver={() => setOpen(true)}
+          style={
+            picture && {
+              backgroundImage: `url(${picture.replace("=s96-c", "")})`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "100%",
+              backgroundPosition: "center",
+            }
+          }
         >
-          L
+          {!picture && getInitials(name)}
         </div>
       </div>
       <div
@@ -52,8 +61,21 @@ export default function UserMenu({ children, userName }: any) {
         style={{ display: open ? "block" : "none" }}
       >
         <div className="container-banner-option">
-          <div className="container-avatar-image-banner">L</div>
-          <div className="text-banner">Leonardo Henrique dos Santos </div>
+          <div
+            className="container-avatar-image-banner"
+            style={
+              picture && {
+                backgroundImage: `url(${picture.replace("=s96-c", "")})`,
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "100%",
+                backgroundPosition: "center",
+              }
+            }
+          >
+            {!picture && getInitials(name)}
+          </div>
+
+          <div className="text-banner">{name}</div>
         </div>
         <div className="option-first">
           <LockOutlined />

@@ -78,7 +78,7 @@ export function Header() {
         .then((content) => {
           console.log(content);
 
-          setDataUserMe(content.data);
+          setDataUserMe(content.data.userMe);
           setUserImage(content.data.userMe.picture);
 
           !content.data.userMe.cookieConsent &&
@@ -99,6 +99,7 @@ export function Header() {
           }
         });
     }
+    // console.log(dataUserMe)
   }, []);
 
   const handleAcceptCookies = () => {
@@ -162,10 +163,7 @@ export function Header() {
     return firstName.toUpperCase() + lastName.toUpperCase();
   }
 
-  useEffect(() => {
-    // cookies.confirmationEmailSent === true && setOpenEmailConfirm(false);
-    // console.log(cookies)
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <div className="container-header">
@@ -206,48 +204,7 @@ export function Header() {
               </>
             ) : (
               <div className="container-avatar-login">
-                <UserMenu userName={dataUserMe && dataUserMe.userMe.name}>
-                  <MenuItem onClick={() => alert("Sucesso")}>
-                    Configuração
-                  </MenuItem>
-                  <Divider sx={{ my: 0.2 }} />
-                  <MenuItem onClick={() => handleLogout()} disableRipple>
-                    <ExitToApp />
-                    Sair
-                  </MenuItem>
-                </UserMenu>
-
-                {/* <div
-                  className="muthed-avatar-header"
-                  style={{
-                    borderColor: `${
-                      dataUserMe && dataUserMe.userMe.picture && "white"
-                    }`,
-                  }}
-                > */}
-                {/* {dataUserMe && !dataUserMe.userMe.picture ? (
-                    getInitials(dataUserMe && dataUserMe.userMe.name)
-                  ) : isImageLoaded ? (
-                    // <img
-                    //   src={dataUserMe.userMe.picture.replace("=s96-c", "")}
-                    //   alt="User avatar"
-                    // />
-                  ) : (
-                    // <Load variant="circular" width={45} height={45} />
-                  )
-                } */}
-                {/* </div> */}
-
-                {/* <UserMenu userName={dataUserMe && dataUserMe.userMe.name}>
-                  <MenuItem onClick={() => alert("Sucesso")}>
-                    Configuração
-                  </MenuItem>
-                  <Divider sx={{ my: 0.2 }} />
-                  <MenuItem onClick={() => handleLogout()} disableRipple>
-                    <ExitToApp />
-                    Sair
-                  </MenuItem>
-                </UserMenu> */}
+                {dataUserMe && <UserMenu userInformation={dataUserMe} />}
               </div>
             )}
             <Drawer
@@ -279,50 +236,10 @@ export function Header() {
                     </>
                   ) : (
                     <div className="container-avatar-login">
-                      {/* <div
-                        className="muthed-avatar-header"
-                        style={{
-                          borderColor: `${
-                            dataUserMe && dataUserMe.userMe.picture && "white"
-                          }`,
-                        }}
-                      >
-                        {dataUserMe && !dataUserMe.userMe.picture ? (
-                          getInitials(dataUserMe && dataUserMe.userMe.name)
-                        ) : isImageLoaded ? (
-                          <img
-                            src={dataUserMe.userMe.picture.replace(
-                              "=s96-c",
-                              ""
-                            )}
-                            alt="User avatar"
-                          />
-                        ) : (
-                          <Load variant="circular" width={45} height={45} />
-                        )}
-                      </div> */}
-                      <UserMenu userName={dataUserMe && dataUserMe.userMe.name}>
-                        {/* <MenuItem onClick={() => alert("Sucesso")}>Profile</MenuItem>
-                      <MenuItem onClick={() => alert("Sucesso")}>My account</MenuItem> */}
-                        <MenuItem onClick={() => alert("Sucesso")}>
-                          Configuração
-                        </MenuItem>
-                        <Divider sx={{ my: 0.2 }} />
-                        <MenuItem onClick={() => handleLogout()} disableRipple>
-                          <ExitToApp />
-                          Sair
-                        </MenuItem>
-                      </UserMenu>
+                      {dataUserMe && <UserMenu userInformation={dataUserMe} />}
                     </div>
                   )}
                 </div>
-                {/* {isMenuList.map((item) => (
-                  <a href={item.href} className="link">
-                    <Text variant="muted font-regular subheadline">
-                      {item.label}
-                    </Text>
-                  </a>
-                ))} */}
               </List>
             </Drawer>
           </div>

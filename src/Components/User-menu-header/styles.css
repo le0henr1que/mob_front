@@ -16,6 +16,9 @@
 
 .container-user-avatar{
     display: flex;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     height: auto;
     /* width: 380px; */
     justify-content: flex-end;
@@ -24,6 +27,7 @@
     
 }
 .container-avatar-image-main{
+
     border-radius: 4px;
     color: #FFF !important;
     background: #119bf7;
@@ -88,6 +92,9 @@
 }
 .container-avatar-image-banner{
     border-radius: 4px;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
     color: #FFF !important;
     background: hsla(0, 0%, 100%, 0.377);
     height: 60px;
