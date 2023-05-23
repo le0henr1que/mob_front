@@ -54,27 +54,22 @@ export default function UserMenu(userInformation: any) {
               backgroundRepeat: "no-repeat",
               backgroundSize: "100%",
               backgroundPosition: "center",
-              backgroundColor: "#fff !important",
+              backgroundColor: "#fff",
             }}
           ></div>
-        ) : (
+        ) : loadImage ? (
           <Load variant="rectangular" width={35} height={35} />
+        ) : (
+          <div
+            className="container-avatar-image-main"
+            onMouseOver={() => setOpen(true)}
+            style={{
+              background: "#119bf7",
+            }}
+          >
+            {getInitials(name)}
+          </div>
         )}
-        {
-          !picture && (
-            <div
-              className="container-avatar-image-main"
-              onMouseOver={() => setOpen(true)}
-              style={{
-                background: "#119bf7",
-              }}
-            >
-              {!picture && getInitials(name)}
-            </div>
-          )
-
-          // : <Load variant="rectangular" width={35} height={35} />
-        }
       </div>
 
       <div
