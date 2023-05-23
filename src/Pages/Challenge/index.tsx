@@ -77,6 +77,40 @@ export function Chellenge() {
     if (event.target.value.length === 1) {
       nextInputRef.current.focus();
     }
+    console.log(event.keyCode);
+    //  else if (event.keyCode === 8 || event.which === 8) {
+    //   if (event.target.value.length === 0) {
+    //     nextInputRef.current.focus();
+    //   }
+    // }
+    // console.log(event.keyCode)
+  };
+  const handlePress = (event: any, nextInputRef: any) => {
+    console.log(event.keyCode);
+
+    if (event.keyCode === 8 || event.which === 8 || event.keyCode === 37) {
+      if (event.target.value.length === 0) {
+        nextInputRef.current.focus();
+      }
+    }
+  };
+  const handlePaste = (event: any) => {
+    event.preventDefault();
+    const clipboardData = event.clipboardData || window.Clipboard;
+    const pastedData = clipboardData.getData("Text");
+
+    // @ts-ignore
+    input1Ref.current.value = pastedData[0];
+    // @ts-ignore
+    input2Ref.current.value = pastedData[1];
+    // @ts-ignore
+    input3Ref.current.value = pastedData[2];
+    // @ts-ignore
+    input4Ref.current.value = pastedData[3];
+    // @ts-ignore
+    input5Ref.current.value = pastedData[4];
+    // @ts-ignore
+    input6Ref.current.value = pastedData[5];
   };
 
   useEffect(() => {}, []);
@@ -101,7 +135,7 @@ export function Chellenge() {
               </div>
 
               <form className="form-sign" onSubmit={handleSubmit}>
-                <Text variant="muthed font-regular body">código</Text>
+                {/* <Text variant="muthed font-regular body">código</Text> */}
                 <div className="input-challenge">
                   <TextField
                     id="challengeNumberOne"
@@ -110,6 +144,8 @@ export function Chellenge() {
                     inputProps={{ maxLength: 1 }}
                     inputRef={input1Ref}
                     onChange={(event) => handleKeyPress(event, input2Ref)}
+                    onKeyUp={(event) => handlePress(event, input1Ref)}
+                    onPaste={(event) => handlePaste(event)}
                     autoFocus
                   />
 
@@ -120,6 +156,8 @@ export function Chellenge() {
                     inputProps={{ maxLength: 1 }}
                     inputRef={input2Ref}
                     onChange={(event) => handleKeyPress(event, input3Ref)}
+                    onKeyUp={(event) => handlePress(event, input1Ref)}
+                    onPaste={(event) => handlePaste(event)}
                   />
                   <TextField
                     id="challengeNumberTrhee"
@@ -128,6 +166,8 @@ export function Chellenge() {
                     inputProps={{ maxLength: 1 }}
                     inputRef={input3Ref}
                     onChange={(event) => handleKeyPress(event, input4Ref)}
+                    onKeyUp={(event) => handlePress(event, input2Ref)}
+                    onPaste={(event) => handlePaste(event)}
                   />
                   <TextField
                     id="challengeNumberFour"
@@ -136,6 +176,8 @@ export function Chellenge() {
                     inputProps={{ maxLength: 1 }}
                     inputRef={input4Ref}
                     onChange={(event) => handleKeyPress(event, input5Ref)}
+                    onKeyUp={(event) => handlePress(event, input3Ref)}
+                    onPaste={(event) => handlePaste(event)}
                   />
                   <TextField
                     id="challengeNumberFive"
@@ -144,6 +186,8 @@ export function Chellenge() {
                     inputProps={{ maxLength: 1 }}
                     inputRef={input5Ref}
                     onChange={(event) => handleKeyPress(event, input6Ref)}
+                    onKeyUp={(event) => handlePress(event, input4Ref)}
+                    onPaste={(event) => handlePaste(event)}
                   />
                   <TextField
                     id="challengeNumberSix"
@@ -151,6 +195,8 @@ export function Chellenge() {
                     variant="outlined"
                     inputRef={input6Ref}
                     inputProps={{ maxLength: 1 }}
+                    onKeyUp={(event) => handlePress(event, input5Ref)}
+                    onPaste={(event) => handlePaste(event)}
                   />
                 </div>
 
