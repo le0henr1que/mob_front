@@ -14,11 +14,13 @@ import { useAuth } from "../../context/AuthContext";
 import { Text } from "../Text";
 import { MenuItemsHeader } from "../../@types";
 import { getInitials } from "../../utils/GetInitials/index";
+import { Load } from "../Load";
 
 export default function UserMenu(userInformation: any) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLButtonElement>(null);
   const { authState, logout } = useAuth();
+  const [loadImage, setLoadImage] = React.useState(false);
 
   const [isMenuList, setIsMenuList] = React.useState<MenuItemsHeader[]>([
     { label: "Achar local", href: "/pesquisar-local" },
@@ -31,7 +33,9 @@ export default function UserMenu(userInformation: any) {
   console.log(picture);
 
   const handleLogout = async () => {
+    setLoadImage(true);
     await logout();
+    setLoadImage(false);
   };
 
   document.addEventListener("click", function () {
@@ -40,33 +44,38 @@ export default function UserMenu(userInformation: any) {
 
   return (
     <>
-      <div className="container-user-avatar">
-        {picture ? (
-          <div
-            className="container-avatar-image-main"
-            onMouseOver={() => setOpen(true)}
-            style={{
-              backgroundImage: `url(${picture.replace("=s96-c", "")})`,
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "100%",
-              backgroundPosition: "center",
-              backgroundColor: "#fff !important",
-            }}
-          >
-            {/* {!picture && getInitials(name)} */}
-          </div>
-        ) : (
-          <div
-            className="container-avatar-image-main"
-            onMouseOver={() => setOpen(true)}
-            style={{
-              background: "#119bf7",
-            }}
-          >
-            {!picture && getInitials(name)}
-          </div>
-        )}
-      </div>
+      {!picture && !loadImage ? (
+        <div className="container-user-avatar">
+          {
+            picture ? (
+              <div
+                className="container-avatar-image-main"
+                onMouseOver={() => setOpen(true)}
+                style={{
+                  backgroundImage: `url(${picture.replace("=s96-c", "")})`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "100%",
+                  backgroundPosition: "center",
+                  backgroundColor: "#fff !important",
+                }}
+              ></div>
+            ) : (
+              <div
+                className="container-avatar-image-main"
+                onMouseOver={() => setOpen(true)}
+                style={{
+                  background: "#119bf7",
+                }}
+              >
+                {!picture && getInitials(name)}
+              </div>
+            )
+            // : <Load variant="rectangular" width={35} height={35} />
+          }
+        </div>
+      ) : (
+        <Load variant="rectangular" width={35} height={35} />
+      )}
       <div
         className="container-element option-user fade-out"
         style={{ display: open ? "block" : "none" }}
@@ -132,51 +141,5 @@ export default function UserMenu(userInformation: any) {
         </div>
       </div>
     </>
-    // <Stack direction="row" spacing={2}>
-    //   <div>
-    //     <Button
-    //       ref={anchorRef}
-    //       id="composition-button"
-    //       aria-controls={open ? "composition-menu" : undefined}
-    //       aria-expanded={open ? "true" : undefined}
-    //       aria-haspopup="true"
-    //       onClick={handleToggle}
-    //       endIcon={<ArrowDropDown />}
-    //     >
-    //       <div className="text-overflow">{userName}</div>
-    //     </Button>
-    //     <Popper
-    //       open={open}
-    //       anchorEl={anchorRef.current}
-    //       role={undefined}
-    //       placement="bottom-start"
-    //       transition
-    //       disablePortal
-    //     >
-    //       {({ TransitionProps, placement }) => (
-    //         <Grow
-    //           {...TransitionProps}
-    //           style={{
-    //             transformOrigin:
-    //               placement === "bottom-start" ? "left top" : "left bottom",
-    //           }}
-    //         >
-    //           <Paper>
-    //             <ClickAwayListener onClickAway={handleClose}>
-    //               <MenuList
-    //                 autoFocusItem={open}
-    //                 id="composition-menu"
-    //                 aria-labelledby="composition-button"
-    //                 onKeyDown={handleListKeyDown}
-    //               >
-    //                 {children}
-    //               </MenuList>
-    //             </ClickAwayListener>
-    //           </Paper>
-    //         </Grow>
-    //       )}
-    //     </Popper>
-    //   </div>
-    // </Stack>
   );
 }
