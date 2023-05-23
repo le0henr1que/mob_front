@@ -16,6 +16,8 @@ import ButtonStyle from "../../Components/Button";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Chart } from "../../Components/Chart";
 //@ts-ignore
+import LogMob from "../../Assests/Frame142.svg";
+//@ts-ignore
 import { Company } from "../../Components/Company";
 import { StarRating } from "../../Components/StarRating";
 import Box from "@mui/material/Box";
@@ -57,6 +59,8 @@ export function ConfirmEmail() {
         <div className="continaer-lateral-form">
           <div className="container-form-confirmEmail">
             <div className="container-confirmEmail-content-title">
+              <img src={LogMob} />
+
               <Text variant="font-bold headline">Confirmação de Email</Text>
 
               <Text variant="muthed font-regular body-small">{message}</Text>

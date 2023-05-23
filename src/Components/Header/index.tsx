@@ -76,7 +76,9 @@ export function Header() {
         })
         .then((content) => {
           console.log(content);
-
+          if (!content.data.userMe) {
+            logout();
+          }
           setDataUserMe(content.data.userMe);
           setUserImage(content.data.userMe.picture);
 
@@ -86,7 +88,7 @@ export function Header() {
 
           !content.data.userMe.confirmed_email &&
             authState.isAuthenticated &&
-            !cookies.confirmationEmailSent &&
+            content.data.userMe.confirmEmailRequest[0].status !== "pending" &&
             setOpenEmailConfirm(true);
 
           setIsImageLoaded(true);

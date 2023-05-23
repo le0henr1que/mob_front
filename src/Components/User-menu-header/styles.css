@@ -65,7 +65,7 @@
     padding-left: 10px;
 }
 .option-user{
-    
+    z-index:999;
     position: absolute;
     background: #FFFF;
     margin-left:-345px;

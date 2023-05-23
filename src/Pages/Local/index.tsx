@@ -17,7 +17,7 @@ export function Local() {
   const navigate = useNavigate();
 
   const handleRegisterLocal = () => {
-    navigate("/local/cadastrar", { state: { from: window.location.pathname } });
+    navigate("/local/cadastrar", { state: { from: "/local/cadastrar" } });
   };
 
   return (
