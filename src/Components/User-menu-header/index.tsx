@@ -45,7 +45,7 @@ export default function UserMenu(userInformation: any) {
   return (
     <>
       <div className="container-user-avatar">
-        {picture && !loadImage && (
+        {picture && !loadImage ? (
           <div
             className="container-avatar-image-main"
             onMouseOver={() => setOpen(true)}
@@ -57,6 +57,8 @@ export default function UserMenu(userInformation: any) {
               backgroundColor: "#fff !important",
             }}
           ></div>
+        ) : (
+          <Load variant="rectangular" width={35} height={35} />
         )}
         {
           !picture && (
