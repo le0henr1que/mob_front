@@ -44,38 +44,37 @@ export default function UserMenu(userInformation: any) {
 
   return (
     <>
-      {!picture && !loadImage ? (
-        <div className="container-user-avatar">
-          {
-            picture ? (
-              <div
-                className="container-avatar-image-main"
-                onMouseOver={() => setOpen(true)}
-                style={{
-                  backgroundImage: `url(${picture.replace("=s96-c", "")})`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "100%",
-                  backgroundPosition: "center",
-                  backgroundColor: "#fff !important",
-                }}
-              ></div>
-            ) : (
-              <div
-                className="container-avatar-image-main"
-                onMouseOver={() => setOpen(true)}
-                style={{
-                  background: "#119bf7",
-                }}
-              >
-                {!picture && getInitials(name)}
-              </div>
-            )
-            // : <Load variant="rectangular" width={35} height={35} />
-          }
-        </div>
-      ) : (
-        <Load variant="rectangular" width={35} height={35} />
-      )}
+      <div className="container-user-avatar">
+        {picture && !loadImage && (
+          <div
+            className="container-avatar-image-main"
+            onMouseOver={() => setOpen(true)}
+            style={{
+              backgroundImage: `url(${picture.replace("=s96-c", "")})`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "100%",
+              backgroundPosition: "center",
+              backgroundColor: "#fff !important",
+            }}
+          ></div>
+        )}
+        {
+          !picture && (
+            <div
+              className="container-avatar-image-main"
+              onMouseOver={() => setOpen(true)}
+              style={{
+                background: "#119bf7",
+              }}
+            >
+              {!picture && getInitials(name)}
+            </div>
+          )
+
+          // : <Load variant="rectangular" width={35} height={35} />
+        }
+      </div>
+
       <div
         className="container-element option-user fade-out"
         style={{ display: open ? "block" : "none" }}
