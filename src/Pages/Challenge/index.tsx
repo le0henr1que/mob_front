@@ -111,6 +111,8 @@ export function Chellenge() {
     input5Ref.current.value = pastedData[4];
     // @ts-ignore
     input6Ref.current.value = pastedData[5];
+    // @ts-ignore
+    input6Ref.current.focus();
   };
 
   useEffect(() => {}, []);
