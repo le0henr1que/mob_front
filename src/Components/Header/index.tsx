@@ -85,11 +85,13 @@ export function Header() {
           !content.data.userMe.cookieConsent &&
             authState.isAuthenticated &&
             setOpen(true);
-
-          !content.data.userMe.confirmed_email &&
+          if (
+            !content.data.userMe.confirmed_email &&
             authState.isAuthenticated &&
-            content.data.userMe.confirmEmailRequest[0].status !== "pending" &&
+            content.data.userMe.confirmEmailRequest.length === 0
+          ) {
             setOpenEmailConfirm(true);
+          }
 
           setIsImageLoaded(true);
         })
