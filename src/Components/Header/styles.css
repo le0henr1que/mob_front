@@ -131,6 +131,11 @@
     .div-button{
         display: none;
     }
+    /* .elementor-2 .elementor-element.elementor-element-9cda3a9 .eael-advance-tabs.eael-tabs-vertical > .eael-tabs-nav > ul li:after {
+        right: -8px;
+        top: calc(50% - 8px) !important;
+        border-left-color: #0066FF;
+    } */
     .container-header-main{
         border:none;
     }

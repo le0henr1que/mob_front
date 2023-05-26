@@ -18,6 +18,9 @@ import React, { useContext } from "react";
 
 export function Home() {
   const navigate = useNavigate();
+  const handleRegisterLocal = () => {
+    navigate("/local/cadastrar", { state: { from: "/local/cadastrar" } });
+  };
 
   return (
     <>
@@ -26,18 +29,6 @@ export function Home() {
         <div className="main-card">
           <div className="card">
             <img src={pana} />
-            <div className="card-title">
-              <Text variant="font-bold headline">
-                Procure por um <span>local</span>
-              </Text>
-            </div>
-            <div className="card-text">
-              <Text variant="muted font-regular subheadline">
-                Digite o nome de uma empresa ou estabelecimento e mostraremos à
-                você, se esses ambientes são acessiveis ou possuel
-                acessibilidade.
-              </Text>
-            </div>
             <div className="card-input">
               <Box
                 component="form"
@@ -55,10 +46,24 @@ export function Home() {
               </Box>
               {/* <Input variant="default" icon={true} placeholder="Pesquisar"/> */}
             </div>
-            <div className="card-text-last">
-              <Text variant="muted font-regular body">
-                Não encontrou o local? <a href="/local">Clique aqui</a>
+            <div className="card-title">
+              <Text variant="font-bold headline">
+                Procure por um <span>local</span>
               </Text>
+            </div>
+
+            <div className="card-text">
+              <Text variant="muted font-regular subheadline">
+                Digite o nome de uma empresa ou estabelecimento e mostraremos à
+                você, se esses ambientes são acessiveis ou possuel
+                acessibilidade.
+              </Text>
+            </div>
+
+            <div className="card-text-last">
+              {/* <Text variant="muted font-regular body">
+                Não encontrou o local? <a href="/local">Clique aqui</a>
+              </Text> */}
             </div>
           </div>
 
@@ -78,7 +83,7 @@ export function Home() {
             <div className="card-buttom">
               <ButtonStyle
                 variant="medium-button"
-                onClick={() => navigate("/local")}
+                onClick={() => handleRegisterLocal()}
               >
                 Cadastre um local
               </ButtonStyle>
