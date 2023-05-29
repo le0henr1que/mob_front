@@ -18,6 +18,7 @@ import { Chart } from "../../Components/Chart";
 import { Company } from "../../Components/LocalInfoHeader";
 import { StarRating } from "../../Components/StarRating";
 import {
+  Fade,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -26,6 +27,8 @@ import {
   RadioGroup,
   TextField,
 } from "@material-ui/core";
+import { Alert, Snackbar } from "@mui/material";
+
 import { useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -38,6 +41,8 @@ export function LocalRegister() {
   const navigate = useNavigate();
 
   const [cnpfField, setCnpjField] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [error, setError] = useState<string>();
 
   const ratingNote = (note: number) => {
     alert(note);
@@ -78,27 +83,39 @@ export function LocalRegister() {
     return value;
   };
   const getCepInfo = async (cep: string) => {
-    brasilApi.get(`/cep/v1/${cep}`).then((content) => {
-      handleCreateLocal.setFieldValue("city", content.data.city);
-      handleCreateLocal.setFieldValue(
-        "neighborhood",
-        content.data.neighborhood
-      );
-      handleCreateLocal.setFieldValue("state", content.data.state);
-      handleCreateLocal.setFieldValue("address", content.data.street);
-    });
+    brasilApi
+      .get(`/cep/v1/${cep}`)
+      .then((content) => {
+        handleCreateLocal.setFieldValue("city", content.data.city);
+        handleCreateLocal.setFieldValue(
+          "neighborhood",
+          content.data.neighborhood
+        );
+        handleCreateLocal.setFieldValue("state", content.data.state);
+        handleCreateLocal.setFieldValue("address", content.data.street);
+      })
+      .catch((error) => {
+        setError(error.response.data.errors[3].message);
+        setOpen(true);
+      });
   };
 
   const getCnpjInfo = async (cnpj: string) => {
-    brasilApi.get(`/cnpj/v1/${cnpj}`).then((content) => {
-      console.log(content.data);
-      handleCreateLocal.setFieldValue("name", content.data.razao_social);
-      if (content.data.cep) {
-        getCepInfo(content.data.cep);
-        let cep = formatCep(content.data.cep);
-        handleCreateLocal.setFieldValue("cep", cep);
-      }
-    });
+    brasilApi
+      .get(`/cnpj/v1/${cnpj}`)
+      .then((content) => {
+        console.log(content.data);
+        handleCreateLocal.setFieldValue("name", content.data.razao_social);
+        if (content.data.cep) {
+          getCepInfo(content.data.cep);
+          let cep = formatCep(content.data.cep);
+          handleCreateLocal.setFieldValue("cep", cep);
+        }
+      })
+      .catch((error) => {
+        setError(error.response.data.message);
+        setOpen(true);
+      });
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -109,7 +126,12 @@ export function LocalRegister() {
 
     if (cnpjFormatted.length === 18) {
       // alert(cnpjFormatted)
-      getCnpjInfo(cnpjFormatted.replaceAll(".", "").replaceAll("/", ""));
+      getCnpjInfo(
+        cnpjFormatted
+          .replaceAll(".", "")
+          .replaceAll("/", "")
+          .replaceAll("-", "")
+      );
     }
   };
 
@@ -128,6 +150,9 @@ export function LocalRegister() {
     // alert(value)
     const cepFormatted = formatCep(value);
     setCep(cepFormatted);
+    if (cepFormatted.length === 9) {
+      getCepInfo(cepFormatted.replaceAll("-", ""));
+    }
     // setCnpj(cnpjFormatted);
     handleCreateLocal.setFieldValue("cep", cepFormatted);
   };
@@ -176,6 +201,22 @@ export function LocalRegister() {
       {/* <Company/> */}
 
       <div className="container-main-evaluate">
+        <Snackbar
+          TransitionComponent={Fade}
+          open={open}
+          autoHideDuration={10000}
+          onClose={() => setOpen(false)}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          key="top right"
+        >
+          <Alert
+            onClose={() => setOpen(false)}
+            severity="error"
+            sx={{ width: "300px" }}
+          >
+            {error}
+          </Alert>
+        </Snackbar>
         <div className="container-evaluate">
           <form
             className="form-input"
