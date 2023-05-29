@@ -78,7 +78,8 @@
 
 .container-flex-local{
     display: flex;
-    align-items: center;
+    /* align-items: center; */
+    height: auto;
     justify-content: space-between;
     gap:24px;
 }

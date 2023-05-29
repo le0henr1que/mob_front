@@ -32,6 +32,7 @@ import { useFormik } from "formik";
 // import InputMask from 'react-input-mask';
 // import MaskedInput from 'react-text-mask';
 import InputMask from "react-input-mask";
+import brasilApi from "../../utils/api/brasilApi";
 
 export function LocalRegister() {
   const navigate = useNavigate();
@@ -45,33 +46,101 @@ export function LocalRegister() {
 
   const currencies = [
     {
-      value: "São Paulo",
+      value: "SP",
       label: "São Paulo",
     },
     {
-      value: "Rio de Janeiro",
+      value: "RJ",
       label: "Rio de Janeiro",
     },
   ];
+  // let schema = Yup.object({
+  //   isCnpj: Yup.boolean(),
+  //   cnpj: Yup.number().when('isCnpj', {
+  //     is: true,
+  //     then: (schema) => schema.min(5),
+  //     otherwise: (schema) => schema.min(0),
+  //   }),
+  // });
+
+  // schema.describe({ value: { isBig: true } });
+  const [cnpj, setCnpj] = useState("");
+  const [cep, setCep] = useState("");
+
+  const formatCnpj = (value: string) => {
+    const cnpjRegex = /^(\d{0,2})(\d{0,3})(\d{0,3})(\d{0,4})(\d{0,2})$/;
+    const match = value.replace(/\D/g, "").match(cnpjRegex);
+    if (match) {
+      return `${match[1]}${match[1] && "."}${match[2]}${match[2] && "."}${
+        match[3]
+      }${match[3] && "/"}${match[4]}${match[4] && "-"}${match[5]}`;
+    }
+    return value;
+  };
+  const getCepInfo = async (cep: string) => {
+    brasilApi.get(`/cep/v1/${cep}`).then((content) => {
+      handleCreateLocal.setFieldValue("city", content.data.city);
+      handleCreateLocal.setFieldValue(
+        "neighborhood",
+        content.data.neighborhood
+      );
+      handleCreateLocal.setFieldValue("state", content.data.state);
+      handleCreateLocal.setFieldValue("address", content.data.street);
+    });
+  };
+
+  const getCnpjInfo = async (cnpj: string) => {
+    brasilApi.get(`/cnpj/v1/${cnpj}`).then((content) => {
+      console.log(content.data);
+      handleCreateLocal.setFieldValue("name", content.data.razao_social);
+      if (content.data.cep) {
+        getCepInfo(content.data.cep);
+        let cep = formatCep(content.data.cep);
+        handleCreateLocal.setFieldValue("cep", cep);
+      }
+    });
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    const cnpjFormatted = formatCnpj(value);
+    setCnpj(cnpjFormatted);
+    handleCreateLocal.setFieldValue("cnpj", cnpjFormatted);
+
+    if (cnpjFormatted.length === 18) {
+      // alert(cnpjFormatted)
+      getCnpjInfo(cnpjFormatted.replaceAll(".", "").replaceAll("/", ""));
+    }
+  };
+
+  const formatCep = (value: string) => {
+    const cepRegex = /^(\d{5})(\d{3})$/;
+    const match = value.replace(/\D/g, "").match(cepRegex);
+
+    if (match) {
+      return `${match[1]}-${match[2]}`;
+    }
+    return value;
+  };
+
+  const handleChangeCep = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    // alert(value)
+    const cepFormatted = formatCep(value);
+    setCep(cepFormatted);
+    // setCnpj(cnpjFormatted);
+    handleCreateLocal.setFieldValue("cep", cepFormatted);
+  };
 
   const schema = Yup.object().shape({
-    haveCnpj: Yup.boolean(),
-    cnpj: Yup.string()
-      .required('O CNPJ é obrigatório quando "haveCnpj" é igual a "sim"')
-      .matches(
-        /^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/,
-        "Formato de CNPJ inválido"
-      )
-      .test("valid-cnpj", "CNPJ inválido", (value) => {
-        if (!value) return true;
-        const cnpj = value.replace(/[^\d]+/g, "");
-        // Restante da lógica de validação do CNPJ
-      }),
-
+    haveCnpj: Yup.string(),
+    cnpj: Yup.string().when("haveCnpj", {
+      is: "sim",
+      then: (schema) => Yup.string().required("CNPJ obrigatório"),
+      otherwise: (schema) => Yup.string().notRequired(),
+    }),
     name: Yup.string().required("O nome é obrigatório"),
-    cep: Yup.string()
-      .required("O CEP é obrigatório")
-      .matches(/^\d{5}\-\d{3}$/, "Formato de CEP inválido"),
+    cep: Yup.string().required("O CEP é obrigatório"),
     state: Yup.string().required("O estado é obrigatório"),
     city: Yup.string().required("A cidade é obrigatória"),
     neighborhood: Yup.string().required("O bairro é obrigatório"),
@@ -80,13 +149,13 @@ export function LocalRegister() {
     address: Yup.string().required("O endereço é obrigatório"),
   });
 
-  const formik = useFormik({
+  const handleCreateLocal = useFormik({
     initialValues: {
       haveCnpj: "",
       category: "",
-      cnpj: "",
+      cnpj: cnpj,
       name: "",
-      cep: "",
+      cep: cep,
       state: "",
       city: "",
       neighborhood: "",
@@ -95,9 +164,9 @@ export function LocalRegister() {
       address: "",
     },
     validationSchema: schema,
-    onSubmit: async (values) => {
-      alert("tewste");
-      console.log(schema);
+
+    onSubmit: (values) => {
+      alert("Foi");
     },
   });
 
@@ -108,7 +177,10 @@ export function LocalRegister() {
 
       <div className="container-main-evaluate">
         <div className="container-evaluate">
-          <form className="form-input" onSubmit={formik.handleSubmit}>
+          <form
+            className="form-input"
+            onSubmit={handleCreateLocal.handleSubmit}
+          >
             <div className="container-title-evaluate">
               <div className="title-first">
                 <Text variant="font-semibold headline">Local</Text>
@@ -124,10 +196,24 @@ export function LocalRegister() {
               <RadioGroup
                 row
                 aria-labelledby="demo-row-radio-buttons-group-label"
-                name="row-radio-buttons-group"
+                name="haveCnpj"
+                id="haveCnpj"
+                value={handleCreateLocal.values.haveCnpj}
+                onChange={handleCreateLocal.handleChange}
+                onBlur={handleCreateLocal.handleBlur}
               >
-                <FormControlLabel value="sim" control={<Radio />} label="Sim" />
-                <FormControlLabel value="não" control={<Radio />} label="Não" />
+                <FormControlLabel
+                  value="sim"
+                  onClick={() => setCnpjField(true)}
+                  control={<Radio />}
+                  label="Sim"
+                />
+                <FormControlLabel
+                  value="não"
+                  onClick={() => setCnpjField(false)}
+                  control={<Radio />}
+                  label="Não"
+                />
               </RadioGroup>
             </FormControl>
             <div className="container-flex-local">
@@ -139,13 +225,17 @@ export function LocalRegister() {
                   select
                   label="Categoria"
                   defaultValue="Estabelecimentos comerciais"
-                  value={formik.values.category}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
+                  value={handleCreateLocal.values.category}
+                  onChange={handleCreateLocal.handleChange}
+                  onBlur={handleCreateLocal.handleBlur}
                   error={Boolean(
-                    formik.touched.category && formik.errors.category
+                    handleCreateLocal.touched.category &&
+                      handleCreateLocal.errors.category
                   )}
-                  helperText={formik.touched.category && formik.errors.category}
+                  helperText={
+                    handleCreateLocal.touched.category &&
+                    handleCreateLocal.errors.category
+                  }
                 >
                   <MenuItem
                     key="Estabelecimentos comerciais"
@@ -168,15 +258,28 @@ export function LocalRegister() {
                 </TextField>
               </div>
 
-              <div className="container-evaluate-content-input">
+              <div
+                className="container-evaluate-content-input"
+                style={{ display: cnpfField ? "flex" : "none" }}
+              >
                 <TextField
-                  value={formik.values.cnpj}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={Boolean(formik.touched.cnpj && formik.errors.cnpj)}
-                  helperText={formik.touched.cnpj && formik.errors.cnpj}
-                  style={{ background: cnpfField ? "#EFEFEF" : "#FFF" }}
-                  disabled={cnpfField}
+                  value={handleCreateLocal.values.cnpj}
+                  onChange={(event: any) => handleChange(event)}
+                  // onKeyUp={(event:any) => handleChange(event)}
+                  onBlur={handleCreateLocal.handleBlur}
+                  error={Boolean(
+                    handleCreateLocal.touched.cnpj &&
+                      handleCreateLocal.errors.cnpj
+                  )}
+                  helperText={
+                    handleCreateLocal.touched.cnpj &&
+                    handleCreateLocal.errors.cnpj
+                  }
+                  // style={{ background: cnpfField ? "#EFEFEF" : "#FFF" }}
+                  // disabled={cnpfField}
+                  inputProps={{
+                    maxLength: 18,
+                  }}
                   id="cnpj"
                   name="cnpj"
                   label="CNPJ"
@@ -185,11 +288,17 @@ export function LocalRegister() {
               </div>
               <div className="container-evaluate-content-input">
                 <TextField
-                  value={formik.values.name}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={Boolean(formik.touched.name && formik.errors.name)}
-                  helperText={formik.touched.name && formik.errors.name}
+                  value={handleCreateLocal.values.name}
+                  onChange={handleCreateLocal.handleChange}
+                  onBlur={handleCreateLocal.handleBlur}
+                  error={Boolean(
+                    handleCreateLocal.touched.name &&
+                      handleCreateLocal.errors.name
+                  )}
+                  helperText={
+                    handleCreateLocal.touched.name &&
+                    handleCreateLocal.errors.name
+                  }
                   id="name"
                   name="name"
                   label="Nome"
@@ -212,11 +321,20 @@ export function LocalRegister() {
                     name="cep"
                     label="CEP"
                     variant="outlined"
-                    value={formik.values.cep}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    error={Boolean(formik.touched.cep && formik.errors.cep)}
-                    helperText={formik.touched.cep && formik.errors.cep}
+                    inputProps={{
+                      maxLength: 9,
+                    }}
+                    value={handleCreateLocal.values.cep}
+                    onChange={(event: any) => handleChangeCep(event)}
+                    onBlur={handleCreateLocal.handleBlur}
+                    error={Boolean(
+                      handleCreateLocal.touched.cep &&
+                        handleCreateLocal.errors.cep
+                    )}
+                    helperText={
+                      handleCreateLocal.touched.cep &&
+                      handleCreateLocal.errors.cep
+                    }
                   />
                 </div>
                 <div className="container-evaluate-content-input">
@@ -225,13 +343,17 @@ export function LocalRegister() {
                     name="address"
                     label="Endereço"
                     variant="outlined"
-                    value={formik.values.address}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
+                    value={handleCreateLocal.values.address}
+                    onChange={handleCreateLocal.handleChange}
+                    onBlur={handleCreateLocal.handleBlur}
                     error={Boolean(
-                      formik.touched.address && formik.errors.address
+                      handleCreateLocal.touched.address &&
+                        handleCreateLocal.errors.address
                     )}
-                    helperText={formik.touched.address && formik.errors.address}
+                    helperText={
+                      handleCreateLocal.touched.address &&
+                      handleCreateLocal.errors.address
+                    }
                   />
                 </div>
               </div>
@@ -244,11 +366,17 @@ export function LocalRegister() {
                     select
                     label="Estado"
                     defaultValue="São Paulo"
-                    value={formik.values.state}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    error={Boolean(formik.touched.state && formik.errors.state)}
-                    helperText={formik.touched.state && formik.errors.state}
+                    value={handleCreateLocal.values.state}
+                    onChange={handleCreateLocal.handleChange}
+                    onBlur={handleCreateLocal.handleBlur}
+                    error={Boolean(
+                      handleCreateLocal.touched.state &&
+                        handleCreateLocal.errors.state
+                    )}
+                    helperText={
+                      handleCreateLocal.touched.state &&
+                      handleCreateLocal.errors.state
+                    }
                   >
                     {currencies.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
@@ -263,11 +391,17 @@ export function LocalRegister() {
                     name="city"
                     label="Cidade"
                     variant="outlined"
-                    value={formik.values.city}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    error={Boolean(formik.touched.city && formik.errors.city)}
-                    helperText={formik.touched.city && formik.errors.city}
+                    value={handleCreateLocal.values.city}
+                    onChange={handleCreateLocal.handleChange}
+                    onBlur={handleCreateLocal.handleBlur}
+                    error={Boolean(
+                      handleCreateLocal.touched.city &&
+                        handleCreateLocal.errors.city
+                    )}
+                    helperText={
+                      handleCreateLocal.touched.city &&
+                      handleCreateLocal.errors.city
+                    }
                   />
                 </div>
               </div>
@@ -278,14 +412,16 @@ export function LocalRegister() {
                     name="neighborhood"
                     label="Bairro"
                     variant="outlined"
-                    value={formik.values.neighborhood}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
+                    value={handleCreateLocal.values.neighborhood}
+                    onChange={handleCreateLocal.handleChange}
+                    onBlur={handleCreateLocal.handleBlur}
                     error={Boolean(
-                      formik.touched.neighborhood && formik.errors.neighborhood
+                      handleCreateLocal.touched.neighborhood &&
+                        handleCreateLocal.errors.neighborhood
                     )}
                     helperText={
-                      formik.touched.neighborhood && formik.errors.neighborhood
+                      handleCreateLocal.touched.neighborhood &&
+                      handleCreateLocal.errors.neighborhood
                     }
                   />
                 </div>
@@ -295,13 +431,17 @@ export function LocalRegister() {
                     name="number"
                     label="Número"
                     variant="outlined"
-                    value={formik.values.number}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
+                    value={handleCreateLocal.values.number}
+                    onChange={handleCreateLocal.handleChange}
+                    onBlur={handleCreateLocal.handleBlur}
                     error={Boolean(
-                      formik.touched.number && formik.errors.number
+                      handleCreateLocal.touched.number &&
+                        handleCreateLocal.errors.number
                     )}
-                    helperText={formik.touched.number && formik.errors.number}
+                    helperText={
+                      handleCreateLocal.touched.number &&
+                      handleCreateLocal.errors.number
+                    }
                   />
                 </div>
                 <div className="container-evaluate-content-input">
@@ -310,14 +450,16 @@ export function LocalRegister() {
                     name="complement"
                     label="Complemento"
                     variant="outlined"
-                    value={formik.values.complement}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
+                    value={handleCreateLocal.values.complement}
+                    onChange={handleCreateLocal.handleChange}
+                    onBlur={handleCreateLocal.handleBlur}
                     error={Boolean(
-                      formik.touched.complement && formik.errors.complement
+                      handleCreateLocal.touched.complement &&
+                        handleCreateLocal.errors.complement
                     )}
                     helperText={
-                      formik.touched.complement && formik.errors.complement
+                      handleCreateLocal.touched.complement &&
+                      handleCreateLocal.errors.complement
                     }
                   />
                 </div>
