@@ -24,6 +24,8 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
 import api from "../../utils/api";
+//@ts-ignore
+import Rafiki1 from "../../Assests/success.svg";
 
 export function ConfirmEmail() {
   const location = useLocation();
@@ -59,6 +61,8 @@ export function ConfirmEmail() {
         <div className="continaer-lateral-form">
           <div className="container-form-confirmEmail">
             <div className="container-confirmEmail-content-title">
+              <img src={Rafiki1} width={300} style={{ marginBottom: 25 }} />
+
               <img src={LogMob} />
 
               <Text variant="font-bold headline">Confirmação de Email</Text>

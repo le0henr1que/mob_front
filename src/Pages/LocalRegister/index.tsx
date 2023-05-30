@@ -18,6 +18,7 @@ import { Chart } from "../../Components/Chart";
 import { Company } from "../../Components/LocalInfoHeader";
 import { StarRating } from "../../Components/StarRating";
 import {
+  CircularProgress,
   Fade,
   FormControl,
   FormControlLabel,
@@ -28,7 +29,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { Alert, Snackbar } from "@mui/material";
-
+import InfoIcon from "@mui/icons-material/Info";
 import { useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -36,6 +37,10 @@ import { useFormik } from "formik";
 // import MaskedInput from 'react-text-mask';
 import InputMask from "react-input-mask";
 import brasilApi from "../../utils/api/brasilApi";
+import { Load } from "../../Components/Load";
+import { states } from "../../utils/Brasil-State";
+import api from "../../utils/api";
+import authService from "../../service/AuthService";
 
 export function LocalRegister() {
   const navigate = useNavigate();
@@ -43,6 +48,7 @@ export function LocalRegister() {
   const [cnpfField, setCnpjField] = useState(false);
   const [open, setOpen] = useState(false);
   const [error, setError] = useState<string>();
+  const [load, setLoad] = useState<boolean>(false);
 
   const ratingNote = (note: number) => {
     alert(note);
@@ -59,16 +65,7 @@ export function LocalRegister() {
       label: "Rio de Janeiro",
     },
   ];
-  // let schema = Yup.object({
-  //   isCnpj: Yup.boolean(),
-  //   cnpj: Yup.number().when('isCnpj', {
-  //     is: true,
-  //     then: (schema) => schema.min(5),
-  //     otherwise: (schema) => schema.min(0),
-  //   }),
-  // });
 
-  // schema.describe({ value: { isBig: true } });
   const [cnpj, setCnpj] = useState("");
   const [cep, setCep] = useState("");
 
@@ -83,6 +80,7 @@ export function LocalRegister() {
     return value;
   };
   const getCepInfo = async (cep: string) => {
+    setLoad(true);
     brasilApi
       .get(`/cep/v1/${cep}`)
       .then((content) => {
@@ -93,14 +91,18 @@ export function LocalRegister() {
         );
         handleCreateLocal.setFieldValue("state", content.data.state);
         handleCreateLocal.setFieldValue("address", content.data.street);
+        setLoad(false);
       })
       .catch((error) => {
         setError(error.response.data.errors[3].message);
         setOpen(true);
+        setLoad(false);
       });
   };
 
   const getCnpjInfo = async (cnpj: string) => {
+    setLoad(true);
+
     brasilApi
       .get(`/cnpj/v1/${cnpj}`)
       .then((content) => {
@@ -110,11 +112,13 @@ export function LocalRegister() {
           getCepInfo(content.data.cep);
           let cep = formatCep(content.data.cep);
           handleCreateLocal.setFieldValue("cep", cep);
+          // setLoad(false)
         }
       })
       .catch((error) => {
         setError(error.response.data.message);
         setOpen(true);
+        setLoad(false);
       });
   };
 
@@ -159,6 +163,7 @@ export function LocalRegister() {
 
   const schema = Yup.object().shape({
     haveCnpj: Yup.string(),
+    category: Yup.string().required("Categoria obrigatória"),
     cnpj: Yup.string().when("haveCnpj", {
       is: "sim",
       then: (schema) => Yup.string().required("CNPJ obrigatório"),
@@ -191,7 +196,56 @@ export function LocalRegister() {
     validationSchema: schema,
 
     onSubmit: (values) => {
-      alert("Foi");
+      // alert("Foi");
+      setLoad(true);
+      const {
+        haveCnpj,
+        category,
+        cnpj,
+        name,
+        cep,
+        state,
+        city,
+        neighborhood,
+        number,
+        complement,
+        address,
+      } = values;
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${authService.getToken()}`,
+        },
+      };
+
+      const data = {
+        name: name,
+        category: category,
+        cnpj: cnpj.replaceAll(".", "").replaceAll("/", "").replaceAll("-", ""),
+        address: {
+          cep: cep.replaceAll("-", ""),
+          complement: complement,
+          number: number,
+          logradouro: address,
+          bairro: neighborhood,
+          city: city,
+          state: state,
+        },
+      };
+
+      api
+        .post("/local", data, config)
+        .then((response) => {
+          // alert("Ok, deu certo");
+          console.log(response.data);
+          navigate("/local/cadastro-local/success");
+          setLoad(false);
+        })
+        .catch((error) => {
+          // alert("Não, deu erro fio -> Para de tentar quebrar o MOB");
+          console.log(error);
+          setLoad(false);
+        });
     },
   });
 
@@ -226,10 +280,11 @@ export function LocalRegister() {
               <div className="title-first">
                 <Text variant="font-semibold headline">Local</Text>
                 <Text variant="muthed font-regular body-small">
-                  Preencha os dados e avalie um novo local.
+                  Informe os detalhes do local.
                 </Text>
               </div>
             </div>
+
             <FormControl>
               <FormLabel id="demo-row-radio-buttons-group-label">
                 Possui CNPJ?
@@ -257,7 +312,26 @@ export function LocalRegister() {
                 />
               </RadioGroup>
             </FormControl>
-            <div className="container-flex-local">
+
+            <div className="container-info">
+              <Text variant="muted font-regular caption">
+                Por que precisamos do CNPJ?
+              </Text>
+              <InfoIcon />
+            </div>
+
+            <div
+              className="container-flex-local"
+              style={{ display: load ? "flex" : "none" }}
+            >
+              <Load width="100%" height={100} />
+              <Load width="100%" height={100} />
+              <Load width="100%" height={100} />
+            </div>
+            <div
+              className="container-flex-local"
+              style={{ display: !load ? "flex" : "none" }}
+            >
               <div className="container-evaluate-content-input">
                 <TextField
                   id="category"
@@ -326,6 +400,12 @@ export function LocalRegister() {
                   label="CNPJ"
                   variant="outlined"
                 />
+                <Text variant="muted font-regular caption">
+                  Não encontrou o CNPJ?{" "}
+                  <a href="/" className="link-forgot">
+                    Clique aqui
+                  </a>
+                </Text>
               </div>
               <div className="container-evaluate-content-input">
                 <TextField
@@ -351,11 +431,39 @@ export function LocalRegister() {
               <div className="container-title-evaluate">
                 <Text variant="font-semibold headline">Endereço</Text>
                 <Text variant="muthed font-regular body-small">
-                  Preencha os dados e avalie um novo local.
+                  Informe os detalhes de endereço do local.
                 </Text>
               </div>
 
-              <div className="container-flex-local">
+              <div
+                className="container-flex-local"
+                style={{ display: load ? "flex" : "none" }}
+              >
+                <Load width="100%" height={100} />
+                <Load width="100%" height={100} />
+                {/* <Load width="100%" height={100}/> */}
+              </div>
+              <div
+                className="container-flex-local"
+                style={{ display: load ? "flex" : "none" }}
+              >
+                <Load width="100%" height={100} />
+                <Load width="100%" height={100} />
+                {/* <Load width="100%" height={100}/> */}
+              </div>
+              <div
+                className="container-flex-local"
+                style={{ display: load ? "flex" : "none" }}
+              >
+                <Load width="100%" height={100} />
+                <Load width="100%" height={100} />
+                <Load width="100%" height={100} />
+              </div>
+
+              <div
+                className="container-flex-local"
+                style={{ display: !load ? "flex" : "none" }}
+              >
                 <div className="container-evaluate-content-input">
                   <TextField
                     id="cep"
@@ -377,6 +485,12 @@ export function LocalRegister() {
                       handleCreateLocal.errors.cep
                     }
                   />
+                  <Text variant="muted font-regular caption">
+                    Não encontrou o CEP?{" "}
+                    <a href="/" className="link-forgot">
+                      Clique aqui
+                    </a>
+                  </Text>
                 </div>
                 <div className="container-evaluate-content-input">
                   <TextField
@@ -398,7 +512,10 @@ export function LocalRegister() {
                   />
                 </div>
               </div>
-              <div className="container-flex-local">
+              <div
+                className="container-flex-local"
+                style={{ display: !load ? "flex" : "none" }}
+              >
                 <div className="container-evaluate-content-input">
                   <TextField
                     id="state"
@@ -419,7 +536,7 @@ export function LocalRegister() {
                       handleCreateLocal.errors.state
                     }
                   >
-                    {currencies.map((option) => (
+                    {states.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -446,7 +563,10 @@ export function LocalRegister() {
                   />
                 </div>
               </div>
-              <div className="container-flex-local">
+              <div
+                className="container-flex-local"
+                style={{ display: !load ? "flex" : "none" }}
+              >
                 <div className="container-evaluate-content-input">
                   <TextField
                     id="neighborhood"
@@ -522,7 +642,7 @@ export function LocalRegister() {
               <div className="container-evaluate-button">
                 <Text variant="color-blue font-regular body-small"></Text>
                 <ButtonStyle variant="medium-button" type="submit">
-                  Registrar
+                  {load ? <CircularProgress /> : "Cadastrar"}
                 </ButtonStyle>
               </div>
             </div>

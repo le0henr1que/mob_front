@@ -20,7 +20,11 @@
 .container-inside{
     width: 100%;
 }
-
+.container-info{
+    display: flex;
+    gap:8px;
+    color:#424242 !important;
+}
 .container-title-evaluate{
     /* margin-bottom: 20px; */
     /* margin-top: 60px; */

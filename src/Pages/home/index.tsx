@@ -15,12 +15,40 @@ import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import React, { useContext } from "react";
+import Autocomplete from "@mui/material/Autocomplete";
+import api from "../../utils/api";
 
 export function Home() {
   const navigate = useNavigate();
+  const [search, setSearch] = React.useState();
+  const [resultSearch, setResultSearch] = React.useState([]);
+
   const handleRegisterLocal = () => {
-    navigate("/local/cadastrar", { state: { from: "/local/cadastrar" } });
+    navigate("/local/cadastro-local", {
+      state: { from: "/local/cadastro-local" },
+    });
   };
+
+  const handleGetLocal = (keyword: string) => {
+    api.get(`/search-local?keyword=${keyword}`).then((content) => {
+      setResultSearch(content.data.searchLocal);
+    });
+  };
+
+  const handleSearchChange = (event: any) => {
+    setSearch(event.target.value);
+    let searchTimeout;
+
+    clearTimeout(searchTimeout);
+
+    searchTimeout = setTimeout(() => {
+      handleGetLocal(event.target.value);
+    }, 500);
+  };
+
+  React.useEffect(() => {
+    handleGetLocal("");
+  }, []);
 
   return (
     <>
@@ -38,10 +66,17 @@ export function Home() {
                 noValidate
                 autoComplete="off"
               >
-                <TextField
-                  id="search-local"
-                  label="Pesquisar..."
-                  variant="outlined"
+                <Autocomplete
+                  disablePortal
+                  id="combo-box-demo"
+                  value={search}
+                  onChange={handleSearchChange}
+                  getOptionLabel={(option: any) => option.name}
+                  options={resultSearch}
+                  sx={{ width: 300 }}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Pesquisar..." />
+                  )}
                 />
               </Box>
               {/* <Input variant="default" icon={true} placeholder="Pesquisar"/> */}

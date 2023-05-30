@@ -9,15 +9,15 @@ import { Footer } from "../../Components/Footer";
 //@ts-ignore
 import pana from "../../Assests/pana.svg";
 //@ts-ignore
-import Rafiki1 from "../../Assests/rafiki1.svg";
+import Rafiki1 from "../../Assests/success.svg";
 import ButtonStyle from "../../Components/Button";
 import { useNavigate } from "react-router-dom";
 
-export function Local() {
+export function SucessPage() {
   const navigate = useNavigate();
 
   const handleRegisterLocal = () => {
-    navigate("/local/cadastrar", { state: { from: "/local/cadastrar" } });
+    navigate("/", { state: { from: "/" } });
   };
 
   return (
@@ -26,19 +26,19 @@ export function Local() {
       <Container>
         <div className="container-local">
           <div className="row-2">
-            <img src={Rafiki1} />
+            <img src={Rafiki1} width={500} />
           </div>
           <div className="row-1">
             <Text variant="headline font-bold title-3">
-              Não encontrou o <span>local?</span>
+              Tudo certo por <span>aqui!</span>
             </Text>
 
             <Text variant="muted font-bold subheadline">
-              Ajude outras pessoas criando e avaliando um novo local.
+              Um novo local foi cadastrado com sucesso!
             </Text>
 
             <ButtonStyle variant="medium-button" onClick={handleRegisterLocal}>
-              Cadastrar um novo local
+              Voltar para home
             </ButtonStyle>
           </div>
         </div>

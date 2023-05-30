@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home } from "../Pages/home";
 import { NotFound } from "../Pages/NotFound";
 import { Login } from "../Pages/Login";
-import { Local } from "../Pages/Local";
+import { SucessPage } from "../Pages/SucessPage";
 import { Rating } from "../Pages/Rating";
 import { Evaluete } from "../Pages/Evaluate";
 import { LocalRegister } from "../Pages/LocalRegister";
@@ -26,7 +26,7 @@ const Router = () => {
       <Routes>
         <Route path="/local/avaliar" element={<Evaluete />} />
         <Route
-          path="/local/cadastrar"
+          path="/local/cadastro-local"
           element={<PrivateRoute Component={LocalRegister} />}
         />
 
@@ -44,7 +44,7 @@ const Router = () => {
 
         <Route path="/confirmar-email" element={<ConfirmEmail />} />
 
-        <Route path="/local" element={<Local />} />
+        <Route path="/local/cadastro-local/success" element={<SucessPage />} />
         <Route path="/local/avaliacoes" element={<Rating />} />
         <Route path="/cadastrar" element={<Register />} />
         <Route path="/minhas-avaliacoes" element={<MyRating />} />
