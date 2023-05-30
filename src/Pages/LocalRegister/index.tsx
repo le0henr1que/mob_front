@@ -43,6 +43,8 @@ import { Load } from "../../Components/Load";
 import { states } from "../../utils/Brasil-State";
 import api from "../../utils/api";
 import authService from "../../service/AuthService";
+import { formatCep } from "../../utils/Mask/CEP";
+import { formatCnpj } from "../../utils/Mask/CNPJ";
 
 export function LocalRegister() {
   const navigate = useNavigate();
@@ -62,16 +64,6 @@ export function LocalRegister() {
   const [cnpj, setCnpj] = useState("");
   const [cep, setCep] = useState("");
 
-  const formatCnpj = (value: string) => {
-    const cnpjRegex = /^(\d{0,2})(\d{0,3})(\d{0,3})(\d{0,4})(\d{0,2})$/;
-    const match = value.replace(/\D/g, "").match(cnpjRegex);
-    if (match) {
-      return `${match[1]}${match[1] && "."}${match[2]}${match[2] && "."}${
-        match[3]
-      }${match[3] && "/"}${match[4]}${match[4] && "-"}${match[5]}`;
-    }
-    return value;
-  };
   const getCepInfo = async (cep: string) => {
     setLoad(true);
     brasilApi
@@ -130,16 +122,6 @@ export function LocalRegister() {
           .replaceAll("-", "")
       );
     }
-  };
-
-  const formatCep = (value: string) => {
-    const cepRegex = /^(\d{5})(\d{3})$/;
-    const match = value.replace(/\D/g, "").match(cepRegex);
-
-    if (match) {
-      return `${match[1]}-${match[2]}`;
-    }
-    return value;
   };
 
   const handleChangeCep = (event: React.ChangeEvent<HTMLInputElement>) => {
