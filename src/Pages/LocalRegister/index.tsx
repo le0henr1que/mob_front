@@ -23,6 +23,8 @@ import {
   FormControl,
   FormControlLabel,
   FormLabel,
+  ListSubheader,
+  Menu,
   MenuItem,
   Radio,
   RadioGroup,
@@ -30,7 +32,7 @@ import {
 } from "@material-ui/core";
 import { Alert, Snackbar } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 // import InputMask from 'react-input-mask';
@@ -50,21 +52,12 @@ export function LocalRegister() {
   const [error, setError] = useState<string>();
   const [load, setLoad] = useState<boolean>(false);
 
+  const [category, setCategory] = useState<any>([]);
+
   const ratingNote = (note: number) => {
     alert(note);
     return note;
   };
-
-  const currencies = [
-    {
-      value: "SP",
-      label: "São Paulo",
-    },
-    {
-      value: "RJ",
-      label: "Rio de Janeiro",
-    },
-  ];
 
   const [cnpj, setCnpj] = useState("");
   const [cep, setCep] = useState("");
@@ -220,7 +213,7 @@ export function LocalRegister() {
 
       const data = {
         name: name,
-        category: category,
+        subcategoryId: category,
         cnpj: cnpj.replaceAll(".", "").replaceAll("/", "").replaceAll("-", ""),
         address: {
           cep: cep.replaceAll("-", ""),
@@ -248,6 +241,17 @@ export function LocalRegister() {
         });
     },
   });
+  function MyListSubheader(props: any) {
+    return <ListSubheader {...props} />;
+  }
+
+  useEffect(() => {
+    setLoad(true);
+    api.get("/local/category").then((content) => {
+      setCategory(content.data.category);
+      setLoad(false);
+    });
+  }, []);
 
   return (
     <>
@@ -352,24 +356,17 @@ export function LocalRegister() {
                     handleCreateLocal.errors.category
                   }
                 >
-                  <MenuItem
-                    key="Estabelecimentos comerciais"
-                    value="Estabelecimentos comerciais"
-                  >
-                    Estabelecimentos comerciais
-                  </MenuItem>
-                  <MenuItem key="Serviços públicos" value="Serviços públicos">
-                    Serviços públicos
-                  </MenuItem>
-                  <MenuItem
-                    key="Espaços de entretenimento"
-                    value="Espaços de entretenimento"
-                  >
-                    Espaços de entretenimento
-                  </MenuItem>
-                  <MenuItem key="Transporte" value="Transporte">
-                    Transporte
-                  </MenuItem>
+                  {!load &&
+                    category.map((content: any) => [
+                      <MyListSubheader key={content.id}>
+                        {content.name}
+                      </MyListSubheader>,
+                      content.subcategory.map((subcategory: any) => (
+                        <MenuItem key={subcategory.id} value={subcategory.id}>
+                          {subcategory.name}
+                        </MenuItem>
+                      )),
+                    ])}
                 </TextField>
               </div>
 

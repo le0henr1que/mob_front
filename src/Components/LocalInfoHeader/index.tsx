@@ -6,8 +6,9 @@ import { StarRating } from "../StarRating";
 import ButtonStyle from "../Button";
 import { Chart } from "../Chart";
 import { useNavigate } from "react-router-dom";
+import { getInitials } from "../../utils/GetInitials";
 
-export function Company() {
+export function Company({ name }: any) {
   const navigate = useNavigate();
   const data = [1, 7, 9, 5, 10];
   return (
@@ -21,9 +22,9 @@ export function Company() {
                 </div> */}
 
           <div className="header-side-company">
-            <div className="avatar-company">LB</div>
+            <div className="avatar-company">{getInitials(name)}</div>
             <div className="title-company-title">
-              <Text variant="font-semibold title-2">Lojas Brasileiras</Text>
+              <Text variant="font-semibold title-2">{name}</Text>
               <div className="heder-subtitle-company">
                 <StarRating
                   variant="nothing"

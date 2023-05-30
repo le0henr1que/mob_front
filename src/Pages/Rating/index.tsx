@@ -13,17 +13,45 @@ import rafiki from "../../Assests/rafiki.svg";
 //@ts-ignore
 import Type from "../../Assests/Group25.svg";
 import ButtonStyle from "../../Components/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Chart } from "../../Components/Chart";
 import { Company } from "../../Components/LocalInfoHeader";
+import { useEffect, useState } from "react";
+import api from "../../utils/api";
 
 export function Rating() {
+  const [local, setLocal] = useState<any>(null);
+  const [load, setLoad] = useState<boolean>(false);
+
   const navigate = useNavigate();
   const data = [1, 7, 9, 5, 10];
+  const { id } = useParams();
+
+  useEffect(() => {
+    const handleGetLocalInfo = async () => {
+      setLoad(true);
+      await api
+        .get(`/local/${id}`)
+        .then(async (content) => {
+          await setLocal(content.data.local);
+          // console.log(content.data)
+          setLoad(false);
+        })
+        .catch((error) => {
+          setLoad(false);
+        });
+    };
+    handleGetLocalInfo();
+  }, []);
+
+  if (local === null) {
+    return <h3>Carregando...</h3>;
+  }
+
   return (
     <>
       <Header />
-      <Company />
+      <Company name={local.name} />
 
       <div className="container-rating-main">
         <div className="container-rating-comments">

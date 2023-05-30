@@ -22,6 +22,9 @@ export function Home() {
   const navigate = useNavigate();
   const [search, setSearch] = React.useState();
   const [resultSearch, setResultSearch] = React.useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [options, setOptions] = React.useState<[]>([]);
+  const loading = open && options.length === 0;
 
   const handleRegisterLocal = () => {
     navigate("/local/cadastro-local", {
@@ -31,7 +34,7 @@ export function Home() {
 
   const handleGetLocal = (keyword: string) => {
     api.get(`/search-local?keyword=${keyword}`).then((content) => {
-      setResultSearch(content.data.searchLocal);
+      setOptions(content.data.searchLocal);
     });
   };
 
@@ -50,6 +53,34 @@ export function Home() {
     handleGetLocal("");
   }, []);
 
+  React.useEffect(() => {
+    let active = true;
+
+    if (!loading) {
+      return undefined;
+    }
+
+    (async () => {
+      if (active) {
+        handleGetLocal("");
+      }
+    })();
+
+    return () => {
+      active = false;
+    };
+  }, [loading]);
+
+  React.useEffect(() => {
+    if (!open) {
+      setOptions([]);
+    }
+  }, [open]);
+
+  const handleOptionSelect = (option: any) => {
+    const { id } = option;
+    navigate(`/local/avaliacoes/${id}`);
+  };
   return (
     <>
       <Header />
@@ -67,13 +98,22 @@ export function Home() {
                 autoComplete="off"
               >
                 <Autocomplete
-                  disablePortal
-                  id="combo-box-demo"
-                  value={search}
-                  onChange={handleSearchChange}
-                  getOptionLabel={(option: any) => option.name}
-                  options={resultSearch}
+                  onChange={(event, value) => handleOptionSelect(value)}
+                  id="asynchronous-demo"
                   sx={{ width: 300 }}
+                  open={open}
+                  onOpen={() => {
+                    setOpen(true);
+                  }}
+                  onClose={() => {
+                    setOpen(false);
+                  }}
+                  isOptionEqualToValue={(option: any, value) =>
+                    option.name === value.name
+                  }
+                  getOptionLabel={(option: any) => option.name}
+                  options={options}
+                  loading={loading}
                   renderInput={(params) => (
                     <TextField {...params} label="Pesquisar..." />
                   )}

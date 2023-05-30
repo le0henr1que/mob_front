@@ -45,7 +45,7 @@ const Router = () => {
         <Route path="/confirmar-email" element={<ConfirmEmail />} />
 
         <Route path="/local/cadastro-local/success" element={<SucessPage />} />
-        <Route path="/local/avaliacoes" element={<Rating />} />
+        <Route path="/local/avaliacoes/:id" element={<Rating />} />
         <Route path="/cadastrar" element={<Register />} />
         <Route path="/minhas-avaliacoes" element={<MyRating />} />
         <Route path="/pesquisar-local" element={<SearchLocal />} />
