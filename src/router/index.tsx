@@ -17,6 +17,7 @@ import { ConfirmEmail } from "../Pages/ConfirmEmail";
 import { Terms } from "../Pages/Terms";
 import { useAuth } from "../context/AuthContext";
 import PrivateRoute from "./privateRoute";
+import { ModalProvider } from "../context/ModalContext";
 
 const Router = () => {
   const { authState } = useAuth();
@@ -25,10 +26,6 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/local/avaliar" element={<Evaluete />} />
-        <Route
-          path="/local/cadastro-local"
-          element={<PrivateRoute Component={LocalRegister} />}
-        />
 
         {/* <PrivateRoute
           exact
@@ -40,6 +37,11 @@ const Router = () => {
         {/* <Route path="/local/cadastrar" element={<LocalRegister />} /> */}
 
         <Route path="/" element={<Home />} />
+        <Route
+          path="/local/cadastro-local"
+          element={<PrivateRoute Component={LocalRegister} />}
+        />
+
         <Route path="/login" element={<Login />} />
 
         <Route path="/confirmar-email" element={<ConfirmEmail />} />

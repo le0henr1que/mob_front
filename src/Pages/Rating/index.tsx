@@ -18,6 +18,7 @@ import { Chart } from "../../Components/Chart";
 import { Company } from "../../Components/LocalInfoHeader";
 import { useEffect, useState } from "react";
 import api from "../../utils/api";
+import { CircleLoad } from "../../Components/circleLoad";
 
 export function Rating() {
   const [local, setLocal] = useState<any>(null);
@@ -45,7 +46,7 @@ export function Rating() {
   }, []);
 
   if (local === null) {
-    return <h3>Carregando...</h3>;
+    return <CircleLoad />;
   }
 
   return (

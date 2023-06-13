@@ -32,7 +32,7 @@ import {
 } from "@material-ui/core";
 import { Alert, Snackbar } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 // import InputMask from 'react-input-mask';
@@ -45,6 +45,8 @@ import api from "../../utils/api";
 import authService from "../../service/AuthService";
 import { formatCep } from "../../utils/Mask/CEP";
 import { formatCnpj } from "../../utils/Mask/CNPJ";
+import { CircleLoad } from "../../Components/circleLoad";
+import { ModalContext } from "../../context/ModalContext";
 
 export function LocalRegister() {
   const navigate = useNavigate();
@@ -53,7 +55,7 @@ export function LocalRegister() {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState<string>();
   const [load, setLoad] = useState<boolean>(false);
-
+  const { openModal } = useContext(ModalContext);
   const [category, setCategory] = useState<any>([]);
 
   const ratingNote = (note: number) => {
@@ -213,7 +215,8 @@ export function LocalRegister() {
         .then((response) => {
           // alert("Ok, deu certo");
           console.log(response.data);
-          navigate("/local/cadastro-local/success");
+          navigate("/");
+          openModal();
           setLoad(false);
         })
         .catch((error) => {
@@ -234,6 +237,10 @@ export function LocalRegister() {
       setLoad(false);
     });
   }, []);
+
+  if (load) {
+    return <CircleLoad />;
+  }
 
   return (
     <>
@@ -306,14 +313,6 @@ export function LocalRegister() {
               <InfoIcon />
             </div>
 
-            <div
-              className="container-flex-local"
-              style={{ display: load ? "flex" : "none" }}
-            >
-              <Load width="100%" height={100} />
-              <Load width="100%" height={100} />
-              <Load width="100%" height={100} />
-            </div>
             <div
               className="container-flex-local"
               style={{ display: !load ? "flex" : "none" }}
@@ -412,31 +411,6 @@ export function LocalRegister() {
                 <Text variant="muthed font-regular body-small">
                   Informe os detalhes de endereço do local.
                 </Text>
-              </div>
-
-              <div
-                className="container-flex-local"
-                style={{ display: load ? "flex" : "none" }}
-              >
-                <Load width="100%" height={100} />
-                <Load width="100%" height={100} />
-                {/* <Load width="100%" height={100}/> */}
-              </div>
-              <div
-                className="container-flex-local"
-                style={{ display: load ? "flex" : "none" }}
-              >
-                <Load width="100%" height={100} />
-                <Load width="100%" height={100} />
-                {/* <Load width="100%" height={100}/> */}
-              </div>
-              <div
-                className="container-flex-local"
-                style={{ display: load ? "flex" : "none" }}
-              >
-                <Load width="100%" height={100} />
-                <Load width="100%" height={100} />
-                <Load width="100%" height={100} />
               </div>
 
               <div

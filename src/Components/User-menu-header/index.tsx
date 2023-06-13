@@ -15,6 +15,7 @@ import { Text } from "../Text";
 import { MenuItemsHeader } from "../../@types";
 import { getInitials } from "../../utils/GetInitials/index";
 import { Load } from "../Load";
+import { CircleLoad } from "../circleLoad";
 
 export default function UserMenu(userInformation: any) {
   const [open, setOpen] = React.useState(false);
@@ -41,6 +42,10 @@ export default function UserMenu(userInformation: any) {
   document.addEventListener("click", function () {
     setOpen(false);
   });
+
+  if (loadImage) {
+    return <CircleLoad />;
+  }
 
   return (
     <>

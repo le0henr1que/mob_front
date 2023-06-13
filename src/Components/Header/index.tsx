@@ -32,11 +32,12 @@ import { Load } from "../../Components/Load";
 import CookieIcon from "@mui/icons-material/Cookie";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { useCookies, withCookies } from "react-cookie";
+import { CircleLoad } from "../circleLoad";
 
 export function Header() {
   const [dataUserMe, setDataUserMe] = useState<UserInterface | any>(null);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
-  const [load, setLoad] = useState(false);
+  const [load, setLoad] = useState(true);
   const [loadConfirmarEmail, setLoadConfirmarEmail] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [userImage, setUserImage] = useState();
@@ -59,6 +60,7 @@ export function Header() {
   ];
 
   const handleLogout = async () => {
+    setLoad(false);
     await logout();
   };
 
@@ -94,11 +96,13 @@ export function Header() {
           }
 
           setIsImageLoaded(true);
+          setLoad(false);
         })
         .catch((error) => {
           if (error.response.status === 403) {
             handleLogout();
             navigate("/");
+            setLoad(false);
           }
         });
     }
@@ -167,7 +171,9 @@ export function Header() {
   }
 
   useEffect(() => {}, []);
-
+  if (load) {
+    return <CircleLoad />;
+  }
   return (
     <div className="container-header">
       <div className="container-header-main">

@@ -17,14 +17,19 @@ import TextField from "@mui/material/TextField";
 import React, { useContext } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import api from "../../utils/api";
+import { CircleLoad } from "../../Components/circleLoad";
+import { ModalContext } from "../../context/ModalContext";
+// import { CustomModal } from "../../context/ModalContext";
 
 export function Home() {
   const navigate = useNavigate();
   const [search, setSearch] = React.useState();
+  const [load, setLoad] = React.useState(false);
   const [resultSearch, setResultSearch] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState<[]>([]);
   const loading = open && options.length === 0;
+  const { isOpen, closeModal } = useContext(ModalContext);
 
   const handleRegisterLocal = () => {
     navigate("/local/cadastro-local", {
@@ -51,6 +56,7 @@ export function Home() {
 
   React.useEffect(() => {
     handleGetLocal("");
+    setLoad(true);
   }, []);
 
   React.useEffect(() => {
@@ -81,10 +87,18 @@ export function Home() {
     const { id } = option;
     navigate(`/local/avaliacoes/${id}`);
   };
+
+  if (!load) {
+    return <CircleLoad />;
+  }
+
   return (
     <>
       <Header />
       <Container>
+        {isOpen &&
+          // <CustomModal isOpen={isOpen} onRequestClose={closeModal} message="Mensagem da modal" />
+          alert("Local Cadastrado com sucesso")}
         <div className="main-card">
           <div className="card">
             <img src={pana} />
