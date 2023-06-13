@@ -47,6 +47,10 @@ import { formatCep } from "../../utils/Mask/CEP";
 import { formatCnpj } from "../../utils/Mask/CNPJ";
 import { CircleLoad } from "../../Components/circleLoad";
 import { ModalContext } from "../../context/ModalContext";
+import econodata from "../../utils/api/econodata";
+import { CardLocal } from "../../Components/CardLocal";
+import { SliderSlider } from "../../Components/Slider";
+import { SwiperSlide } from "swiper/react";
 
 export function LocalRegister() {
   const navigate = useNavigate();
@@ -57,6 +61,7 @@ export function LocalRegister() {
   const [load, setLoad] = useState<boolean>(false);
   const { openModal } = useContext(ModalContext);
   const [category, setCategory] = useState<any>([]);
+  const [company, setCompany] = useState<any>([]);
 
   const ratingNote = (note: number) => {
     alert(note);
@@ -238,6 +243,25 @@ export function LocalRegister() {
     });
   }, []);
 
+  const handleGetCompanyForName = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    // alert("teste")
+    const { value } = event.target;
+
+    handleCreateLocal.setFieldValue("name", value);
+    if (value.length >= 2) {
+      econodata
+        .post("/consulta-empresa/api/ecdt-busca/searchCompaniesSite", {
+          input: value,
+        })
+        .then((content) => {
+          console.log(content);
+          setCompany(content.data.companies);
+        });
+    }
+  };
+
   if (load) {
     return <CircleLoad />;
   }
@@ -319,36 +343,23 @@ export function LocalRegister() {
             >
               <div className="container-evaluate-content-input">
                 <TextField
-                  id="category"
-                  name="category"
-                  variant="outlined"
-                  select
-                  label="Categoria"
-                  defaultValue="Estabelecimentos comerciais"
-                  value={handleCreateLocal.values.category}
-                  onChange={handleCreateLocal.handleChange}
+                  value={handleCreateLocal.values.name}
+                  // onChange={handleCreateLocal.handleChange}
+                  onChange={(event: any) => handleGetCompanyForName(event)}
                   onBlur={handleCreateLocal.handleBlur}
                   error={Boolean(
-                    handleCreateLocal.touched.category &&
-                      handleCreateLocal.errors.category
+                    handleCreateLocal.touched.name &&
+                      handleCreateLocal.errors.name
                   )}
                   helperText={
-                    handleCreateLocal.touched.category &&
-                    handleCreateLocal.errors.category
+                    handleCreateLocal.touched.name &&
+                    handleCreateLocal.errors.name
                   }
-                >
-                  {!load &&
-                    category.map((content: any) => [
-                      <MyListSubheader key={content.id}>
-                        {content.name}
-                      </MyListSubheader>,
-                      content.subcategory.map((subcategory: any) => (
-                        <MenuItem key={subcategory.id} value={subcategory.id}>
-                          {subcategory.name}
-                        </MenuItem>
-                      )),
-                    ])}
-                </TextField>
+                  id="name"
+                  name="name"
+                  label="Nome"
+                  variant="outlined"
+                />
               </div>
 
               <div
@@ -387,24 +398,70 @@ export function LocalRegister() {
               </div>
               <div className="container-evaluate-content-input">
                 <TextField
-                  value={handleCreateLocal.values.name}
+                  id="category"
+                  name="category"
+                  variant="outlined"
+                  select
+                  label="Categoria"
+                  defaultValue="Estabelecimentos comerciais"
+                  value={handleCreateLocal.values.category}
                   onChange={handleCreateLocal.handleChange}
                   onBlur={handleCreateLocal.handleBlur}
                   error={Boolean(
-                    handleCreateLocal.touched.name &&
-                      handleCreateLocal.errors.name
+                    handleCreateLocal.touched.category &&
+                      handleCreateLocal.errors.category
                   )}
                   helperText={
-                    handleCreateLocal.touched.name &&
-                    handleCreateLocal.errors.name
+                    handleCreateLocal.touched.category &&
+                    handleCreateLocal.errors.category
                   }
-                  id="name"
-                  name="name"
-                  label="Nome"
-                  variant="outlined"
-                />
+                >
+                  {!load &&
+                    category.map((content: any) => [
+                      <MyListSubheader key={content.id}>
+                        {content.name}
+                      </MyListSubheader>,
+                      content.subcategory.map((subcategory: any) => (
+                        <MenuItem key={subcategory.id} value={subcategory.id}>
+                          {subcategory.name}
+                        </MenuItem>
+                      )),
+                    ])}
+                </TextField>
               </div>
             </div>
+            <div className="card-search-local">
+              {company.length > 0 && (
+                <div className="card-text-local">
+                  <Text variant="muted font-regular subheadline">
+                    Encontramos algumas empresas que podem corresponder ao nome
+                    que você digitou. Por favor, selecione uma das opções abaixo
+                    para prosseguir:
+                  </Text>
+                </div>
+              )}
+              <div className="div-company">
+                <SliderSlider>
+                  {company.length > 0 &&
+                    company.map((content: any) => (
+                      <SwiperSlide>
+                        <CardLocal author={content.razao_social} rating={4} />
+                      </SwiperSlide>
+                    ))}
+                </SliderSlider>
+              </div>
+              {company.length > 0 && (
+                <div className="card-text-local">
+                  <Text variant="muted font-regular subheadline">
+                    Se a empresa desejada não estiver na lista acima, você
+                    também pode digitar o nome completo para continuar com a
+                    pesquisa ou continuar inserindo os dados correspondente ao
+                    local.
+                  </Text>
+                </div>
+              )}
+            </div>
+
             <div className="address-container">
               <div className="container-title-evaluate">
                 <Text variant="font-semibold headline">Endereço</Text>
