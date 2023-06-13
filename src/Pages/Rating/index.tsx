@@ -19,6 +19,7 @@ import { Company } from "../../Components/LocalInfoHeader";
 import { useEffect, useState } from "react";
 import api from "../../utils/api";
 import { CircleLoad } from "../../Components/circleLoad";
+import { getInitials } from "../../utils/GetInitials";
 
 export function Rating() {
   const [local, setLocal] = useState<any>(null);
@@ -52,7 +53,27 @@ export function Rating() {
   return (
     <>
       <Header />
-      <Company name={local.name} />
+      <div className="content-main-company">
+        <div className="content-rating-main">
+          <div className="info-company">
+            <div className="container-banner-option-company"></div>
+            <div className="circle-white-avatar">
+              <div className="circle-logo-company">
+                {getInitials(local.name)}
+              </div>
+            </div>
+          </div>
+
+          <div className="company">
+            <div className="company-search"></div>
+
+            <div className="company-comments"></div>
+          </div>
+        </div>
+      </div>
+
+      {/* <Company name={local.name} />
+    
 
       <div className="container-rating-main">
         <div className="container-rating-comments">
@@ -108,7 +129,7 @@ export function Rating() {
             />
           </div>
         </div>
-      </div>
+      </div> */}
 
       <Footer />
     </>

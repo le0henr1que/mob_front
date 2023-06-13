@@ -1,4 +1,4 @@
-.container-rating-main{
+/* .container-rating-main{
     width: 100%;
     height: auto;
     display: flex;
@@ -26,4 +26,115 @@
     height: 50px;
     margin-bottom: 50px;
 
+} */
+
+.info-company{
+    box-sizing: border-box;
+    text-align: center;
+    /* display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column; */
+
+    position: relative;
+    width: 332px;
+    height: 509px;
+    /* left: 72px;
+    top: 10px; */
+    
+    background: #FFFFFF;
+    border: 1px solid #E0DFDC;
+    border-radius: 5px;
+}
+
+.content-main-company{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    align-items: center;
+}
+.content-rating-main{
+    width: 1350px;
+    display: flex;
+    /* background:red; */
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 600px;
+}
+.company{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: auto;
+    gap:50px;
+}
+.company-search{
+    box-sizing: border-box;
+
+    /* position: absolute; */
+    width: 950px;
+    height: 141px;
+    /* left: 448px;
+    top: 10px; */
+
+    background: #FFFFFF;
+    border: 1px solid #E0DFDC;
+    border-radius: 5px;
+}
+
+.company-comments{
+    box-sizing: border-box;
+
+    /* position: absolute; */
+    width: 950px;
+    height: 300px;
+    /*left: 448px; */
+    /* top: 429px; */
+
+    background: #FFFFFF;
+    border: 1px solid #E0DFDC;
+    border-radius: 5px;
+}
+
+.container-banner-option-company{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 4rem 1rem;
+    background-color: #f9fafe;
+    background-image: url("../../Assests/banner.png");
+    text-align: left;
+}
+.circle-white-avatar{
+    width: 130px;
+    height: 130px;
+    border-radius: 130px;
+    background-color:#FFF;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    top:60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.circle-logo-company{
+    width: 120px;
+    height: 120px;
+    border-radius: 120px;
+    background: #FFF;
+    font-style: normal;
+    font-weight: 700 ;
+    font-size: 60px ;
+    line-height: 109px ;
+    color: #AFAFAF ;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #AFAFAF ;
 }
