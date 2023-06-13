@@ -60,7 +60,6 @@ export function Header() {
   ];
 
   const handleLogout = async () => {
-    setLoad(false);
     await logout();
   };
 
@@ -171,7 +170,7 @@ export function Header() {
   }
 
   useEffect(() => {}, []);
-  if (load) {
+  if (load && dataUserMe) {
     return <CircleLoad />;
   }
   return (
